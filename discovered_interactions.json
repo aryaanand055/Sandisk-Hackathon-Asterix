@@ -1,0 +1,4728 @@
+{
+  "interactions": [
+    {
+      "features": [
+        "traffic_pattern",
+        "cache_size",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "traffic_pattern",
+          "value": "high"
+        },
+        {
+          "feature": "cache_size",
+          "value": "small"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.4673,
+      "baseline_fail_rate": 0.1736,
+      "lift": 2.69,
+      "support": 398,
+      "order": 3
+    },
+    {
+      "features": [
+        "voltage",
+        "cache_size",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "voltage",
+          "value": "voltage[1.0-1.2]"
+        },
+        {
+          "feature": "cache_size",
+          "value": "small"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.312,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.8,
+      "support": 375,
+      "order": 3
+    },
+    {
+      "features": [
+        "temperature",
+        "traffic_pattern",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "temperature",
+          "value": "temperature[59.9-95.0]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "high"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.301,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.73,
+      "support": 392,
+      "order": 3
+    },
+    {
+      "features": [
+        "memory_size",
+        "traffic_pattern",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "memory_size",
+          "value": "memory_size[2048.0-4096.0]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "high"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2972,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.71,
+      "support": 212,
+      "order": 3
+    },
+    {
+      "features": [
+        "random_seed",
+        "cache_size",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "random_seed",
+          "value": "random_seed[66694.0-99996.0]"
+        },
+        {
+          "feature": "cache_size",
+          "value": "small"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.295,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.7,
+      "support": 383,
+      "order": 3
+    },
+    {
+      "features": [
+        "voltage",
+        "traffic_pattern",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "voltage",
+          "value": "voltage[1.0-1.2]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "high"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2949,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.7,
+      "support": 373,
+      "order": 3
+    },
+    {
+      "features": [
+        "voltage",
+        "traffic_pattern",
+        "cache_size"
+      ],
+      "conditions": [
+        {
+          "feature": "voltage",
+          "value": "voltage[1.0-1.2]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "high"
+        },
+        {
+          "feature": "cache_size",
+          "value": "small"
+        }
+      ],
+      "fail_rate": 0.2943,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.7,
+      "support": 367,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "traffic_pattern",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[3367.0-6670.0]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "high"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2927,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.69,
+      "support": 386,
+      "order": 3
+    },
+    {
+      "features": [
+        "random_seed",
+        "traffic_pattern",
+        "cache_size"
+      ],
+      "conditions": [
+        {
+          "feature": "random_seed",
+          "value": "random_seed[66694.0-99996.0]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "high"
+        },
+        {
+          "feature": "cache_size",
+          "value": "small"
+        }
+      ],
+      "fail_rate": 0.2935,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.69,
+      "support": 368,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "traffic_pattern",
+        "cache_size"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[3367.0-6670.0]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "high"
+        },
+        {
+          "feature": "cache_size",
+          "value": "small"
+        }
+      ],
+      "fail_rate": 0.2861,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.65,
+      "support": 402,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "cache_size",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[3367.0-6670.0]"
+        },
+        {
+          "feature": "cache_size",
+          "value": "small"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2833,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.63,
+      "support": 420,
+      "order": 3
+    },
+    {
+      "features": [
+        "memory_size",
+        "cache_size",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "memory_size",
+          "value": "memory_size[2048.0-4096.0]"
+        },
+        {
+          "feature": "cache_size",
+          "value": "small"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2834,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.63,
+      "support": 247,
+      "order": 3
+    },
+    {
+      "features": [
+        "memory_size",
+        "cache_size",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "memory_size",
+          "value": "memory_size[256.0-512.0]"
+        },
+        {
+          "feature": "cache_size",
+          "value": "small"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2811,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.62,
+      "support": 434,
+      "order": 3
+    },
+    {
+      "features": [
+        "random_seed",
+        "traffic_pattern",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "random_seed",
+          "value": "random_seed[33726.0-66694.0]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "high"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2801,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.61,
+      "support": 382,
+      "order": 3
+    },
+    {
+      "features": [
+        "random_seed",
+        "traffic_pattern",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "random_seed",
+          "value": "random_seed[66694.0-99996.0]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "high"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2766,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.59,
+      "support": 394,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "cache_size",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[101.0-3367.0]"
+        },
+        {
+          "feature": "cache_size",
+          "value": "small"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2753,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.59,
+      "support": 385,
+      "order": 3
+    },
+    {
+      "features": [
+        "cache_size",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "cache_size",
+          "value": "small"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.27,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.56,
+      "support": 1152,
+      "order": 2
+    },
+    {
+      "features": [
+        "traffic_pattern",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "traffic_pattern",
+          "value": "high"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2704,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.56,
+      "support": 1150,
+      "order": 2
+    },
+    {
+      "features": [
+        "memory_size",
+        "traffic_pattern",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "memory_size",
+          "value": "memory_size[256.0-512.0]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "high"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2701,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.56,
+      "support": 448,
+      "order": 3
+    },
+    {
+      "features": [
+        "voltage",
+        "traffic_pattern",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "voltage",
+          "value": "voltage[1.0-1.0]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "high"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2716,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.56,
+      "support": 394,
+      "order": 3
+    },
+    {
+      "features": [
+        "temperature",
+        "cache_size",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "temperature",
+          "value": "temperature[25.0-49.7]"
+        },
+        {
+          "feature": "cache_size",
+          "value": "small"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2701,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.56,
+      "support": 385,
+      "order": 3
+    },
+    {
+      "features": [
+        "temperature",
+        "cache_size",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "temperature",
+          "value": "temperature[59.9-95.0]"
+        },
+        {
+          "feature": "cache_size",
+          "value": "small"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2703,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.56,
+      "support": 381,
+      "order": 3
+    },
+    {
+      "features": [
+        "temperature",
+        "cache_size",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "temperature",
+          "value": "temperature[49.7-59.9]"
+        },
+        {
+          "feature": "cache_size",
+          "value": "small"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2694,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.55,
+      "support": 386,
+      "order": 3
+    },
+    {
+      "features": [
+        "temperature",
+        "memory_size",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "temperature",
+          "value": "temperature[59.9-95.0]"
+        },
+        {
+          "feature": "memory_size",
+          "value": "memory_size[2048.0-4096.0]"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2694,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.55,
+      "support": 219,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "traffic_pattern",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[101.0-3367.0]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "high"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2674,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.54,
+      "support": 389,
+      "order": 3
+    },
+    {
+      "features": [
+        "temperature",
+        "memory_size",
+        "traffic_pattern"
+      ],
+      "conditions": [
+        {
+          "feature": "temperature",
+          "value": "temperature[59.9-95.0]"
+        },
+        {
+          "feature": "memory_size",
+          "value": "memory_size[2048.0-4096.0]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "high"
+        }
+      ],
+      "fail_rate": 0.2651,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.53,
+      "support": 215,
+      "order": 3
+    },
+    {
+      "features": [
+        "memory_size",
+        "traffic_pattern",
+        "cache_size"
+      ],
+      "conditions": [
+        {
+          "feature": "memory_size",
+          "value": "memory_size[2048.0-4096.0]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "high"
+        },
+        {
+          "feature": "cache_size",
+          "value": "small"
+        }
+      ],
+      "fail_rate": 0.2643,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.52,
+      "support": 227,
+      "order": 3
+    },
+    {
+      "features": [
+        "temperature",
+        "traffic_pattern",
+        "cache_size"
+      ],
+      "conditions": [
+        {
+          "feature": "temperature",
+          "value": "temperature[49.7-59.9]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "high"
+        },
+        {
+          "feature": "cache_size",
+          "value": "small"
+        }
+      ],
+      "fail_rate": 0.2626,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.51,
+      "support": 377,
+      "order": 3
+    },
+    {
+      "features": [
+        "temperature",
+        "traffic_pattern",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "temperature",
+          "value": "temperature[25.0-49.7]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "high"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2613,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.51,
+      "support": 375,
+      "order": 3
+    },
+    {
+      "features": [
+        "temperature",
+        "traffic_pattern",
+        "cache_size"
+      ],
+      "conditions": [
+        {
+          "feature": "temperature",
+          "value": "temperature[59.9-95.0]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "high"
+        },
+        {
+          "feature": "cache_size",
+          "value": "small"
+        }
+      ],
+      "fail_rate": 0.2611,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.5,
+      "support": 383,
+      "order": 3
+    },
+    {
+      "features": [
+        "memory_size",
+        "traffic_pattern",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "memory_size",
+          "value": "memory_size[512.0-2048.0]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "high"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2592,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.49,
+      "support": 490,
+      "order": 3
+    },
+    {
+      "features": [
+        "memory_size",
+        "traffic_pattern",
+        "cache_size"
+      ],
+      "conditions": [
+        {
+          "feature": "memory_size",
+          "value": "memory_size[512.0-2048.0]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "high"
+        },
+        {
+          "feature": "cache_size",
+          "value": "small"
+        }
+      ],
+      "fail_rate": 0.2585,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.49,
+      "support": 441,
+      "order": 3
+    },
+    {
+      "features": [
+        "random_seed",
+        "cache_size",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "random_seed",
+          "value": "random_seed[4.0-33726.0]"
+        },
+        {
+          "feature": "cache_size",
+          "value": "small"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2585,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.49,
+      "support": 383,
+      "order": 3
+    },
+    {
+      "features": [
+        "random_seed",
+        "voltage",
+        "cache_size"
+      ],
+      "conditions": [
+        {
+          "feature": "random_seed",
+          "value": "random_seed[66694.0-99996.0]"
+        },
+        {
+          "feature": "voltage",
+          "value": "voltage[1.0-1.2]"
+        },
+        {
+          "feature": "cache_size",
+          "value": "small"
+        }
+      ],
+      "fail_rate": 0.2589,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.49,
+      "support": 336,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "memory_size",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[3367.0-6670.0]"
+        },
+        {
+          "feature": "memory_size",
+          "value": "memory_size[2048.0-4096.0]"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2591,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.49,
+      "support": 220,
+      "order": 3
+    },
+    {
+      "features": [
+        "traffic_pattern",
+        "cache_size"
+      ],
+      "conditions": [
+        {
+          "feature": "traffic_pattern",
+          "value": "high"
+        },
+        {
+          "feature": "cache_size",
+          "value": "small"
+        }
+      ],
+      "fail_rate": 0.257,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.48,
+      "support": 1148,
+      "order": 2
+    },
+    {
+      "features": [
+        "random_seed",
+        "cache_size",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "random_seed",
+          "value": "random_seed[33726.0-66694.0]"
+        },
+        {
+          "feature": "cache_size",
+          "value": "small"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2565,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.48,
+      "support": 386,
+      "order": 3
+    },
+    {
+      "features": [
+        "random_seed",
+        "voltage",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "random_seed",
+          "value": "random_seed[66694.0-99996.0]"
+        },
+        {
+          "feature": "voltage",
+          "value": "voltage[1.0-1.2]"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2577,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.48,
+      "support": 357,
+      "order": 3
+    },
+    {
+      "features": [
+        "random_seed",
+        "temperature",
+        "cache_size"
+      ],
+      "conditions": [
+        {
+          "feature": "random_seed",
+          "value": "random_seed[66694.0-99996.0]"
+        },
+        {
+          "feature": "temperature",
+          "value": "temperature[59.9-95.0]"
+        },
+        {
+          "feature": "cache_size",
+          "value": "small"
+        }
+      ],
+      "fail_rate": 0.2558,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.47,
+      "support": 344,
+      "order": 3
+    },
+    {
+      "features": [
+        "memory_size",
+        "cache_size",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "memory_size",
+          "value": "memory_size[512.0-2048.0]"
+        },
+        {
+          "feature": "cache_size",
+          "value": "small"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2527,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.46,
+      "support": 471,
+      "order": 3
+    },
+    {
+      "features": [
+        "voltage",
+        "cache_size",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "voltage",
+          "value": "voltage[1.0-1.0]"
+        },
+        {
+          "feature": "cache_size",
+          "value": "small"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2532,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.46,
+      "support": 395,
+      "order": 3
+    },
+    {
+      "features": [
+        "random_seed",
+        "traffic_pattern",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "random_seed",
+          "value": "random_seed[4.0-33726.0]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "high"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.254,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.46,
+      "support": 374,
+      "order": 3
+    },
+    {
+      "features": [
+        "memory_size",
+        "traffic_pattern",
+        "cache_size"
+      ],
+      "conditions": [
+        {
+          "feature": "memory_size",
+          "value": "memory_size[256.0-512.0]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "high"
+        },
+        {
+          "feature": "cache_size",
+          "value": "small"
+        }
+      ],
+      "fail_rate": 0.2521,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.45,
+      "support": 480,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "traffic_pattern",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[6670.0-10000.0]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "high"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2507,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.44,
+      "support": 375,
+      "order": 3
+    },
+    {
+      "features": [
+        "random_seed",
+        "voltage",
+        "memory_size"
+      ],
+      "conditions": [
+        {
+          "feature": "random_seed",
+          "value": "random_seed[4.0-33726.0]"
+        },
+        {
+          "feature": "voltage",
+          "value": "voltage[0.8-1.0]"
+        },
+        {
+          "feature": "memory_size",
+          "value": "memory_size[2048.0-4096.0]"
+        }
+      ],
+      "fail_rate": 0.25,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.44,
+      "support": 204,
+      "order": 3
+    },
+    {
+      "features": [
+        "temperature",
+        "traffic_pattern",
+        "cache_size"
+      ],
+      "conditions": [
+        {
+          "feature": "temperature",
+          "value": "temperature[25.0-49.7]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "high"
+        },
+        {
+          "feature": "cache_size",
+          "value": "small"
+        }
+      ],
+      "fail_rate": 0.2474,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.43,
+      "support": 388,
+      "order": 3
+    },
+    {
+      "features": [
+        "temperature",
+        "traffic_pattern",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "temperature",
+          "value": "temperature[49.7-59.9]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "high"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.248,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.43,
+      "support": 383,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "cache_size",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[6670.0-10000.0]"
+        },
+        {
+          "feature": "cache_size",
+          "value": "small"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2478,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.43,
+      "support": 347,
+      "order": 3
+    },
+    {
+      "features": [
+        "voltage",
+        "memory_size",
+        "traffic_pattern"
+      ],
+      "conditions": [
+        {
+          "feature": "voltage",
+          "value": "voltage[0.8-1.0]"
+        },
+        {
+          "feature": "memory_size",
+          "value": "memory_size[2048.0-4096.0]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "high"
+        }
+      ],
+      "fail_rate": 0.2486,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.43,
+      "support": 185,
+      "order": 3
+    },
+    {
+      "features": [
+        "voltage",
+        "traffic_pattern",
+        "cache_size"
+      ],
+      "conditions": [
+        {
+          "feature": "voltage",
+          "value": "voltage[1.0-1.0]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "high"
+        },
+        {
+          "feature": "cache_size",
+          "value": "small"
+        }
+      ],
+      "fail_rate": 0.2457,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.42,
+      "support": 407,
+      "order": 3
+    },
+    {
+      "features": [
+        "voltage",
+        "cache_size",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "voltage",
+          "value": "voltage[0.8-1.0]"
+        },
+        {
+          "feature": "cache_size",
+          "value": "small"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2461,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.42,
+      "support": 382,
+      "order": 3
+    },
+    {
+      "features": [
+        "voltage",
+        "traffic_pattern",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "voltage",
+          "value": "voltage[0.8-1.0]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "high"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2454,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.41,
+      "support": 383,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "voltage",
+        "cache_size"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[6670.0-10000.0]"
+        },
+        {
+          "feature": "voltage",
+          "value": "voltage[1.0-1.2]"
+        },
+        {
+          "feature": "cache_size",
+          "value": "small"
+        }
+      ],
+      "fail_rate": 0.2447,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.41,
+      "support": 376,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "voltage",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[3367.0-6670.0]"
+        },
+        {
+          "feature": "voltage",
+          "value": "voltage[1.0-1.2]"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2422,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.4,
+      "support": 384,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "traffic_pattern",
+        "cache_size"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[101.0-3367.0]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "high"
+        },
+        {
+          "feature": "cache_size",
+          "value": "small"
+        }
+      ],
+      "fail_rate": 0.2426,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.4,
+      "support": 371,
+      "order": 3
+    },
+    {
+      "features": [
+        "random_seed",
+        "memory_size",
+        "cache_size"
+      ],
+      "conditions": [
+        {
+          "feature": "random_seed",
+          "value": "random_seed[66694.0-99996.0]"
+        },
+        {
+          "feature": "memory_size",
+          "value": "memory_size[512.0-2048.0]"
+        },
+        {
+          "feature": "cache_size",
+          "value": "small"
+        }
+      ],
+      "fail_rate": 0.2419,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.39,
+      "support": 430,
+      "order": 3
+    },
+    {
+      "features": [
+        "voltage",
+        "memory_size",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "voltage",
+          "value": "voltage[1.0-1.2]"
+        },
+        {
+          "feature": "memory_size",
+          "value": "memory_size[256.0-512.0]"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2413,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.39,
+      "support": 402,
+      "order": 3
+    },
+    {
+      "features": [
+        "random_seed",
+        "traffic_pattern",
+        "cache_size"
+      ],
+      "conditions": [
+        {
+          "feature": "random_seed",
+          "value": "random_seed[33726.0-66694.0]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "high"
+        },
+        {
+          "feature": "cache_size",
+          "value": "small"
+        }
+      ],
+      "fail_rate": 0.2413,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.39,
+      "support": 373,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "temperature",
+        "traffic_pattern"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[3367.0-6670.0]"
+        },
+        {
+          "feature": "temperature",
+          "value": "temperature[59.9-95.0]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "high"
+        }
+      ],
+      "fail_rate": 0.2405,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.39,
+      "support": 370,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "traffic_pattern",
+        "cache_size"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[6670.0-10000.0]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "high"
+        },
+        {
+          "feature": "cache_size",
+          "value": "small"
+        }
+      ],
+      "fail_rate": 0.24,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.38,
+      "support": 375,
+      "order": 3
+    },
+    {
+      "features": [
+        "random_seed",
+        "traffic_pattern",
+        "cache_size"
+      ],
+      "conditions": [
+        {
+          "feature": "random_seed",
+          "value": "random_seed[4.0-33726.0]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "high"
+        },
+        {
+          "feature": "cache_size",
+          "value": "small"
+        }
+      ],
+      "fail_rate": 0.2383,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.37,
+      "support": 407,
+      "order": 3
+    },
+    {
+      "features": [
+        "temperature",
+        "voltage",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "temperature",
+          "value": "temperature[59.9-95.0]"
+        },
+        {
+          "feature": "voltage",
+          "value": "voltage[1.0-1.2]"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2378,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.37,
+      "support": 370,
+      "order": 3
+    },
+    {
+      "features": [
+        "random_seed",
+        "memory_size",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "random_seed",
+          "value": "random_seed[4.0-33726.0]"
+        },
+        {
+          "feature": "memory_size",
+          "value": "memory_size[2048.0-4096.0]"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2374,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.37,
+      "support": 219,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "random_seed",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[3367.0-6670.0]"
+        },
+        {
+          "feature": "random_seed",
+          "value": "random_seed[66694.0-99996.0]"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2368,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.36,
+      "support": 418,
+      "order": 3
+    },
+    {
+      "features": [
+        "voltage",
+        "memory_size",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "voltage",
+          "value": "voltage[0.8-1.0]"
+        },
+        {
+          "feature": "memory_size",
+          "value": "memory_size[2048.0-4096.0]"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2364,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.36,
+      "support": 220,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "memory_size",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[101.0-3367.0]"
+        },
+        {
+          "feature": "memory_size",
+          "value": "memory_size[256.0-512.0]"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2336,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.35,
+      "support": 411,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "temperature",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[101.0-3367.0]"
+        },
+        {
+          "feature": "temperature",
+          "value": "temperature[59.9-95.0]"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2348,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.35,
+      "support": 362,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "random_seed",
+        "memory_size"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[6670.0-10000.0]"
+        },
+        {
+          "feature": "random_seed",
+          "value": "random_seed[33726.0-66694.0]"
+        },
+        {
+          "feature": "memory_size",
+          "value": "memory_size[512.0-2048.0]"
+        }
+      ],
+      "fail_rate": 0.2335,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.34,
+      "support": 424,
+      "order": 3
+    },
+    {
+      "features": [
+        "random_seed",
+        "voltage",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "random_seed",
+          "value": "random_seed[33726.0-66694.0]"
+        },
+        {
+          "feature": "voltage",
+          "value": "voltage[1.0-1.2]"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2328,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.34,
+      "support": 378,
+      "order": 3
+    },
+    {
+      "features": [
+        "temperature",
+        "voltage",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "temperature",
+          "value": "temperature[59.9-95.0]"
+        },
+        {
+          "feature": "voltage",
+          "value": "voltage[0.8-1.0]"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2334,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.34,
+      "support": 377,
+      "order": 3
+    },
+    {
+      "features": [
+        "voltage",
+        "traffic_pattern",
+        "cache_size"
+      ],
+      "conditions": [
+        {
+          "feature": "voltage",
+          "value": "voltage[0.8-1.0]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "high"
+        },
+        {
+          "feature": "cache_size",
+          "value": "small"
+        }
+      ],
+      "fail_rate": 0.2326,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.34,
+      "support": 374,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "temperature",
+        "voltage"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[6670.0-10000.0]"
+        },
+        {
+          "feature": "temperature",
+          "value": "temperature[59.9-95.0]"
+        },
+        {
+          "feature": "voltage",
+          "value": "voltage[0.8-1.0]"
+        }
+      ],
+      "fail_rate": 0.2323,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.34,
+      "support": 353,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "random_seed",
+        "cache_size"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[101.0-3367.0]"
+        },
+        {
+          "feature": "random_seed",
+          "value": "random_seed[66694.0-99996.0]"
+        },
+        {
+          "feature": "cache_size",
+          "value": "small"
+        }
+      ],
+      "fail_rate": 0.2321,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.34,
+      "support": 349,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "random_seed",
+        "memory_size"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[6670.0-10000.0]"
+        },
+        {
+          "feature": "random_seed",
+          "value": "random_seed[4.0-33726.0]"
+        },
+        {
+          "feature": "memory_size",
+          "value": "memory_size[2048.0-4096.0]"
+        }
+      ],
+      "fail_rate": 0.2329,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.34,
+      "support": 219,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "memory_size",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[6670.0-10000.0]"
+        },
+        {
+          "feature": "memory_size",
+          "value": "memory_size[512.0-2048.0]"
+        },
+        {
+          "feature": "scheduler",
+          "value": "adaptive"
+        }
+      ],
+      "fail_rate": 0.2308,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.33,
+      "support": 429,
+      "order": 3
+    },
+    {
+      "features": [
+        "random_seed",
+        "memory_size",
+        "traffic_pattern"
+      ],
+      "conditions": [
+        {
+          "feature": "random_seed",
+          "value": "random_seed[4.0-33726.0]"
+        },
+        {
+          "feature": "memory_size",
+          "value": "memory_size[2048.0-4096.0]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "low"
+        }
+      ],
+      "fail_rate": 0.2311,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.33,
+      "support": 212,
+      "order": 3
+    },
+    {
+      "features": [
+        "temperature",
+        "memory_size",
+        "cache_size"
+      ],
+      "conditions": [
+        {
+          "feature": "temperature",
+          "value": "temperature[59.9-95.0]"
+        },
+        {
+          "feature": "memory_size",
+          "value": "memory_size[256.0-512.0]"
+        },
+        {
+          "feature": "cache_size",
+          "value": "small"
+        }
+      ],
+      "fail_rate": 0.229,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.32,
+      "support": 441,
+      "order": 3
+    },
+    {
+      "features": [
+        "random_seed",
+        "voltage",
+        "traffic_pattern"
+      ],
+      "conditions": [
+        {
+          "feature": "random_seed",
+          "value": "random_seed[66694.0-99996.0]"
+        },
+        {
+          "feature": "voltage",
+          "value": "voltage[1.0-1.2]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "high"
+        }
+      ],
+      "fail_rate": 0.229,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.32,
+      "support": 393,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "temperature",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[3367.0-6670.0]"
+        },
+        {
+          "feature": "temperature",
+          "value": "temperature[59.9-95.0]"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2269,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.31,
+      "support": 401,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "temperature",
+        "cache_size"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[3367.0-6670.0]"
+        },
+        {
+          "feature": "temperature",
+          "value": "temperature[59.9-95.0]"
+        },
+        {
+          "feature": "cache_size",
+          "value": "small"
+        }
+      ],
+      "fail_rate": 0.2274,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.31,
+      "support": 387,
+      "order": 3
+    },
+    {
+      "features": [
+        "random_seed",
+        "temperature",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "random_seed",
+          "value": "random_seed[66694.0-99996.0]"
+        },
+        {
+          "feature": "temperature",
+          "value": "temperature[59.9-95.0]"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2279,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.31,
+      "support": 373,
+      "order": 3
+    },
+    {
+      "features": [
+        "random_seed",
+        "temperature",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "random_seed",
+          "value": "random_seed[4.0-33726.0]"
+        },
+        {
+          "feature": "temperature",
+          "value": "temperature[59.9-95.0]"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2268,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.31,
+      "support": 366,
+      "order": 3
+    },
+    {
+      "features": [
+        "voltage",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "voltage",
+          "value": "voltage[1.0-1.2]"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2248,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.3,
+      "support": 1103,
+      "order": 2
+    },
+    {
+      "features": [
+        "input_size",
+        "traffic_pattern",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[6670.0-10000.0]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "low"
+        },
+        {
+          "feature": "scheduler",
+          "value": "adaptive"
+        }
+      ],
+      "fail_rate": 0.2258,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.3,
+      "support": 372,
+      "order": 3
+    },
+    {
+      "features": [
+        "temperature",
+        "voltage",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "temperature",
+          "value": "temperature[49.7-59.9]"
+        },
+        {
+          "feature": "voltage",
+          "value": "voltage[1.0-1.2]"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2255,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.3,
+      "support": 368,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "voltage",
+        "traffic_pattern"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[3367.0-6670.0]"
+        },
+        {
+          "feature": "voltage",
+          "value": "voltage[1.0-1.2]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "high"
+        }
+      ],
+      "fail_rate": 0.226,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.3,
+      "support": 323,
+      "order": 3
+    },
+    {
+      "features": [
+        "temperature",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "temperature",
+          "value": "temperature[59.9-95.0]"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2235,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.29,
+      "support": 1123,
+      "order": 2
+    },
+    {
+      "features": [
+        "voltage",
+        "memory_size",
+        "cache_size"
+      ],
+      "conditions": [
+        {
+          "feature": "voltage",
+          "value": "voltage[1.0-1.2]"
+        },
+        {
+          "feature": "memory_size",
+          "value": "memory_size[512.0-2048.0]"
+        },
+        {
+          "feature": "cache_size",
+          "value": "small"
+        }
+      ],
+      "fail_rate": 0.2244,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.29,
+      "support": 450,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "random_seed",
+        "voltage"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[3367.0-6670.0]"
+        },
+        {
+          "feature": "random_seed",
+          "value": "random_seed[66694.0-99996.0]"
+        },
+        {
+          "feature": "voltage",
+          "value": "voltage[1.0-1.2]"
+        }
+      ],
+      "fail_rate": 0.2234,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.29,
+      "support": 385,
+      "order": 3
+    },
+    {
+      "features": [
+        "random_seed",
+        "memory_size",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "random_seed",
+          "value": "random_seed[66694.0-99996.0]"
+        },
+        {
+          "feature": "memory_size",
+          "value": "memory_size[2048.0-4096.0]"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2236,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.29,
+      "support": 237,
+      "order": 3
+    },
+    {
+      "features": [
+        "memory_size",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "memory_size",
+          "value": "memory_size[2048.0-4096.0]"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2222,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.28,
+      "support": 675,
+      "order": 2
+    },
+    {
+      "features": [
+        "voltage",
+        "memory_size",
+        "traffic_pattern"
+      ],
+      "conditions": [
+        {
+          "feature": "voltage",
+          "value": "voltage[1.0-1.2]"
+        },
+        {
+          "feature": "memory_size",
+          "value": "memory_size[512.0-2048.0]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "high"
+        }
+      ],
+      "fail_rate": 0.223,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.28,
+      "support": 435,
+      "order": 3
+    },
+    {
+      "features": [
+        "temperature",
+        "memory_size",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "temperature",
+          "value": "temperature[49.7-59.9]"
+        },
+        {
+          "feature": "memory_size",
+          "value": "memory_size[256.0-512.0]"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2222,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.28,
+      "support": 423,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "temperature",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[6670.0-10000.0]"
+        },
+        {
+          "feature": "temperature",
+          "value": "temperature[25.0-49.7]"
+        },
+        {
+          "feature": "scheduler",
+          "value": "adaptive"
+        }
+      ],
+      "fail_rate": 0.223,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.28,
+      "support": 408,
+      "order": 3
+    },
+    {
+      "features": [
+        "random_seed",
+        "temperature",
+        "traffic_pattern"
+      ],
+      "conditions": [
+        {
+          "feature": "random_seed",
+          "value": "random_seed[66694.0-99996.0]"
+        },
+        {
+          "feature": "temperature",
+          "value": "temperature[59.9-95.0]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "high"
+        }
+      ],
+      "fail_rate": 0.2225,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.28,
+      "support": 391,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "random_seed",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[101.0-3367.0]"
+        },
+        {
+          "feature": "random_seed",
+          "value": "random_seed[33726.0-66694.0]"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2219,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.28,
+      "support": 383,
+      "order": 3
+    },
+    {
+      "features": [
+        "temperature",
+        "voltage",
+        "traffic_pattern"
+      ],
+      "conditions": [
+        {
+          "feature": "temperature",
+          "value": "temperature[59.9-95.0]"
+        },
+        {
+          "feature": "voltage",
+          "value": "voltage[1.0-1.0]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "high"
+        }
+      ],
+      "fail_rate": 0.2225,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.28,
+      "support": 382,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "random_seed",
+        "temperature"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[3367.0-6670.0]"
+        },
+        {
+          "feature": "random_seed",
+          "value": "random_seed[66694.0-99996.0]"
+        },
+        {
+          "feature": "temperature",
+          "value": "temperature[59.9-95.0]"
+        }
+      ],
+      "fail_rate": 0.2225,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.28,
+      "support": 373,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "random_seed",
+        "temperature"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[6670.0-10000.0]"
+        },
+        {
+          "feature": "random_seed",
+          "value": "random_seed[4.0-33726.0]"
+        },
+        {
+          "feature": "temperature",
+          "value": "temperature[59.9-95.0]"
+        }
+      ],
+      "fail_rate": 0.2225,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.28,
+      "support": 346,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "temperature",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[6670.0-10000.0]"
+        },
+        {
+          "feature": "temperature",
+          "value": "temperature[59.9-95.0]"
+        },
+        {
+          "feature": "scheduler",
+          "value": "adaptive"
+        }
+      ],
+      "fail_rate": 0.2219,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.28,
+      "support": 338,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "voltage",
+        "memory_size"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[6670.0-10000.0]"
+        },
+        {
+          "feature": "voltage",
+          "value": "voltage[1.0-1.2]"
+        },
+        {
+          "feature": "memory_size",
+          "value": "memory_size[2048.0-4096.0]"
+        }
+      ],
+      "fail_rate": 0.2218,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.28,
+      "support": 239,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "temperature",
+        "memory_size"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[3367.0-6670.0]"
+        },
+        {
+          "feature": "temperature",
+          "value": "temperature[59.9-95.0]"
+        },
+        {
+          "feature": "memory_size",
+          "value": "memory_size[2048.0-4096.0]"
+        }
+      ],
+      "fail_rate": 0.2222,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.28,
+      "support": 225,
+      "order": 3
+    },
+    {
+      "features": [
+        "random_seed",
+        "memory_size",
+        "traffic_pattern"
+      ],
+      "conditions": [
+        {
+          "feature": "random_seed",
+          "value": "random_seed[33726.0-66694.0]"
+        },
+        {
+          "feature": "memory_size",
+          "value": "memory_size[2048.0-4096.0]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "high"
+        }
+      ],
+      "fail_rate": 0.2222,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.28,
+      "support": 189,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "memory_size",
+        "cache_size"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[6670.0-10000.0]"
+        },
+        {
+          "feature": "memory_size",
+          "value": "memory_size[512.0-2048.0]"
+        },
+        {
+          "feature": "cache_size",
+          "value": "medium"
+        }
+      ],
+      "fail_rate": 0.2208,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.27,
+      "support": 453,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "random_seed",
+        "cache_size"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[3367.0-6670.0]"
+        },
+        {
+          "feature": "random_seed",
+          "value": "random_seed[66694.0-99996.0]"
+        },
+        {
+          "feature": "cache_size",
+          "value": "small"
+        }
+      ],
+      "fail_rate": 0.2208,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.27,
+      "support": 385,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "cache_size",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[6670.0-10000.0]"
+        },
+        {
+          "feature": "cache_size",
+          "value": "large"
+        },
+        {
+          "feature": "scheduler",
+          "value": "adaptive"
+        }
+      ],
+      "fail_rate": 0.2201,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.27,
+      "support": 368,
+      "order": 3
+    },
+    {
+      "features": [
+        "temperature",
+        "voltage",
+        "cache_size"
+      ],
+      "conditions": [
+        {
+          "feature": "temperature",
+          "value": "temperature[59.9-95.0]"
+        },
+        {
+          "feature": "voltage",
+          "value": "voltage[0.8-1.0]"
+        },
+        {
+          "feature": "cache_size",
+          "value": "small"
+        }
+      ],
+      "fail_rate": 0.2207,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.27,
+      "support": 367,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "voltage",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[6670.0-10000.0]"
+        },
+        {
+          "feature": "voltage",
+          "value": "voltage[1.0-1.2]"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2197,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.27,
+      "support": 355,
+      "order": 3
+    },
+    {
+      "features": [
+        "random_seed",
+        "temperature",
+        "voltage"
+      ],
+      "conditions": [
+        {
+          "feature": "random_seed",
+          "value": "random_seed[66694.0-99996.0]"
+        },
+        {
+          "feature": "temperature",
+          "value": "temperature[59.9-95.0]"
+        },
+        {
+          "feature": "voltage",
+          "value": "voltage[1.0-1.2]"
+        }
+      ],
+      "fail_rate": 0.2203,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.27,
+      "support": 345,
+      "order": 3
+    },
+    {
+      "features": [
+        "voltage",
+        "memory_size",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "voltage",
+          "value": "voltage[1.0-1.2]"
+        },
+        {
+          "feature": "memory_size",
+          "value": "memory_size[2048.0-4096.0]"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2208,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.27,
+      "support": 231,
+      "order": 3
+    },
+    {
+      "features": [
+        "random_seed",
+        "cache_size"
+      ],
+      "conditions": [
+        {
+          "feature": "random_seed",
+          "value": "random_seed[66694.0-99996.0]"
+        },
+        {
+          "feature": "cache_size",
+          "value": "small"
+        }
+      ],
+      "fail_rate": 0.2181,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.26,
+      "support": 1091,
+      "order": 2
+    },
+    {
+      "features": [
+        "temperature",
+        "memory_size",
+        "cache_size"
+      ],
+      "conditions": [
+        {
+          "feature": "temperature",
+          "value": "temperature[59.9-95.0]"
+        },
+        {
+          "feature": "memory_size",
+          "value": "memory_size[512.0-2048.0]"
+        },
+        {
+          "feature": "cache_size",
+          "value": "medium"
+        }
+      ],
+      "fail_rate": 0.218,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.26,
+      "support": 445,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "voltage",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[6670.0-10000.0]"
+        },
+        {
+          "feature": "voltage",
+          "value": "voltage[0.8-1.0]"
+        },
+        {
+          "feature": "scheduler",
+          "value": "adaptive"
+        }
+      ],
+      "fail_rate": 0.2181,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.26,
+      "support": 376,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "random_seed",
+        "traffic_pattern"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[3367.0-6670.0]"
+        },
+        {
+          "feature": "random_seed",
+          "value": "random_seed[66694.0-99996.0]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "high"
+        }
+      ],
+      "fail_rate": 0.2192,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.26,
+      "support": 365,
+      "order": 3
+    },
+    {
+      "features": [
+        "temperature",
+        "voltage",
+        "memory_size"
+      ],
+      "conditions": [
+        {
+          "feature": "temperature",
+          "value": "temperature[59.9-95.0]"
+        },
+        {
+          "feature": "voltage",
+          "value": "voltage[0.8-1.0]"
+        },
+        {
+          "feature": "memory_size",
+          "value": "memory_size[2048.0-4096.0]"
+        }
+      ],
+      "fail_rate": 0.2182,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.26,
+      "support": 220,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "memory_size",
+        "traffic_pattern"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[3367.0-6670.0]"
+        },
+        {
+          "feature": "memory_size",
+          "value": "memory_size[2048.0-4096.0]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "high"
+        }
+      ],
+      "fail_rate": 0.219,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.26,
+      "support": 210,
+      "order": 3
+    },
+    {
+      "features": [
+        "random_seed",
+        "temperature",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "random_seed",
+          "value": "random_seed[33726.0-66694.0]"
+        },
+        {
+          "feature": "temperature",
+          "value": "temperature[59.9-95.0]"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2161,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.25,
+      "support": 384,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "random_seed",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[6670.0-10000.0]"
+        },
+        {
+          "feature": "random_seed",
+          "value": "random_seed[33726.0-66694.0]"
+        },
+        {
+          "feature": "scheduler",
+          "value": "adaptive"
+        }
+      ],
+      "fail_rate": 0.2174,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.25,
+      "support": 368,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "random_seed",
+        "voltage"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[6670.0-10000.0]"
+        },
+        {
+          "feature": "random_seed",
+          "value": "random_seed[33726.0-66694.0]"
+        },
+        {
+          "feature": "voltage",
+          "value": "voltage[0.8-1.0]"
+        }
+      ],
+      "fail_rate": 0.2165,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.25,
+      "support": 351,
+      "order": 3
+    },
+    {
+      "features": [
+        "random_seed",
+        "voltage",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "random_seed",
+          "value": "random_seed[4.0-33726.0]"
+        },
+        {
+          "feature": "voltage",
+          "value": "voltage[0.8-1.0]"
+        },
+        {
+          "feature": "scheduler",
+          "value": "adaptive"
+        }
+      ],
+      "fail_rate": 0.2173,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.25,
+      "support": 336,
+      "order": 3
+    },
+    {
+      "features": [
+        "temperature",
+        "memory_size",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "temperature",
+          "value": "temperature[59.9-95.0]"
+        },
+        {
+          "feature": "memory_size",
+          "value": "memory_size[512.0-2048.0]"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2161,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.24,
+      "support": 472,
+      "order": 3
+    },
+    {
+      "features": [
+        "random_seed",
+        "memory_size",
+        "traffic_pattern"
+      ],
+      "conditions": [
+        {
+          "feature": "random_seed",
+          "value": "random_seed[33726.0-66694.0]"
+        },
+        {
+          "feature": "memory_size",
+          "value": "memory_size[512.0-2048.0]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "high"
+        }
+      ],
+      "fail_rate": 0.2151,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.24,
+      "support": 451,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "memory_size",
+        "cache_size"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[6670.0-10000.0]"
+        },
+        {
+          "feature": "memory_size",
+          "value": "memory_size[256.0-512.0]"
+        },
+        {
+          "feature": "cache_size",
+          "value": "small"
+        }
+      ],
+      "fail_rate": 0.2151,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.24,
+      "support": 437,
+      "order": 3
+    },
+    {
+      "features": [
+        "random_seed",
+        "memory_size",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "random_seed",
+          "value": "random_seed[66694.0-99996.0]"
+        },
+        {
+          "feature": "memory_size",
+          "value": "memory_size[256.0-512.0]"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2148,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.24,
+      "support": 419,
+      "order": 3
+    },
+    {
+      "features": [
+        "random_seed",
+        "voltage",
+        "cache_size"
+      ],
+      "conditions": [
+        {
+          "feature": "random_seed",
+          "value": "random_seed[66694.0-99996.0]"
+        },
+        {
+          "feature": "voltage",
+          "value": "voltage[1.0-1.0]"
+        },
+        {
+          "feature": "cache_size",
+          "value": "small"
+        }
+      ],
+      "fail_rate": 0.2145,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.24,
+      "support": 387,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "voltage",
+        "cache_size"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[101.0-3367.0]"
+        },
+        {
+          "feature": "voltage",
+          "value": "voltage[1.0-1.0]"
+        },
+        {
+          "feature": "cache_size",
+          "value": "small"
+        }
+      ],
+      "fail_rate": 0.2147,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.24,
+      "support": 382,
+      "order": 3
+    },
+    {
+      "features": [
+        "temperature",
+        "traffic_pattern",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "temperature",
+          "value": "temperature[59.9-95.0]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "low"
+        },
+        {
+          "feature": "scheduler",
+          "value": "static"
+        }
+      ],
+      "fail_rate": 0.2154,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.24,
+      "support": 376,
+      "order": 3
+    },
+    {
+      "features": [
+        "temperature",
+        "voltage",
+        "cache_size"
+      ],
+      "conditions": [
+        {
+          "feature": "temperature",
+          "value": "temperature[49.7-59.9]"
+        },
+        {
+          "feature": "voltage",
+          "value": "voltage[1.0-1.2]"
+        },
+        {
+          "feature": "cache_size",
+          "value": "small"
+        }
+      ],
+      "fail_rate": 0.216,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.24,
+      "support": 375,
+      "order": 3
+    },
+    {
+      "features": [
+        "temperature",
+        "traffic_pattern",
+        "cache_size"
+      ],
+      "conditions": [
+        {
+          "feature": "temperature",
+          "value": "temperature[59.9-95.0]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "high"
+        },
+        {
+          "feature": "cache_size",
+          "value": "medium"
+        }
+      ],
+      "fail_rate": 0.2156,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.24,
+      "support": 371,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "voltage",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[6670.0-10000.0]"
+        },
+        {
+          "feature": "voltage",
+          "value": "voltage[1.0-1.2]"
+        },
+        {
+          "feature": "scheduler",
+          "value": "adaptive"
+        }
+      ],
+      "fail_rate": 0.2158,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.24,
+      "support": 366,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "random_seed",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[6670.0-10000.0]"
+        },
+        {
+          "feature": "random_seed",
+          "value": "random_seed[4.0-33726.0]"
+        },
+        {
+          "feature": "scheduler",
+          "value": "adaptive"
+        }
+      ],
+      "fail_rate": 0.2157,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.24,
+      "support": 357,
+      "order": 3
+    },
+    {
+      "features": [
+        "random_seed",
+        "temperature",
+        "traffic_pattern"
+      ],
+      "conditions": [
+        {
+          "feature": "random_seed",
+          "value": "random_seed[33726.0-66694.0]"
+        },
+        {
+          "feature": "temperature",
+          "value": "temperature[25.0-49.7]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "high"
+        }
+      ],
+      "fail_rate": 0.2151,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.24,
+      "support": 344,
+      "order": 3
+    },
+    {
+      "features": [
+        "random_seed",
+        "temperature",
+        "memory_size"
+      ],
+      "conditions": [
+        {
+          "feature": "random_seed",
+          "value": "random_seed[4.0-33726.0]"
+        },
+        {
+          "feature": "temperature",
+          "value": "temperature[49.7-59.9]"
+        },
+        {
+          "feature": "memory_size",
+          "value": "memory_size[2048.0-4096.0]"
+        }
+      ],
+      "fail_rate": 0.2159,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.24,
+      "support": 227,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "memory_size",
+        "traffic_pattern"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[101.0-3367.0]"
+        },
+        {
+          "feature": "memory_size",
+          "value": "memory_size[2048.0-4096.0]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "high"
+        }
+      ],
+      "fail_rate": 0.2146,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.24,
+      "support": 219,
+      "order": 3
+    },
+    {
+      "features": [
+        "memory_size",
+        "traffic_pattern"
+      ],
+      "conditions": [
+        {
+          "feature": "memory_size",
+          "value": "memory_size[2048.0-4096.0]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "high"
+        }
+      ],
+      "fail_rate": 0.2131,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.23,
+      "support": 643,
+      "order": 2
+    },
+    {
+      "features": [
+        "voltage",
+        "memory_size",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "voltage",
+          "value": "voltage[1.0-1.2]"
+        },
+        {
+          "feature": "memory_size",
+          "value": "memory_size[512.0-2048.0]"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2128,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.23,
+      "support": 470,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "memory_size",
+        "traffic_pattern"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[3367.0-6670.0]"
+        },
+        {
+          "feature": "memory_size",
+          "value": "memory_size[512.0-2048.0]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "high"
+        }
+      ],
+      "fail_rate": 0.2136,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.23,
+      "support": 440,
+      "order": 3
+    },
+    {
+      "features": [
+        "random_seed",
+        "voltage",
+        "memory_size"
+      ],
+      "conditions": [
+        {
+          "feature": "random_seed",
+          "value": "random_seed[66694.0-99996.0]"
+        },
+        {
+          "feature": "voltage",
+          "value": "voltage[1.0-1.2]"
+        },
+        {
+          "feature": "memory_size",
+          "value": "memory_size[512.0-2048.0]"
+        }
+      ],
+      "fail_rate": 0.2133,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.23,
+      "support": 422,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "temperature",
+        "memory_size"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[6670.0-10000.0]"
+        },
+        {
+          "feature": "temperature",
+          "value": "temperature[59.9-95.0]"
+        },
+        {
+          "feature": "memory_size",
+          "value": "memory_size[512.0-2048.0]"
+        }
+      ],
+      "fail_rate": 0.2129,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.23,
+      "support": 418,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "temperature",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[3367.0-6670.0]"
+        },
+        {
+          "feature": "temperature",
+          "value": "temperature[49.7-59.9]"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2132,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.23,
+      "support": 394,
+      "order": 3
+    },
+    {
+      "features": [
+        "random_seed",
+        "temperature",
+        "traffic_pattern"
+      ],
+      "conditions": [
+        {
+          "feature": "random_seed",
+          "value": "random_seed[66694.0-99996.0]"
+        },
+        {
+          "feature": "temperature",
+          "value": "temperature[59.9-95.0]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "low"
+        }
+      ],
+      "fail_rate": 0.2133,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.23,
+      "support": 375,
+      "order": 3
+    },
+    {
+      "features": [
+        "random_seed",
+        "temperature",
+        "voltage"
+      ],
+      "conditions": [
+        {
+          "feature": "random_seed",
+          "value": "random_seed[4.0-33726.0]"
+        },
+        {
+          "feature": "temperature",
+          "value": "temperature[59.9-95.0]"
+        },
+        {
+          "feature": "voltage",
+          "value": "voltage[0.8-1.0]"
+        }
+      ],
+      "fail_rate": 0.2141,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.23,
+      "support": 369,
+      "order": 3
+    },
+    {
+      "features": [
+        "random_seed",
+        "temperature",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "random_seed",
+          "value": "random_seed[33726.0-66694.0]"
+        },
+        {
+          "feature": "temperature",
+          "value": "temperature[25.0-49.7]"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2129,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.23,
+      "support": 357,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "temperature",
+        "cache_size"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[6670.0-10000.0]"
+        },
+        {
+          "feature": "temperature",
+          "value": "temperature[59.9-95.0]"
+        },
+        {
+          "feature": "cache_size",
+          "value": "small"
+        }
+      ],
+      "fail_rate": 0.2141,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.23,
+      "support": 341,
+      "order": 3
+    },
+    {
+      "features": [
+        "random_seed",
+        "voltage",
+        "traffic_pattern"
+      ],
+      "conditions": [
+        {
+          "feature": "random_seed",
+          "value": "random_seed[33726.0-66694.0]"
+        },
+        {
+          "feature": "voltage",
+          "value": "voltage[1.0-1.2]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "high"
+        }
+      ],
+      "fail_rate": 0.2136,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.23,
+      "support": 337,
+      "order": 3
+    },
+    {
+      "features": [
+        "random_seed",
+        "memory_size",
+        "traffic_pattern"
+      ],
+      "conditions": [
+        {
+          "feature": "random_seed",
+          "value": "random_seed[66694.0-99996.0]"
+        },
+        {
+          "feature": "memory_size",
+          "value": "memory_size[2048.0-4096.0]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "high"
+        }
+      ],
+      "fail_rate": 0.2129,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.23,
+      "support": 249,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "voltage",
+        "memory_size"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[6670.0-10000.0]"
+        },
+        {
+          "feature": "voltage",
+          "value": "voltage[0.8-1.0]"
+        },
+        {
+          "feature": "memory_size",
+          "value": "memory_size[2048.0-4096.0]"
+        }
+      ],
+      "fail_rate": 0.2133,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.23,
+      "support": 225,
+      "order": 3
+    },
+    {
+      "features": [
+        "random_seed",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "random_seed",
+          "value": "random_seed[66694.0-99996.0]"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2113,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.22,
+      "support": 1117,
+      "order": 2
+    },
+    {
+      "features": [
+        "input_size",
+        "temperature",
+        "memory_size"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[6670.0-10000.0]"
+        },
+        {
+          "feature": "temperature",
+          "value": "temperature[25.0-49.7]"
+        },
+        {
+          "feature": "memory_size",
+          "value": "memory_size[512.0-2048.0]"
+        }
+      ],
+      "fail_rate": 0.2116,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.22,
+      "support": 449,
+      "order": 3
+    },
+    {
+      "features": [
+        "voltage",
+        "memory_size",
+        "cache_size"
+      ],
+      "conditions": [
+        {
+          "feature": "voltage",
+          "value": "voltage[1.0-1.0]"
+        },
+        {
+          "feature": "memory_size",
+          "value": "memory_size[256.0-512.0]"
+        },
+        {
+          "feature": "cache_size",
+          "value": "small"
+        }
+      ],
+      "fail_rate": 0.2121,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.22,
+      "support": 448,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "random_seed",
+        "temperature"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[6670.0-10000.0]"
+        },
+        {
+          "feature": "random_seed",
+          "value": "random_seed[66694.0-99996.0]"
+        },
+        {
+          "feature": "temperature",
+          "value": "temperature[25.0-49.7]"
+        }
+      ],
+      "fail_rate": 0.2121,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.22,
+      "support": 396,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "traffic_pattern",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[6670.0-10000.0]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "medium"
+        },
+        {
+          "feature": "scheduler",
+          "value": "adaptive"
+        }
+      ],
+      "fail_rate": 0.2109,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.22,
+      "support": 384,
+      "order": 3
+    },
+    {
+      "features": [
+        "voltage",
+        "cache_size",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "voltage",
+          "value": "voltage[1.0-1.2]"
+        },
+        {
+          "feature": "cache_size",
+          "value": "medium"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2115,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.22,
+      "support": 383,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "random_seed",
+        "voltage"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[6670.0-10000.0]"
+        },
+        {
+          "feature": "random_seed",
+          "value": "random_seed[66694.0-99996.0]"
+        },
+        {
+          "feature": "voltage",
+          "value": "voltage[1.0-1.2]"
+        }
+      ],
+      "fail_rate": 0.2116,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.22,
+      "support": 378,
+      "order": 3
+    },
+    {
+      "features": [
+        "temperature",
+        "voltage",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "temperature",
+          "value": "temperature[25.0-49.7]"
+        },
+        {
+          "feature": "voltage",
+          "value": "voltage[1.0-1.2]"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.211,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.22,
+      "support": 365,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "random_seed",
+        "traffic_pattern"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[3367.0-6670.0]"
+        },
+        {
+          "feature": "random_seed",
+          "value": "random_seed[33726.0-66694.0]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "high"
+        }
+      ],
+      "fail_rate": 0.2115,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.22,
+      "support": 364,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "voltage",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[101.0-3367.0]"
+        },
+        {
+          "feature": "voltage",
+          "value": "voltage[1.0-1.2]"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2115,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.22,
+      "support": 364,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "cache_size",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[6670.0-10000.0]"
+        },
+        {
+          "feature": "cache_size",
+          "value": "medium"
+        },
+        {
+          "feature": "scheduler",
+          "value": "adaptive"
+        }
+      ],
+      "fail_rate": 0.2121,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.22,
+      "support": 363,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "temperature",
+        "memory_size"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[6670.0-10000.0]"
+        },
+        {
+          "feature": "temperature",
+          "value": "temperature[25.0-49.7]"
+        },
+        {
+          "feature": "memory_size",
+          "value": "memory_size[2048.0-4096.0]"
+        }
+      ],
+      "fail_rate": 0.2109,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.22,
+      "support": 256,
+      "order": 3
+    },
+    {
+      "features": [
+        "temperature",
+        "voltage",
+        "memory_size"
+      ],
+      "conditions": [
+        {
+          "feature": "temperature",
+          "value": "temperature[59.9-95.0]"
+        },
+        {
+          "feature": "voltage",
+          "value": "voltage[1.0-1.0]"
+        },
+        {
+          "feature": "memory_size",
+          "value": "memory_size[2048.0-4096.0]"
+        }
+      ],
+      "fail_rate": 0.2112,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.22,
+      "support": 232,
+      "order": 3
+    },
+    {
+      "features": [
+        "temperature",
+        "memory_size",
+        "cache_size"
+      ],
+      "conditions": [
+        {
+          "feature": "temperature",
+          "value": "temperature[59.9-95.0]"
+        },
+        {
+          "feature": "memory_size",
+          "value": "memory_size[2048.0-4096.0]"
+        },
+        {
+          "feature": "cache_size",
+          "value": "medium"
+        }
+      ],
+      "fail_rate": 0.2117,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.22,
+      "support": 222,
+      "order": 3
+    },
+    {
+      "features": [
+        "random_seed",
+        "temperature",
+        "memory_size"
+      ],
+      "conditions": [
+        {
+          "feature": "random_seed",
+          "value": "random_seed[4.0-33726.0]"
+        },
+        {
+          "feature": "temperature",
+          "value": "temperature[59.9-95.0]"
+        },
+        {
+          "feature": "memory_size",
+          "value": "memory_size[2048.0-4096.0]"
+        }
+      ],
+      "fail_rate": 0.2126,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.22,
+      "support": 207,
+      "order": 3
+    },
+    {
+      "features": [
+        "temperature",
+        "traffic_pattern"
+      ],
+      "conditions": [
+        {
+          "feature": "temperature",
+          "value": "temperature[59.9-95.0]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "high"
+        }
+      ],
+      "fail_rate": 0.2102,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.21,
+      "support": 1137,
+      "order": 2
+    },
+    {
+      "features": [
+        "temperature",
+        "cache_size"
+      ],
+      "conditions": [
+        {
+          "feature": "temperature",
+          "value": "temperature[59.9-95.0]"
+        },
+        {
+          "feature": "cache_size",
+          "value": "small"
+        }
+      ],
+      "fail_rate": 0.2102,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.21,
+      "support": 1118,
+      "order": 2
+    },
+    {
+      "features": [
+        "memory_size",
+        "traffic_pattern",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "memory_size",
+          "value": "memory_size[512.0-2048.0]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "low"
+        },
+        {
+          "feature": "scheduler",
+          "value": "adaptive"
+        }
+      ],
+      "fail_rate": 0.2097,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.21,
+      "support": 434,
+      "order": 3
+    },
+    {
+      "features": [
+        "random_seed",
+        "temperature",
+        "memory_size"
+      ],
+      "conditions": [
+        {
+          "feature": "random_seed",
+          "value": "random_seed[66694.0-99996.0]"
+        },
+        {
+          "feature": "temperature",
+          "value": "temperature[59.9-95.0]"
+        },
+        {
+          "feature": "memory_size",
+          "value": "memory_size[256.0-512.0]"
+        }
+      ],
+      "fail_rate": 0.2104,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.21,
+      "support": 404,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "voltage",
+        "traffic_pattern"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[3367.0-6670.0]"
+        },
+        {
+          "feature": "voltage",
+          "value": "voltage[1.0-1.0]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "high"
+        }
+      ],
+      "fail_rate": 0.2101,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.21,
+      "support": 395,
+      "order": 3
+    },
+    {
+      "features": [
+        "temperature",
+        "cache_size",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "temperature",
+          "value": "temperature[59.9-95.0]"
+        },
+        {
+          "feature": "cache_size",
+          "value": "medium"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2107,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.21,
+      "support": 375,
+      "order": 3
+    },
+    {
+      "features": [
+        "temperature",
+        "traffic_pattern",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "temperature",
+          "value": "temperature[25.0-49.7]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "low"
+        },
+        {
+          "feature": "scheduler",
+          "value": "adaptive"
+        }
+      ],
+      "fail_rate": 0.2092,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.21,
+      "support": 368,
+      "order": 3
+    },
+    {
+      "features": [
+        "random_seed",
+        "traffic_pattern",
+        "cache_size"
+      ],
+      "conditions": [
+        {
+          "feature": "random_seed",
+          "value": "random_seed[33726.0-66694.0]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "high"
+        },
+        {
+          "feature": "cache_size",
+          "value": "medium"
+        }
+      ],
+      "fail_rate": 0.2101,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.21,
+      "support": 357,
+      "order": 3
+    },
+    {
+      "features": [
+        "random_seed",
+        "temperature",
+        "voltage"
+      ],
+      "conditions": [
+        {
+          "feature": "random_seed",
+          "value": "random_seed[66694.0-99996.0]"
+        },
+        {
+          "feature": "temperature",
+          "value": "temperature[59.9-95.0]"
+        },
+        {
+          "feature": "voltage",
+          "value": "voltage[1.0-1.0]"
+        }
+      ],
+      "fail_rate": 0.2107,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.21,
+      "support": 356,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "temperature",
+        "traffic_pattern"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[6670.0-10000.0]"
+        },
+        {
+          "feature": "temperature",
+          "value": "temperature[59.9-95.0]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "medium"
+        }
+      ],
+      "fail_rate": 0.2105,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.21,
+      "support": 342,
+      "order": 3
+    },
+    {
+      "features": [
+        "random_seed",
+        "voltage",
+        "memory_size"
+      ],
+      "conditions": [
+        {
+          "feature": "random_seed",
+          "value": "random_seed[66694.0-99996.0]"
+        },
+        {
+          "feature": "voltage",
+          "value": "voltage[1.0-1.2]"
+        },
+        {
+          "feature": "memory_size",
+          "value": "memory_size[2048.0-4096.0]"
+        }
+      ],
+      "fail_rate": 0.2105,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.21,
+      "support": 228,
+      "order": 3
+    },
+    {
+      "features": [
+        "voltage",
+        "memory_size",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "voltage",
+          "value": "voltage[1.0-1.0]"
+        },
+        {
+          "feature": "memory_size",
+          "value": "memory_size[2048.0-4096.0]"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2098,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.21,
+      "support": 224,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[3367.0-6670.0]"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2088,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.2,
+      "support": 1188,
+      "order": 2
+    },
+    {
+      "features": [
+        "temperature",
+        "memory_size",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "temperature",
+          "value": "temperature[59.9-95.0]"
+        },
+        {
+          "feature": "memory_size",
+          "value": "memory_size[256.0-512.0]"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2083,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.2,
+      "support": 432,
+      "order": 3
+    },
+    {
+      "features": [
+        "random_seed",
+        "temperature",
+        "cache_size"
+      ],
+      "conditions": [
+        {
+          "feature": "random_seed",
+          "value": "random_seed[33726.0-66694.0]"
+        },
+        {
+          "feature": "temperature",
+          "value": "temperature[59.9-95.0]"
+        },
+        {
+          "feature": "cache_size",
+          "value": "medium"
+        }
+      ],
+      "fail_rate": 0.2091,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.2,
+      "support": 397,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "temperature",
+        "voltage"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[6670.0-10000.0]"
+        },
+        {
+          "feature": "temperature",
+          "value": "temperature[25.0-49.7]"
+        },
+        {
+          "feature": "voltage",
+          "value": "voltage[1.0-1.2]"
+        }
+      ],
+      "fail_rate": 0.2092,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.2,
+      "support": 392,
+      "order": 3
+    },
+    {
+      "features": [
+        "random_seed",
+        "voltage",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "random_seed",
+          "value": "random_seed[66694.0-99996.0]"
+        },
+        {
+          "feature": "voltage",
+          "value": "voltage[1.0-1.0]"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2086,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.2,
+      "support": 374,
+      "order": 3
+    },
+    {
+      "features": [
+        "random_seed",
+        "temperature",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "random_seed",
+          "value": "random_seed[66694.0-99996.0]"
+        },
+        {
+          "feature": "temperature",
+          "value": "temperature[25.0-49.7]"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2087,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.2,
+      "support": 369,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "random_seed",
+        "traffic_pattern"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[6670.0-10000.0]"
+        },
+        {
+          "feature": "random_seed",
+          "value": "random_seed[4.0-33726.0]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "low"
+        }
+      ],
+      "fail_rate": 0.2083,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.2,
+      "support": 360,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "temperature",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[6670.0-10000.0]"
+        },
+        {
+          "feature": "temperature",
+          "value": "temperature[59.9-95.0]"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.2083,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.2,
+      "support": 360,
+      "order": 3
+    },
+    {
+      "features": [
+        "input_size",
+        "memory_size",
+        "scheduler"
+      ],
+      "conditions": [
+        {
+          "feature": "input_size",
+          "value": "input_size[101.0-3367.0]"
+        },
+        {
+          "feature": "memory_size",
+          "value": "memory_size[2048.0-4096.0]"
+        },
+        {
+          "feature": "scheduler",
+          "value": "dynamic"
+        }
+      ],
+      "fail_rate": 0.209,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.2,
+      "support": 244,
+      "order": 3
+    },
+    {
+      "features": [
+        "voltage",
+        "memory_size",
+        "traffic_pattern"
+      ],
+      "conditions": [
+        {
+          "feature": "voltage",
+          "value": "voltage[1.0-1.0]"
+        },
+        {
+          "feature": "memory_size",
+          "value": "memory_size[2048.0-4096.0]"
+        },
+        {
+          "feature": "traffic_pattern",
+          "value": "high"
+        }
+      ],
+      "fail_rate": 0.2087,
+      "baseline_fail_rate": 0.1736,
+      "lift": 1.2,
+      "support": 230,
+      "order": 3
+    }
+  ]
+}

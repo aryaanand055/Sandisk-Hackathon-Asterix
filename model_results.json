@@ -1,0 +1,159 @@
+{
+  "model": "random_forest",
+  "seed": 42,
+  "metrics": {
+    "accuracy": 0.813,
+    "precision_fail": 0.3846,
+    "recall_fail": 0.1297,
+    "f1_fail": 0.194,
+    "roc_auc": 0.5666,
+    "pr_auc": 0.257
+  },
+  "feature_importances": [
+    {
+      "feature": "input_size",
+      "importance": 0.1572,
+      "rank": 1
+    },
+    {
+      "feature": "random_seed",
+      "importance": 0.1479,
+      "rank": 2
+    },
+    {
+      "feature": "temperature",
+      "importance": 0.1465,
+      "rank": 3
+    },
+    {
+      "feature": "voltage",
+      "importance": 0.1372,
+      "rank": 4
+    },
+    {
+      "feature": "memory_size",
+      "importance": 0.073,
+      "rank": 5
+    },
+    {
+      "feature": "traffic_pattern",
+      "importance": 0.0589,
+      "rank": 6
+    },
+    {
+      "feature": "cache_size",
+      "importance": 0.0557,
+      "rank": 7
+    },
+    {
+      "feature": "scheduler",
+      "importance": 0.0545,
+      "rank": 8
+    },
+    {
+      "feature": "workload",
+      "importance": 0.051,
+      "rank": 9
+    },
+    {
+      "feature": "timing",
+      "importance": 0.0498,
+      "rank": 10
+    },
+    {
+      "feature": "feature_y",
+      "importance": 0.0347,
+      "rank": 11
+    },
+    {
+      "feature": "feature_x",
+      "importance": 0.0338,
+      "rank": 12
+    }
+  ],
+  "lineage": {
+    "random_seed": [
+      "random_seed"
+    ],
+    "input_size": [
+      "input_size"
+    ],
+    "temperature": [
+      "temperature"
+    ],
+    "voltage": [
+      "voltage"
+    ],
+    "cache_size": [
+      "cache_size_large",
+      "cache_size_medium",
+      "cache_size_small"
+    ],
+    "scheduler": [
+      "scheduler_adaptive",
+      "scheduler_dynamic",
+      "scheduler_static"
+    ],
+    "feature_x": [
+      "feature_x_OFF",
+      "feature_x_ON"
+    ],
+    "feature_y": [
+      "feature_y_OFF",
+      "feature_y_ON"
+    ],
+    "memory_size": [
+      "memory_size_256",
+      "memory_size_512",
+      "memory_size_1024",
+      "memory_size_2048",
+      "memory_size_4096"
+    ],
+    "workload": [
+      "workload_large",
+      "workload_medium",
+      "workload_small"
+    ],
+    "traffic_pattern": [
+      "traffic_pattern_high",
+      "traffic_pattern_low",
+      "traffic_pattern_medium"
+    ],
+    "timing": [
+      "timing_early",
+      "timing_late",
+      "timing_mid"
+    ]
+  },
+  "roles": {
+    "identifier": [
+      "run_id"
+    ],
+    "target": [
+      "pass_fail"
+    ],
+    "outcome": [
+      "execution_time",
+      "throughput",
+      "error_type"
+    ],
+    "categorical": [
+      "cache_size",
+      "scheduler",
+      "feature_x",
+      "feature_y",
+      "memory_size",
+      "workload",
+      "traffic_pattern",
+      "timing"
+    ],
+    "numeric": [
+      "random_seed",
+      "input_size",
+      "temperature",
+      "voltage"
+    ]
+  },
+  "n_train": 8000,
+  "n_test": 2000
+}

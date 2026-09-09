@@ -1,0 +1,168 @@
+{
+  "rules": [
+    {
+      "id": "rule_1",
+      "description": "Dynamic scheduler with high traffic and small cache causes frequent timeouts",
+      "conditions": [
+        {
+          "field": "scheduler",
+          "op": "==",
+          "value": "dynamic"
+        },
+        {
+          "field": "traffic_pattern",
+          "op": "==",
+          "value": "high"
+        },
+        {
+          "field": "cache_size",
+          "op": "==",
+          "value": "small"
+        }
+      ],
+      "effect": {
+        "type": "failure_multiplier",
+        "target": "pass_fail",
+        "value": 3.0
+      },
+      "error_type_bias": "timeout",
+      "phase": "outcome"
+    },
+    {
+      "id": "rule_2",
+      "description": "Small cache with large workload causes execution time degradation",
+      "conditions": [
+        {
+          "field": "cache_size",
+          "op": "==",
+          "value": "small"
+        },
+        {
+          "field": "workload",
+          "op": "==",
+          "value": "large"
+        }
+      ],
+      "effect": {
+        "type": "exec_time_multiplier",
+        "target": "execution_time",
+        "value": 2.0
+      },
+      "phase": "outcome"
+    },
+    {
+      "id": "rule_3",
+      "description": "Feature X enabled at high temperatures causes data corruption failures",
+      "conditions": [
+        {
+          "field": "feature_x",
+          "op": "==",
+          "value": "ON"
+        },
+        {
+          "field": "temperature",
+          "op": ">",
+          "value": 80.0
+        }
+      ],
+      "effect": {
+        "type": "failure_multiplier",
+        "target": "pass_fail",
+        "value": 2.5
+      },
+      "error_type_bias": "corruption",
+      "phase": "outcome"
+    },
+    {
+      "id": "rule_4",
+      "description": "Certain seed ranges trigger edge-case large workload selection",
+      "conditions": [
+        {
+          "field": "random_seed",
+          "op": "<=",
+          "value": 1000
+        }
+      ],
+      "effect": {
+        "type": "value_bias",
+        "target": "workload",
+        "value": "large",
+        "probability": 0.7
+      },
+      "phase": "sampling"
+    },
+    {
+      "id": "rule_5",
+      "description": "Low voltage combined with large memory causes corruption failures",
+      "conditions": [
+        {
+          "field": "voltage",
+          "op": "<",
+          "value": 0.85
+        },
+        {
+          "field": "memory_size",
+          "op": ">=",
+          "value": 2048
+        }
+      ],
+      "effect": {
+        "type": "failure_multiplier",
+        "target": "pass_fail",
+        "value": 2.0
+      },
+      "error_type_bias": "corruption",
+      "phase": "outcome"
+    },
+    {
+      "id": "rule_6",
+      "description": "Feature Y with adaptive scheduler and large inputs causes overflow failures",
+      "conditions": [
+        {
+          "field": "feature_y",
+          "op": "==",
+          "value": "ON"
+        },
+        {
+          "field": "scheduler",
+          "op": "==",
+          "value": "adaptive"
+        },
+        {
+          "field": "input_size",
+          "op": ">",
+          "value": 8000
+        }
+      ],
+      "effect": {
+        "type": "failure_multiplier",
+        "target": "pass_fail",
+        "value": 2.0
+      },
+      "error_type_bias": "overflow",
+      "phase": "outcome"
+    },
+    {
+      "id": "rule_7",
+      "description": "Late timing at elevated temperatures causes execution time degradation",
+      "conditions": [
+        {
+          "field": "timing",
+          "op": "==",
+          "value": "late"
+        },
+        {
+          "field": "temperature",
+          "op": ">",
+          "value": 70.0
+        }
+      ],
+      "effect": {
+        "type": "exec_time_multiplier",
+        "target": "execution_time",
+        "value": 1.5
+      },
+      "phase": "outcome"
+    }
+  ]
+}

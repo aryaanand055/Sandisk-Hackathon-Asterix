@@ -1,0 +1,54 @@
+{
+  "random_seed": [
+    "random_seed"
+  ],
+  "input_size": [
+    "input_size"
+  ],
+  "temperature": [
+    "temperature"
+  ],
+  "voltage": [
+    "voltage"
+  ],
+  "cache_size": [
+    "cache_size_large",
+    "cache_size_medium",
+    "cache_size_small"
+  ],
+  "scheduler": [
+    "scheduler_adaptive",
+    "scheduler_dynamic",
+    "scheduler_static"
+  ],
+  "feature_x": [
+    "feature_x_OFF",
+    "feature_x_ON"
+  ],
+  "feature_y": [
+    "feature_y_OFF",
+    "feature_y_ON"
+  ],
+  "memory_size": [
+    "memory_size_256",
+    "memory_size_512",
+    "memory_size_1024",
+    "memory_size_2048",
+    "memory_size_4096"
+  ],
+  "workload": [
+    "workload_large",
+    "workload_medium",
+    "workload_small"
+  ],
+  "traffic_pattern": [
+    "traffic_pattern_high",
+    "traffic_pattern_low",
+    "traffic_pattern_medium"
+  ],
+  "timing": [
+    "timing_early",
+    "timing_late",
+    "timing_mid"
+  ]
+}

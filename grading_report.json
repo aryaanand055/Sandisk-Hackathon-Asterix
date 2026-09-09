@@ -1,0 +1,206 @@
+{
+  "feature_coverage": {
+    "top_k": 8,
+    "top_features": [
+      "cache_size",
+      "input_size",
+      "memory_size",
+      "random_seed",
+      "scheduler",
+      "temperature",
+      "traffic_pattern",
+      "voltage"
+    ],
+    "per_rule": [
+      {
+        "rule_id": "rule_1",
+        "description": "Dynamic scheduler with high traffic and small cache causes frequent timeouts",
+        "effect_type": "failure_multiplier",
+        "rule_features": [
+          "cache_size",
+          "scheduler",
+          "traffic_pattern"
+        ],
+        "matched_features": [
+          "cache_size",
+          "scheduler",
+          "traffic_pattern"
+        ],
+        "missed_features": [],
+        "coverage": 1.0,
+        "fully_detected": true
+      },
+      {
+        "rule_id": "rule_2",
+        "description": "Small cache with large workload causes execution time degradation",
+        "effect_type": "exec_time_multiplier",
+        "rule_features": [
+          "cache_size",
+          "workload"
+        ],
+        "matched_features": [
+          "cache_size"
+        ],
+        "missed_features": [
+          "workload"
+        ],
+        "coverage": 0.5,
+        "fully_detected": false
+      },
+      {
+        "rule_id": "rule_3",
+        "description": "Feature X enabled at high temperatures causes data corruption failures",
+        "effect_type": "failure_multiplier",
+        "rule_features": [
+          "feature_x",
+          "temperature"
+        ],
+        "matched_features": [
+          "temperature"
+        ],
+        "missed_features": [
+          "feature_x"
+        ],
+        "coverage": 0.5,
+        "fully_detected": false
+      },
+      {
+        "rule_id": "rule_4",
+        "description": "Certain seed ranges trigger edge-case large workload selection",
+        "effect_type": "value_bias",
+        "rule_features": [
+          "random_seed"
+        ],
+        "matched_features": [
+          "random_seed"
+        ],
+        "missed_features": [],
+        "coverage": 1.0,
+        "fully_detected": true
+      },
+      {
+        "rule_id": "rule_5",
+        "description": "Low voltage combined with large memory causes corruption failures",
+        "effect_type": "failure_multiplier",
+        "rule_features": [
+          "memory_size",
+          "voltage"
+        ],
+        "matched_features": [
+          "memory_size",
+          "voltage"
+        ],
+        "missed_features": [],
+        "coverage": 1.0,
+        "fully_detected": true
+      },
+      {
+        "rule_id": "rule_6",
+        "description": "Feature Y with adaptive scheduler and large inputs causes overflow failures",
+        "effect_type": "failure_multiplier",
+        "rule_features": [
+          "feature_y",
+          "input_size",
+          "scheduler"
+        ],
+        "matched_features": [
+          "input_size",
+          "scheduler"
+        ],
+        "missed_features": [
+          "feature_y"
+        ],
+        "coverage": 0.6666666666666666,
+        "fully_detected": false
+      },
+      {
+        "rule_id": "rule_7",
+        "description": "Late timing at elevated temperatures causes execution time degradation",
+        "effect_type": "exec_time_multiplier",
+        "rule_features": [
+          "temperature",
+          "timing"
+        ],
+        "matched_features": [
+          "temperature"
+        ],
+        "missed_features": [
+          "timing"
+        ],
+        "coverage": 0.5,
+        "fully_detected": false
+      }
+    ],
+    "aggregate_feature_recall": 0.7333333333333333
+  },
+  "interaction_matching": {
+    "total_failure_rules": 4,
+    "rules_detected": 4,
+    "rule_recall": 1.0,
+    "per_rule": [
+      {
+        "rule_id": "rule_1",
+        "description": "Dynamic scheduler with high traffic and small cache causes frequent timeouts",
+        "rule_features": [
+          "cache_size",
+          "scheduler",
+          "traffic_pattern"
+        ],
+        "detected": true,
+        "match_score": 1.0,
+        "matched_interaction": "traffic_pattern=high AND cache_size=small AND scheduler=dynamic",
+        "interaction_lift": 2.69,
+        "interaction_support": 398
+      },
+      {
+        "rule_id": "rule_3",
+        "description": "Feature X enabled at high temperatures causes data corruption failures",
+        "rule_features": [
+          "feature_x",
+          "temperature"
+        ],
+        "detected": true,
+        "match_score": 0.5,
+        "matched_interaction": "temperature=temperature[59.9-95.0] AND traffic_pattern=high AND scheduler=dynamic",
+        "interaction_lift": 1.73,
+        "interaction_support": 392
+      },
+      {
+        "rule_id": "rule_5",
+        "description": "Low voltage combined with large memory causes corruption failures",
+        "rule_features": [
+          "memory_size",
+          "voltage"
+        ],
+        "detected": true,
+        "match_score": 1.0,
+        "matched_interaction": "random_seed=random_seed[4.0-33726.0] AND voltage=voltage[0.8-1.0] AND memory_size=memory_size[2048.0-4096.0]",
+        "interaction_lift": 1.44,
+        "interaction_support": 204
+      },
+      {
+        "rule_id": "rule_6",
+        "description": "Feature Y with adaptive scheduler and large inputs causes overflow failures",
+        "rule_features": [
+          "feature_y",
+          "input_size",
+          "scheduler"
+        ],
+        "detected": true,
+        "match_score": 0.67,
+        "matched_interaction": "input_size=input_size[3367.0-6670.0] AND traffic_pattern=high AND scheduler=dynamic",
+        "interaction_lift": 1.69,
+        "interaction_support": 386
+      }
+    ]
+  },
+  "overall": {
+    "composite_score": 89.3,
+    "grade": "A",
+    "assessment": "Excellent -- model reliably identifies planted failure patterns",
+    "feature_recall_weight": 0.4,
+    "interaction_recall_weight": 0.6,
+    "feature_recall": 0.7333,
+    "rule_recall": 1.0
+  }
+}
