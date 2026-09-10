@@ -275,7 +275,7 @@
   "files": {
     "config.csv": {
       "rows": 4000,
-      "bytes": 989104,
+      "bytes": 993104,
       "columns": [
         "runId",
         "test_id",
@@ -318,7 +318,7 @@
     },
     "randomization.csv": {
       "rows": 4000,
-      "bytes": 625101,
+      "bytes": 629101,
       "columns": [
         "run_id",
         "sequence_name",
@@ -345,8 +345,8 @@
       ]
     },
     "transactions.csv": {
-      "rows": 37700,
-      "bytes": 7305070,
+      "rows": 40000,
+      "bytes": 7761208,
       "columns": [
         "Run_ID",
         "transaction_id",
@@ -386,7 +386,7 @@
     },
     "telemetry.csv": {
       "rows": 4000,
-      "bytes": 590949,
+      "bytes": 579712,
       "columns": [
         "simulation_id",
         "host",
@@ -413,7 +413,7 @@
     },
     "outcomes.csv": {
       "rows": 4000,
-      "bytes": 513190,
+      "bytes": 498057,
       "columns": [
         "runId",
         "test_id",
@@ -438,7 +438,7 @@
     },
     "registers.csv": {
       "rows": 16000,
-      "bytes": 1427759,
+      "bytes": 1429294,
       "columns": [
         "run_id",
         "access_time_ns",
@@ -456,7 +456,7 @@
     },
     "uvm.log": {
       "rows": 4000,
-      "bytes": 7540155,
+      "bytes": 7522415,
       "columns": [
         "<uvm log grammar>"
       ]
@@ -469,7 +469,7 @@
     "outcomes.uvm_fatal_count == count of UVM_FATAL lines for that run in uvm.log",
     "outcomes.scoreboard_mismatches == rows in transactions.csv with checker_result == MISMATCH for that run",
     "outcomes.failure_type == NONE for every passing run",
-    "every start_time_ns in transactions.csv < execution_time_ms * 1000",
+    "timestamps are real nanoseconds: every start_time_ns in transactions.csv < execution_time_ms * 1e6",
     "run_id is the join key across every file that carries one"
   ],
   "raw_vs_derived": {
