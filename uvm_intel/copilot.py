@@ -126,28 +126,73 @@ def query_gemini_copilot(
         }
 
     try:
-        from google import genai
-        client = genai.Client(api_key=key)
-
-        # Try gemini-2.5-flash or gemini-2.0-flash
-        model_names = ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash"]
         response_text = None
         used_model = None
-        last_err = None
 
-        for m_name in model_names:
+        # 1. Try modern google-genai SDK
+        try:
+            from google import genai
+            client = genai.Client(api_key=key)
+
+            # Discover available models from user's API key
+            available_models = []
             try:
-                response = client.models.generate_content(
-                    model=m_name,
-                    contents=f"{system_instruction}\n\n{prompt}"
-                )
-                if response and response.text:
-                    response_text = response.text
-                    used_model = m_name
-                    break
-            except Exception as e:
-                last_err = e
-                continue
+                for m in client.models.list():
+                    # Pick models supporting content generation
+                    m_id = getattr(m, "name", "") or getattr(m, "id", "")
+                    if "generateContent" in getattr(m, "supported_actions", []) or "flash" in m_id.lower() or "gemini" in m_id.lower():
+                        # Strip models/ prefix if present
+                        clean_id = m_id.replace("models/", "")
+                        available_models.append(clean_id)
+            except Exception:
+                pass
+
+            priority_models = [
+                "gemini-3.6-flash",
+                "gemini-3.7-flash",
+                "gemini-3.8-flash",
+                "gemini-3.5-flash",
+                "gemini-3.1-pro-preview",
+                "gemini-flash-latest",
+            ]
+            candidates = priority_models + [m for m in available_models if m not in priority_models]
+
+            last_err = None
+            for m_name in candidates:
+                try:
+                    response = client.models.generate_content(
+                        model=m_name,
+                        contents=f"{system_instruction}\n\n{prompt}"
+                    )
+                    if response and response.text:
+                        response_text = response.text
+                        used_model = m_name
+                        break
+                except Exception as e:
+                    last_err = e
+                    continue
+
+        except Exception as sdk_err:
+            last_err = sdk_err
+
+        # 2. Fallback to google.generativeai if google-genai failed
+        if not response_text:
+            try:
+                import google.generativeai as legacy_genai
+                legacy_genai.configure(api_key=key)
+                for m_name in ["gemini-1.5-flash", "gemini-1.5-pro", "gemini-pro"]:
+                    try:
+                        m = legacy_genai.GenerativeModel(m_name, system_instruction=system_instruction)
+                        res = m.generate_content(prompt)
+                        if res and res.text:
+                            response_text = res.text
+                            used_model = f"legacy:{m_name}"
+                            break
+                    except Exception as e:
+                        last_err = e
+                        continue
+            except Exception:
+                pass
 
         if not response_text:
             raise RuntimeError(f"Gemini API call failed across models: {last_err}")

@@ -17,6 +17,9 @@ import pandas as pd
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 
+from dotenv import load_dotenv
+load_dotenv()
+
 from uvm_intel.copilot import query_gemini_copilot
 from uvm_intel.ingest_multi import parse_files_multi
 from uvm_intel.log_parser import parse_files
@@ -97,8 +100,9 @@ def _run_job(job_id: str, paths: List[str], params: Dict[str, Any],
         def progress(message: str, pct: int) -> None:
             job.update(progress=max(8, int(pct)), message=message)
 
+        stats_dict = stats.as_dict() if hasattr(stats, "as_dict") else stats
         analysis = run_analysis(
-            runs, errors, stats.as_dict(),
+            runs, errors, stats_dict,
             max_risk=params["max_risk"],
             n_trials=params["n_trials"],
             dbscan_eps=params["dbscan_eps"],
