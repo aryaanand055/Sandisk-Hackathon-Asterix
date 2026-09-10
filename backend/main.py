@@ -21,92 +21,151 @@ jobs = {}
 
 def generate_sample_result():
     return {
-        "executive_summary": {
-            "total_runs": 50000,
-            "overall_fail_rate": 0.24,
-            "model_auc": 0.88,
-            "num_rules_discovered": 7,
-            "failure_mode_distribution": [
-                {"mode": "FIFO_OVERFLOW", "count": 2891},
-                {"mode": "TIMEOUT", "count": 8014},
-                {"mode": "ECC_UNCORRECTABLE", "count": 1976},
-            ],
-            "metrics": {
-                "precision": 0.89,
-                "recall": 0.85,
-                "f1_score": 0.87
-            }
+        "meta": {
+            "job_id": "sample_analysis",
+            "status": "done",
+            "progress": 100,
+            "message": "Complete",
+            "elapsed": 18.94,
+            "n_runs": 50000
         },
-        "fingerprints": {
-            "clusters": [
-                {
-                    "id": "c1",
-                    "error_type": "PROTOCOL_VIOLATION",
-                    "run_count": 804,
-                    "determinism_score": 0.9988,
-                    "is_deterministic": True,
-                    "svd_x": 2.5,
-                    "svd_y": -1.2
+        "analysis": {
+            "summary": {
+                "n_runs": 50000,
+                "n_pass": 43648,
+                "n_fail": 6352,
+                "fail_rate": 0.127,
+                "n_error_lines": 13665,
+                "error_tag_distribution": {
+                    "DATA_MISMATCH": 3085,
+                    "FIFO_OVERFLOW": 1183,
+                    "TIMEOUT": 925,
+                    "RETENTION_FAIL": 672,
+                    "ASSERTION_FAIL": 487
                 },
-                {
-                    "id": "c2",
-                    "error_type": "TIMEOUT",
-                    "run_count": 3040,
-                    "determinism_score": 0.0,
-                    "is_deterministic": False,
-                    "svd_x": -1.8,
-                    "svd_y": 2.3
+                "severity_distribution": {
+                    "ERROR": 12740,
+                    "FATAL": 925
+                },
+                "metric_stats": {
+                    "execution_time_ms": {
+                        "mean": 105.85,
+                        "median": 20.58,
+                        "p95": 425.99,
+                        "min": 1.0,
+                        "max": 2000.0
+                    },
+                    "throughput_mbps": {
+                        "mean": 41.17,
+                        "median": 16.3,
+                        "p95": 165.13,
+                        "min": 0.0,
+                        "max": 1008.95
+                    },
+                    "cycles": {
+                        "mean": 78492661.93,
+                        "median": 15372771.0,
+                        "p95": 292384763.9,
+                        "min": 400000.0,
+                        "max": 2398987283.0
+                    }
                 }
-            ]
-        },
-        "pareto": {
-            "frontier": [
-                {"throughput": 1200, "predicted_risk": 0.015, "label": "config1"},
-                {"throughput": 1500, "predicted_risk": 0.020, "label": "config2"},
-                {"throughput": 1800, "predicted_risk": 0.040, "label": "config3"},
+            },
+            "risk_model": {
+                "n_train": 40000,
+                "n_test": 10000,
+                "fail_rate": 0.127,
+                "metrics": {
+                    "accuracy": 0.94,
+                    "precision": 0.89,
+                    "recall": 0.85,
+                    "f1": 0.87,
+                    "roc_auc": 0.92
+                },
+                "confusion_matrix": {
+                    "tp": 8539,
+                    "fp": 1461,
+                    "tn": 8539,
+                    "fn": 1461
+                },
+                "shap_importance": [
+                    {"feature": "test_mode_enabled", "mean_abs_shap": 0.285},
+                    {"feature": "cache_policy", "mean_abs_shap": 0.228},
+                    {"feature": "queue_depth", "mean_abs_shap": 0.195},
+                    {"feature": "clock_freq_mhz", "mean_abs_shap": 0.142},
+                    {"feature": "ecc_mode", "mean_abs_shap": 0.089}
+                ]
+            },
+            "fingerprints": {
+                "n_clusters": 8,
+                "n_templates": 127,
+                "clusters": [
+                    {
+                        "id": "c1",
+                        "error_type": "DATA_MISMATCH",
+                        "n_runs": 2841,
+                        "n_distinct_templates": 1,
+                        "determinism": 0.998,
+                        "is_rtl_bug": True
+                    },
+                    {
+                        "id": "c2",
+                        "error_type": "FIFO_OVERFLOW",
+                        "n_runs": 1183,
+                        "n_distinct_templates": 12,
+                        "determinism": 0.145,
+                        "is_rtl_bug": False
+                    },
+                    {
+                        "id": "c3",
+                        "error_type": "TIMEOUT",
+                        "n_runs": 925,
+                        "n_distinct_templates": 8,
+                        "determinism": 0.089,
+                        "is_rtl_bug": False
+                    }
+                ]
+            },
+            "pareto": {
+                "n_points": 318,
+                "frontier": [
+                    {"throughput": 850.2, "predicted_risk": 0.012, "n_configs": 5},
+                    {"throughput": 920.5, "predicted_risk": 0.018, "n_configs": 8},
+                    {"throughput": 1010.3, "predicted_risk": 0.040, "n_configs": 12}
+                ],
+                "best_safe": {"throughput": 850.2, "predicted_risk": 0.012},
+                "knee": {"throughput": 920.5, "predicted_risk": 0.018},
+                "peak": {"throughput": 1010.3, "predicted_risk": 0.040}
+            },
+            "recommendations": {
+                "n_trials": 150,
+                "max_risk": 0.02,
+                "search_space": {
+                    "test_mode_enabled": [0, 1],
+                    "cache_policy": ["Disabled", "LRU", "Adaptive"],
+                    "queue_depth": [8, 16, 32, 64],
+                    "ecc_mode": ["Disabled", "Enabled"]
+                },
+                "best_configs": [
+                    {"throughput": 848.1, "predicted_risk": 0.011, "test_mode_enabled": 0, "cache_policy": "LRU", "queue_depth": 16},
+                    {"throughput": 825.3, "predicted_risk": 0.013, "test_mode_enabled": 0, "cache_policy": "LRU", "queue_depth": 8},
+                    {"throughput": 810.5, "predicted_risk": 0.009, "test_mode_enabled": 1, "cache_policy": "Adaptive", "queue_depth": 16}
+                ]
+            },
+            "config_diff": {
+                "n_twins": 4126,
+                "field_deltas": [
+                    {"field": "test_mode_enabled", "fail_vs_pass_rate": 0.92, "rank": 1},
+                    {"field": "cache_policy", "fail_vs_pass_rate": 0.84, "rank": 2},
+                    {"field": "queue_depth", "fail_vs_pass_rate": 0.76, "rank": 3}
+                ]
+            },
+            "failure_by_field": [
+                {"field": "test_mode_enabled", "fail_rate_by_value": {"0": 0.08, "1": 0.34}, "lift": 4.25},
+                {"field": "cache_policy", "fail_rate_by_value": {"Disabled": 0.22, "LRU": 0.09, "Adaptive": 0.18}, "lift": 2.44},
+                {"field": "queue_depth", "fail_rate_by_value": {"8": 0.10, "16": 0.12, "32": 0.24, "64": 0.28}, "lift": 2.80}
             ],
-            "peak_throughput": {"throughput": 1800, "predicted_risk": 0.040},
-            "knee_point": {"throughput": 1500, "predicted_risk": 0.020},
-            "best_safe_config": {"throughput": 1200, "predicted_risk": 0.015}
-        },
-        "recommendations": {
-            "n_trials": 250,
-            "max_risk": 0.02,
-            "recommended_configs": [
-                {"throughput": 1200, "predicted_risk": 0.015, "config_hash": "abc123def456"},
-                {"throughput": 1180, "predicted_risk": 0.018, "config_hash": "xyz789uvw012"},
-            ]
-        },
-        "config_diff": {
-            "twin_divergence": [
-                {"setting": "cache_policy", "failing_value": "Adaptive", "passing_value": "LRU", "divergence_rate": 0.95, "impact_level": "high"},
-                {"setting": "queue_depth", "failing_value": "32", "passing_value": "16", "divergence_rate": 0.87, "impact_level": "high"},
-                {"setting": "test_mode_enabled", "failing_value": "1", "passing_value": "0", "divergence_rate": 0.78, "impact_level": "medium"},
-            ]
-        },
-        "runs": [
-            {"run_id": "RUN-000001", "test_name": "Back_To_Back_Program", "status": "pass", "execution_time_ms": 412.7, "throughput_mbps": 1893.2},
-            {"run_id": "RUN-000002", "test_name": "Back_To_Back_Program", "status": "fail", "execution_time_ms": 405.2, "throughput_mbps": 1850.1},
-        ] + [{"run_id": f"RUN-{i:06d}", "test_name": "Test", "status": "pass" if i % 4 != 0 else "fail", "execution_time_ms": 400 + i % 100, "throughput_mbps": 1800 + i % 500} for i in range(3, 100)],
-        "details": {
-            "parse_stats": {
-                "total_lines": 1015872,
-                "malformed_blocks": 0,
-                "parse_time_sec": 2.0
-            },
-            "stage_timing": {
-                "parse": 2.0,
-                "risk_model": 5.2,
-                "fingerprints": 3.1,
-                "pareto": 1.8,
-                "recommender": 12.4,
-                "config_diff": 2.5
-            },
-            "field_analysis": [
-                {"field": "cache_policy", "fail_rate": 0.45, "lift": 4.19, "top_value": "Adaptive"},
-                {"field": "test_mode_enabled", "fail_rate": 0.35, "lift": 3.16, "top_value": "1"},
-                {"field": "queue_depth", "fail_rate": 0.38, "lift": 2.53, "top_value": "32"},
-            ]
+            "total_seconds": 18.94
         }
     }
 
