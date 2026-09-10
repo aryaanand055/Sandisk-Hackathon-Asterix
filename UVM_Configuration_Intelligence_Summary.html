@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>UVM Configuration Intelligence — Project Summary</title>
+<style>
+  @page {
+    size: A4;
+    margin: 12mm 13mm 12mm 13mm;
+    @bottom-right {
+      content: counter(page);
+    }
+  }
+
+  * {
+    box-sizing: border-box;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #1e293b;
+    background: #ffffff;
+    line-height: 1.4;
+    font-size: 8.5pt;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Header / Hero */
+  .hero {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    color: #ffffff;
+    padding: 16px 20px;
+    border-radius: 6px;
+    margin-bottom: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  }
+
+  .badge-container {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+
+  .badge {
+    display: inline-block;
+    font-size: 6.5pt;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    border-radius: 3px;
+  }
+
+  .badge-amber {
+    background-color: #f59e0b;
+    color: #0f172a;
+  }
+
+  .badge-teal {
+    background-color: #14b8a6;
+    color: #042f2e;
+  }
+
+  .badge-slate {
+    background-color: #334155;
+    color: #f1f5f9;
+  }
+
+  .hero h1 {
+    font-size: 18pt;
+    font-weight: 800;
+    margin: 0 0 4px 0;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+    line-height: 1.15;
+  }
+
+  .hero p {
+    font-size: 8.8pt;
+    color: #cbd5e1;
+    margin: 0 0 12px 0;
+    max-width: 98%;
+    line-height: 1.35;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    padding-top: 10px;
+  }
+
+  .stat-item .val {
+    font-size: 14pt;
+    font-weight: 800;
+    color: #fbbf24;
+    line-height: 1;
+  }
+
+  .stat-item .lbl {
+    font-size: 6.5pt;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 2px;
+  }
+
+  /* Section Styling */
+  h2 {
+    font-size: 11pt;
+    font-weight: 700;
+    color: #0f172a;
+    border-bottom: 1.5px solid #e2e8f0;
+    padding-bottom: 3px;
+    margin-top: 10px;
+    margin-bottom: 6px;
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+
+  h3 {
+    font-size: 9pt;
+    font-weight: 700;
+    color: #1e293b;
+    margin-top: 8px;
+    margin-bottom: 4px;
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+
+  p {
+    margin-top: 0;
+    margin-bottom: 5px;
+    text-align: justify;
+  }
+
+  ul, ol {
+    margin-top: 0;
+    margin-bottom: 6px;
+    padding-left: 14px;
+  }
+
+  li {
+    margin-bottom: 2px;
+  }
+
+  /* Cards & Callouts */
+  .card-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 7px;
+    margin: 6px 0;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .card-grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 6px;
+    margin: 6px 0;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 5px;
+    padding: 7px 9px;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .card h4 {
+    margin: 0 0 2px 0;
+    font-size: 8pt;
+    color: #0f172a;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .card p {
+    font-size: 7.5pt;
+    color: #475569;
+    margin: 0;
+    line-height: 1.25;
+    text-align: left;
+  }
+
+  .callout {
+    background: #f0fdfa;
+    border-left: 3px solid #0d9488;
+    padding: 6px 9px;
+    border-radius: 0 4px 4px 0;
+    margin: 6px 0;
+    font-size: 7.5pt;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .callout strong {
+    color: #0f172a;
+  }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 7.5pt;
+    margin: 6px 0;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  th, td {
+    padding: 4.5px 7px;
+    text-align: left;
+    border: 1px solid #cbd5e1;
+  }
+
+  th {
+    background: #1e293b;
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 7pt;
+    letter-spacing: 0.03em;
+  }
+
+  tr:nth-child(even) {
+    background-color: #f8fafc;
+  }
+
+  .text-right {
+    text-align: right;
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  .pill {
+    display: inline-block;
+    padding: 1px 4px;
+    border-radius: 2px;
+    font-size: 6.5pt;
+    font-weight: 600;
+  }
+
+  .pill-red {
+    background: #fee2e2;
+    color: #991b1b;
+  }
+
+  .pill-amber {
+    background: #fef3c7;
+    color: #92400e;
+  }
+
+  .pill-blue {
+    background: #e0f2fe;
+    color: #075985;
+  }
+
+  /* Pipeline Graphic Box */
+  .pipeline-flow {
+    background: #090d16;
+    border: 1px solid #1e293b;
+    border-radius: 5px;
+    padding: 8px 10px;
+    margin: 8px 0;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .pipe-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-bottom: 5px;
+  }
+
+  .pipe-box {
+    background: #1e293b;
+    color: #ffffff;
+    border-radius: 3px;
+    padding: 3px 6px;
+    font-size: 7pt;
+    font-weight: 600;
+    border: 1px solid #334155;
+    text-align: center;
+  }
+
+  .pipe-box.primary {
+    background: #0f766e;
+    border-color: #14b8a6;
+    color: #f0fdfa;
+  }
+
+  .pipe-arrow {
+    color: #f59e0b;
+    font-weight: bold;
+    font-size: 8pt;
+  }
+
+  .pipe-branches {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 5px;
+    margin-top: 6px;
+    padding-top: 6px;
+    border-top: 1px dashed #334155;
+  }
+
+  .branch-card {
+    background: #131b27;
+    border: 1px solid #273549;
+    border-radius: 3px;
+    padding: 5px;
+    text-align: center;
+  }
+
+  .branch-card .title {
+    color: #38bdf8;
+    font-size: 7pt;
+    font-weight: 700;
+    margin-bottom: 1px;
+  }
+
+  .branch-card .tech {
+    color: #fbbf24;
+    font-size: 6pt;
+    font-family: "Courier New", Courier, monospace;
+    margin-bottom: 1px;
+  }
+
+  .branch-card .desc {
+    color: #94a3b8;
+    font-size: 6pt;
+    line-height: 1.15;
+  }
+
+  /* Code snippet inline */
+  code {
+    font-family: "Courier New", Courier, monospace;
+    font-size: 7pt;
+    background: #f1f5f9;
+    color: #0f172a;
+    padding: 1px 3px;
+    border-radius: 2px;
+    border: 1px solid #e2e8f0;
+  }
+
+  .page-break {
+    page-break-before: always;
+    break-before: page;
+  }
+
+  .footer-note {
+    font-size: 6.5pt;
+    color: #94a3b8;
+    text-align: center;
+    margin-top: 10px;
+    border-top: 1px solid #f1f5f9;
+    padding-top: 5px;
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= PAGE 1 ================= -->
+<div class="hero">
+  <div class="badge-container">
+    <span class="badge badge-amber">Sandisk Hackathon 2026</span>
+    <span class="badge badge-teal">Team Asterix</span>
+    <span class="badge badge-slate">Enterprise VLSI Verification AI</span>
+  </div>
+  <h1>UVM Configuration Intelligence</h1>
+  <p>An intelligent platform for transforming massive Universal Verification Methodology (UVM) simulation logs into ranked root-cause attributions, deterministic RTL bug isolations, multi-objective Pareto trade-offs, and constrained Bayesian recommendations.</p>
+  
+  <div class="stats-grid">
+    <div class="stat-item">
+      <div class="val">1,015,872</div>
+      <div class="lbl">Log lines parsed</div>
+    </div>
+    <div class="stat-item">
+      <div class="val">2.0 s</div>
+      <div class="lbl">Full 50k parse time</div>
+    </div>
+    <div class="stat-item">
+      <div class="val">0.88</div>
+      <div class="lbl">Risk model ROC-AUC</div>
+    </div>
+    <div class="stat-item">
+      <div class="val">0.999</div>
+      <div class="lbl">RTL bug determinism</div>
+    </div>
+  </div>
+</div>
+
+<h2>1. Problem Statement & Motivation</h2>
+<p>
+  In modern semiconductor and ASIC verification, nightly regressions generate millions of lines of unstructured simulation logs. When runs fail, verification engineers face four severe triage bottlenecks:
+</p>
+<div class="card-grid">
+  <div class="card">
+    <h4>⚠️ The "What" vs. "Why" Dilemma</h4>
+    <p>A failed UVM test logs <em>that</em> an assertion fired or FIFO overflowed, but fails to explain <em>which combination of configuration knobs</em> triggered the failure state.</p>
+  </div>
+  <div class="card">
+    <h4>🎲 Flake vs. RTL Bug Conflation</h4>
+    <p>Random seed-induced noise and hard deterministic RTL bugs emit similar UVM error reports, forcing engineers into days of tedious interactive waveform debugging.</p>
+  </div>
+  <div class="card">
+    <h4>📉 Black-Box Performance Tuning</h4>
+    <p>Configuration tuning remains folklore. Verification leads lack tools to determine the fastest configuration settings that provably satisfy a failure budget (e.g., &le; 2%).</p>
+  </div>
+  <div class="card">
+    <h4>🗑️ Ad-Hoc, Non-Accumulating Triage</h4>
+    <p>Custom triage scripts are written per debug emergency and discarded immediately after. Verification knowledge never accumulates systematically across builds.</p>
+  </div>
+</div>
+
+<h2>2. End-to-End Pipeline Architecture</h2>
+<p>
+  The platform executes an asynchronous, modular analytics pipeline. An optimized parser processes log dumps into structured data, feeding five decoupled analytical stages in parallel:
+</p>
+
+<div class="pipeline-flow">
+  <div class="pipe-row">
+    <div class="pipe-box">Raw Simulation .log Dumps</div>
+    <div class="pipe-arrow">&rarr;</div>
+    <div class="pipe-box primary">uvm_intel.log_parser (1M lines in 2.0s)</div>
+    <div class="pipe-arrow">&rarr;</div>
+    <div class="pipe-box">Structured Frames: runs_df &amp; errors_df</div>
+  </div>
+  <div class="pipe-branches">
+    <div class="branch-card">
+      <div class="title">Risk Model</div>
+      <div class="tech">LightGBM + SHAP</div>
+      <div class="desc">Knob-only attribution, no outcome leakage</div>
+    </div>
+    <div class="branch-card">
+      <div class="title">Fingerprints</div>
+      <div class="tech">TF-IDF + DBSCAN</div>
+      <div class="desc">Template masking, isolates deterministic RTL bugs</div>
+    </div>
+    <div class="branch-card">
+      <div class="title">Pareto Frontier</div>
+      <div class="tech">Multi-Objective</div>
+      <div class="desc">Throughput vs. Risk over top-SHAP discrete knobs</div>
+    </div>
+    <div class="branch-card">
+      <div class="title">Config Diff</div>
+      <div class="tech">Nearest-Twin KNN</div>
+      <div class="desc">Pinpoints exact knob flip between pass/fail runs</div>
+    </div>
+    <div class="branch-card">
+      <div class="title">Recommender</div>
+      <div class="tech">Optuna TPE</div>
+      <div class="desc">Bayesian search for max throughput at risk &le; 2%</div>
+    </div>
+  </div>
+</div>
+
+<div class="callout">
+  <strong>Fault-Isolated Execution:</strong> Every stage in <code>uvm_intel/pipeline.py</code> is isolated with exception wrapping. If an optional engine encounters edge-case input, the overall report remains intact and delivers partial analytics with diagnostic traces rather than aborting the pipeline.
+</div>
+
+<!-- ================= PAGE 2 ================= -->
+<div class="page-break"></div>
+
+<h2>3. Key Technical Innovations</h2>
+<div class="card-grid">
+  <div class="card">
+    <h4>1. Leakage-Guarded Risk Modeling</h4>
+    <p>Trained with LightGBM on <em>only settable configuration knobs</em>. All outcome variables (<code>execution_time_ms</code>, <code>throughput_mbps</code>, <code>uvm_error_count</code>, tags) and identifiers (<code>run_id</code>, <code>seed</code>) are strictly pruned, preventing artificial label leakage. SHAP TreeExplainer delivers directional attribution per feature value.</p>
+  </div>
+  <div class="card">
+    <h4>2. Determinism Scoring Engine</h4>
+    <p>Masks dynamic fields (addresses &rarr; <code>&lt;ADDR&gt;</code>, values &rarr; <code>&lt;N&gt;</code>) and fits TF-IDF across unique templates. Collapses 50k logs into ~7 clusters. Defines:
+    <br><code>Determinism = 1 - (Distinct Raw Traces / Total Cluster Runs)</code>.
+    <br>Isolates true RTL bugs (score 0.999) from random flakes (score 0.000).</p>
+  </div>
+  <div class="card">
+    <h4>3. Top-SHAP Grouped Pareto Frontier</h4>
+    <p>Rather than evaluating continuous sensor readings (voltage, temperature) which treat each run as an isolated singleton, points are aggregated over the <strong>top-4 discrete knobs ranked by SHAP</strong>. Produces 318 meaningful configuration clusters with observed rates tracking predicted risks exactly.</p>
+  </div>
+  <div class="card">
+    <h4>4. Constrained Bayesian Optimization</h4>
+    <p>Optuna TPE searches the multi-dimensional design space against two LightGBM surrogates: risk and throughput. The throughput regressor trains <em>exclusively on passing runs</em> to measure true operating capability, enforcing an explicit penalised &le; 2% risk ceiling.</p>
+  </div>
+</div>
+
+<h2>4. Embedded Ground Truth Validation Benchmark</h2>
+<p>
+  The synthetic log generator embeds 7 deterministic and statistical interaction rules (defined in <code>data/uvm_ground_truth.json</code>). The pipeline's discovery algorithms are benchmarked against this definitive answer key:
+</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="width: 40px;">Rule</th>
+      <th>Trigger Condition</th>
+      <th>Simulated Impact</th>
+      <th class="text-right" style="width: 50px;">Runs</th>
+      <th class="text-right" style="width: 55px;">Fail Rate</th>
+      <th class="text-right" style="width: 45px;">Lift</th>
+      <th>Verification Objective</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>R1</strong></td>
+      <td><code>test_name = Back_To_Back_Program</code> + <code>cache_policy = Adaptive</code></td>
+      <td>P(fail) = 0.85, <code>FIFO_OVERFLOW</code></td>
+      <td class="text-right">2,891</td>
+      <td class="text-right">85.1%</td>
+      <td class="text-right"><span class="pill pill-red">4.19&times;</span></td>
+      <td>Multi-parameter corner case</td>
+    </tr>
+    <tr>
+      <td><strong>R2</strong></td>
+      <td><code>test_mode_enabled = 1</code></td>
+      <td>+0.35 Failure Probability</td>
+      <td class="text-right">13,999</td>
+      <td class="text-right">47.3%</td>
+      <td class="text-right"><span class="pill pill-amber">3.16&times;</span></td>
+      <td>Single high-impact dominant knob</td>
+    </tr>
+    <tr>
+      <td><strong>R3</strong></td>
+      <td><code>queue_depth &ge; 32</code> + <code>ecc_mode = Disabled</code></td>
+      <td>+0.35, <code>ECC_UNCORRECTABLE</code></td>
+      <td class="text-right">1,976</td>
+      <td class="text-right">57.4%</td>
+      <td class="text-right"><span class="pill pill-amber">2.53&times;</span></td>
+      <td>Memory sub-system stress interaction</td>
+    </tr>
+    <tr>
+      <td><strong>R4</strong></td>
+      <td><code>temperature_c &gt; 85</code> + <code>voltage_mv &lt; 1100</code></td>
+      <td>+0.30, <code>RETENTION_FAIL</code></td>
+      <td class="text-right">281</td>
+      <td class="text-right">55.9%</td>
+      <td class="text-right"><span class="pill pill-blue">2.34&times;</span></td>
+      <td>Rare environmental physical condition</td>
+    </tr>
+    <tr>
+      <td><strong>R5</strong></td>
+      <td><code>num_planes = 4</code> + <code>burst_length = 64</code> + <code>scrambler_enable = 1</code></td>
+      <td>P(fail) = 0.98, <strong>Deterministic byte trace</strong></td>
+      <td class="text-right">815</td>
+      <td class="text-right">98.7%</td>
+      <td class="text-right"><span class="pill pill-red">4.33&times;</span></td>
+      <td><strong>Planted RTL bug (byte-identical)</strong></td>
+    </tr>
+    <tr>
+      <td><strong>R6</strong></td>
+      <td><code>clock_freq_mhz &ge; 1000</code> + <code>prefetch_depth &gt; 8</code></td>
+      <td>+0.30, <code>TIMEOUT</code></td>
+      <td class="text-right">8,014</td>
+      <td class="text-right">47.5%</td>
+      <td class="text-right"><span class="pill pill-amber">2.43&times;</span></td>
+      <td>Clock &amp; prefetch throughput limits</td>
+    </tr>
+    <tr>
+      <td><strong>R7</strong></td>
+      <td><code>cache_policy = Disabled</code> + <code>queue_depth &ge; 16</code></td>
+      <td>+0.30, <code>DATA_MISMATCH</code></td>
+      <td class="text-right">2,800</td>
+      <td class="text-right">49.3%</td>
+      <td class="text-right"><span class="pill pill-blue">2.19&times;</span></td>
+      <td>Coherency / buffer overflow bug</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- ================= PAGE 3 ================= -->
+<div class="page-break"></div>
+
+<h2>5. Interactive Web Application (React 18 + Vite)</h2>
+<p>
+  The frontend interface (in <code>frontend/src/</code>) connects via REST polling to FastAPI, organizing regression insights into 7 views:
+</p>
+
+<div class="card-grid-3">
+  <div class="card">
+    <h4>1. Executive Summary</h4>
+    <p>KPI cards (Runs, Fail Rate, Error Lines), Pass/Fail donut chart, Risk histogram, global SHAP chart, error taxonomy, and held-out ROC curve.</p>
+  </div>
+  <div class="card">
+    <h4>2. Failure Fingerprints</h4>
+    <p>2D TruncatedSVD scatter projection of failure clusters, determinism table, masked template vs. raw log viewer, and one-click handoff to diff.</p>
+  </div>
+  <div class="card">
+    <h4>3. Trade-off Matrix</h4>
+    <p>Interactive Pareto scatter with highlighted Peak Throughput, Knee, and Best-Safe operating points across 318 discrete configurations.</p>
+  </div>
+  <div class="card">
+    <h4>4. Recommendations</h4>
+    <p>Optuna TPE search results, ranking parameter configurations that achieve peak throughput while staying below the 2% failure risk threshold.</p>
+  </div>
+  <div class="card">
+    <h4>5. Config Diff</h4>
+    <p>Nearest-twin run analyzer comparing failing runs against closest passing counterparts (&ge; 0.5 SD change threshold) to spotlight broken settings.</p>
+  </div>
+  <div class="card">
+    <h4>6. Run Explorer &amp; Details</h4>
+    <p>Full virtualized, searchable run table with pagination, field-level lift metrics, pipeline execution stage timings, and one-click JSON export.</p>
+  </div>
+</div>
+
+<h2>6. Repository Structure & Artifacts</h2>
+<div class="card-grid">
+  <div class="card">
+    <h4>Production Platform (<code>uvm_intel/</code> &amp; <code>backend/</code>)</h4>
+    <p>
+      • <code>log_format.py</code>: Canonical UVM log schema.<br>
+      • <code>log_parser.py</code>: High-throughput regex/line parser.<br>
+      • <code>risk_model.py</code>: Leakage-safe LightGBM + SHAP.<br>
+      • <code>fingerprints.py</code>: Text template DBSCAN clusterer.<br>
+      • <code>pareto.py</code> &amp; <code>recommender.py</code>: Optuna optimizer.<br>
+      • <code>config_diff.py</code>: Nearest-twin KNN comparator.<br>
+      • <code>backend/main.py</code>: FastAPI service with threaded jobs.
+    </p>
+  </div>
+  <div class="card">
+    <h4>Baseline Discovery Engine (Root Directory)</h4>
+    <p>
+      • <code>data_model.py</code>: Schema specifications for test data.<br>
+      • <code>generate_dataset.py</code>: Vectorized NumPy synthetic generator.<br>
+      • <code>train_baseline.py</code>: Random Forest baseline classifier.<br>
+      • <code>interaction_analysis.py</code>: Pairwise/3-way lift &amp; support.<br>
+      • <code>grade_against_ground_truth.py</code>: Precision/Recall grader.<br>
+      • <code>ingest.py</code>: Fallback tolerant parser for messy inputs.<br>
+      • <code>presentation/build_deck.js</code>: Presentation deck builder.
+    </p>
+  </div>
+</div>
+
+<h2>7. Measured System Benchmarks</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Corpus Size</th>
+      <th>Log Volume</th>
+      <th>Log Parse Time</th>
+      <th>End-to-End Analytics Time</th>
+      <th>Memory Footprint</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>5,000 runs</strong></td>
+      <td>~5.6 MB (101k lines)</td>
+      <td>0.6 seconds</td>
+      <td>9.6 seconds</td>
+      <td>&lt; 180 MB</td>
+    </tr>
+    <tr>
+      <td><strong>10,000 runs</strong></td>
+      <td>~11.2 MB (203k lines)</td>
+      <td>1.2 seconds</td>
+      <td>27.0 seconds</td>
+      <td>&lt; 260 MB</td>
+    </tr>
+    <tr>
+      <td><strong>50,000 runs</strong></td>
+      <td>~56.0 MB (1,015,872 lines)</td>
+      <td><strong>2.0 seconds</strong></td>
+      <td>Wrapped Thread Execution</td>
+      <td>&lt; 510 MB</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>8. Roadmap & Production Extensions</h2>
+<ul>
+  <li><strong>RAG Copilot (Phase 4 scope)</strong>: Natural language Q&A over parsed regression archives with ChromaDB + LangChain embeddings.</li>
+  <li><strong>Longitudinal Regression Tracking</strong>: Continuous tracking of SHAP importance drift, failure clusters, and risk inflation across nightly builds.</li>
+  <li><strong>CI/CD Quality Gate</strong>: Automated pipeline gate that fails validation if a new cluster with determinism score &gt; 0.8 is detected.</li>
+  <li><strong>Commercial Simulator Adapters</strong>: Pluggable AST parsers for Synopsys VCS, Siemens Questa, and Cadence Xcelium transcript formats.</li>
+</ul>
+
+<div class="footer-note">
+  UVM Configuration Intelligence &bull; SanDisk Hackathon 2026 &bull; Team Asterix &bull; Generated September 2026
+</div>
+
+</body>
+</html>

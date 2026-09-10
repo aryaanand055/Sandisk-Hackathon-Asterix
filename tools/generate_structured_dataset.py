@@ -108,8 +108,8 @@ A_RULES: List[Dict[str, Any]] = [
      "description": "Hot and undervolted NAND loses charge retention "
                     "(requires joining config.csv with telemetry.csv)",
      "files": ["telemetry.csv"],
-     "conditions": [{"field": "temperature_c", "op": ">", "value": 85.0},
-                    {"field": "voltage_mv", "op": "<", "value": 1100.0}],
+     "conditions": [{"field": "temperature_c", "op": ">", "value": 80.0},
+                    {"field": "voltage_mv", "op": "<", "value": 1120.0}],
      "effect": "add", "value": 0.30,
      "error_tag": "RETENTION_FAIL", "deterministic": False},
     {"id": "A5",
@@ -245,9 +245,13 @@ def a_sample_random(n, rng, cfg):
 def a_sample_env(n, rng):
     """Environment half of telemetry - sampled before rules are resolved."""
     e = {}
-    e["temperature_c"] = np.round(np.clip(rng.normal(62, 15, n), 25, 95), 1)
-    e["voltage_mv"] = np.round(np.clip(rng.normal(1160, 45, n), 1050, 1250), 1)
     e["power_mode"] = _pick(rng, ["nominal", "low_power", "turbo"], [0.55, 0.20, 0.25], n)
+    # Turbo runs hot, low-power runs cool - the environment is not independent of
+    # the power setting, which is what makes the thermal rule physically sensible.
+    bump = np.where(e["power_mode"] == "turbo", 9.0,
+                    np.where(e["power_mode"] == "low_power", -5.0, 0.0))
+    e["temperature_c"] = np.round(np.clip(rng.normal(62, 15, n) + bump, 25, 98), 1)
+    e["voltage_mv"] = np.round(np.clip(rng.normal(1160, 45, n), 1050, 1250), 1)
     return e
 
 
@@ -385,8 +389,8 @@ B_RULES: List[Dict[str, Any]] = [
      "description": "Undervoltage above 70 C makes the CDC synchroniser metastable "
                     "(telemetry.csv only)",
      "files": ["telemetry.csv"],
-     "conditions": [{"field": "voltage_mv", "op": "<", "value": 1080.0},
-                    {"field": "temperature_c", "op": ">", "value": 70.0}],
+     "conditions": [{"field": "voltage_mv", "op": "<", "value": 1090.0},
+                    {"field": "temperature_c", "op": ">", "value": 65.0}],
      "effect": "add", "value": 0.20,
      "error_tag": "METASTABILITY", "deterministic": False},
     {"id": "B7",
@@ -479,9 +483,11 @@ def b_sample_random(n, rng, cfg):
 
 def b_sample_env(n, rng):
     e = {}
-    e["temperature_c"] = np.round(np.clip(rng.normal(55, 14, n), 20, 95), 1)
-    e["voltage_mv"] = np.round(np.clip(rng.normal(1120, 40, n), 1000, 1240), 1)
     e["power_mode"] = _pick(rng, ["nominal", "low_power", "turbo"], [0.60, 0.28, 0.12], n)
+    bump = np.where(e["power_mode"] == "turbo", 8.0,
+                    np.where(e["power_mode"] == "low_power", -4.0, 0.0))
+    e["temperature_c"] = np.round(np.clip(rng.normal(55, 14, n) + bump, 20, 95), 1)
+    e["voltage_mv"] = np.round(np.clip(rng.normal(1120, 40, n), 1000, 1240), 1)
     return e
 
 

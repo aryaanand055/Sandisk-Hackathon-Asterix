@@ -30,9 +30,11 @@ export default function ExecutiveSummary({ data }) {
   const bands = Object.entries(meter.risk_bands || {})
     .map(([name, count]) => ({ name, count }))
 
-  const roc = (risk.roc_curve?.fpr || []).map((f, i) => ({
-    fpr: f, tpr: risk.roc_curve.tpr[i],
-  }))
+  const roc = Array.isArray(risk.roc_curve)
+    ? risk.roc_curve
+    : (risk.roc_curve?.fpr || []).map((f, i) => ({
+        fpr: f, tpr: risk.roc_curve?.tpr?.[i] || 0,
+      }))
 
   const cm = risk.confusion_matrix || {}
 

@@ -8,15 +8,15 @@
   "files": {
     "uvm.log": {
       "rows": 2000,
-      "bytes": 3694845,
+      "bytes": 3711553,
       "columns": [
         "<uvm log grammar>"
       ]
     }
   },
   "waveforms": [],
-  "pass_rate": 0.777,
-  "fail_rate": 0.223,
+  "pass_rate": 0.7585,
+  "fail_rate": 0.2415,
   "column_aliases": {},
   "absent_categories": [
     "config.csv",

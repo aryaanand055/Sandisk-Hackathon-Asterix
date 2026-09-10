@@ -44,8 +44,15 @@ def cluster_failures(
     max_features: int = 3000,
 ) -> Dict[str, Any]:
     """Cluster failing runs by error-trace template."""
-    failing = runs[(runs["pass_fail"] == "fail")
-                   & (runs["trace_fingerprint"] != CLEAN)].copy()
+    df = runs.copy()
+    if "trace_fingerprint" not in df.columns:
+        df["trace_fingerprint"] = df["primary_error_tag"].fillna("ERR_UNKNOWN") if "primary_error_tag" in df.columns else "ERR_UNKNOWN"
+    if "error_trace" not in df.columns:
+        df["error_trace"] = df["primary_error_tag"].fillna("") if "primary_error_tag" in df.columns else ""
+    if "seed" not in df.columns:
+        df["seed"] = 0
+
+    failing = df[(df["pass_fail"] == "fail") & (df["trace_fingerprint"] != CLEAN)].copy()
 
     if failing.empty:
         return {"n_failing": 0, "clusters": [], "scatter": [],

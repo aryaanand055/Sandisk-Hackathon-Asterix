@@ -26,6 +26,8 @@ OUTCOME_COLUMNS = {
     "uvm_fatal_count", "uvm_error_total", "uvm_fatal_total",
     "uvm_warning_total", "verdict", "pass_fail", "primary_error_tag",
     "distinct_error_tags", "trace_fingerprint", "error_trace",
+    "power_mw", "temperature_c", "area_mm2", "status", "error_msg",
+    "notes", "timestamp", "log_file", "source_file",
 }
 # Identifiers and pure randomisation controls.
 EXCLUDED_COLUMNS = {"run_id", "seed"}

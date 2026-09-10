@@ -9,8 +9,8 @@
     "dut": "nvme_ssd_controller",
     "base_fail_prob": 0.012,
     "exec_ceiling_ms": 2000.0,
-    "observed_fail_rate": 0.2447,
-    "observed_pass_rate": 0.7553,
+    "observed_fail_rate": 0.2673,
+    "observed_pass_rate": 0.7327,
     "files_provided": [
       "config.csv",
       "outcomes.csv",
@@ -51,9 +51,9 @@
       "observed": {
         "rows_matched": 83,
         "match_share": 0.0553,
-        "fail_rate_when_fired": 0.8675,
-        "fail_rate_otherwise": 0.2082,
-        "lift": 4.167
+        "fail_rate_when_fired": 0.9277,
+        "fail_rate_otherwise": 0.2287,
+        "lift": 4.057
       }
     },
     {
@@ -76,9 +76,9 @@
       "observed": {
         "rows_matched": 422,
         "match_share": 0.2813,
-        "fail_rate_when_fired": 0.481,
-        "fail_rate_otherwise": 0.1521,
-        "lift": 3.162
+        "fail_rate_when_fired": 0.4692,
+        "fail_rate_otherwise": 0.1883,
+        "lift": 2.492
       }
     },
     {
@@ -106,9 +106,9 @@
       "observed": {
         "rows_matched": 57,
         "match_share": 0.038,
-        "fail_rate_when_fired": 0.614,
-        "fail_rate_otherwise": 0.2301,
-        "lift": 2.669
+        "fail_rate_when_fired": 0.5965,
+        "fail_rate_otherwise": 0.2543,
+        "lift": 2.345
       }
     },
     {
@@ -121,12 +121,12 @@
         {
           "field": "temperature_c",
           "op": ">",
-          "value": 85.0
+          "value": 80.0
         },
         {
           "field": "voltage_mv",
           "op": "<",
-          "value": 1100.0
+          "value": 1120.0
         }
       ],
       "effect": "add",
@@ -134,11 +134,11 @@
       "error_tag": "RETENTION_FAIL",
       "deterministic": false,
       "observed": {
-        "rows_matched": 8,
-        "match_share": 0.0053,
-        "fail_rate_when_fired": 0.625,
-        "fail_rate_otherwise": 0.2426,
-        "lift": 2.576
+        "rows_matched": 45,
+        "match_share": 0.03,
+        "fail_rate_when_fired": 0.6889,
+        "fail_rate_otherwise": 0.2543,
+        "lift": 2.709
       }
     },
     {
@@ -172,8 +172,8 @@
         "rows_matched": 33,
         "match_share": 0.022,
         "fail_rate_when_fired": 1.0,
-        "fail_rate_otherwise": 0.2277,
-        "lift": 4.392
+        "fail_rate_otherwise": 0.2509,
+        "lift": 3.986
       }
     },
     {
@@ -201,9 +201,9 @@
       "observed": {
         "rows_matched": 233,
         "match_share": 0.1553,
-        "fail_rate_when_fired": 0.412,
-        "fail_rate_otherwise": 0.2139,
-        "lift": 1.926
+        "fail_rate_when_fired": 0.5107,
+        "fail_rate_otherwise": 0.2226,
+        "lift": 2.295
       }
     },
     {
@@ -237,9 +237,9 @@
       "observed": {
         "rows_matched": 35,
         "match_share": 0.0233,
-        "fail_rate_when_fired": 0.5714,
-        "fail_rate_otherwise": 0.2369,
-        "lift": 2.413
+        "fail_rate_when_fired": 0.6286,
+        "fail_rate_otherwise": 0.2587,
+        "lift": 2.43
       }
     },
     {
@@ -265,23 +265,23 @@
       "error_tag": "THERMAL_SHUTDOWN",
       "deterministic": false,
       "observed": {
-        "rows_matched": 79,
-        "match_share": 0.0527,
-        "fail_rate_when_fired": 0.443,
-        "fail_rate_otherwise": 0.2336,
-        "lift": 1.896
+        "rows_matched": 132,
+        "match_share": 0.088,
+        "fail_rate_when_fired": 0.5227,
+        "fail_rate_otherwise": 0.2427,
+        "lift": 2.154
       }
     }
   ],
   "error_tag_distribution": {
-    "ASSERTION_FAIL": 50,
-    "DATA_MISMATCH": 92,
-    "ECC_UNCORRECTABLE": 29,
-    "FIFO_OVERFLOW": 72,
+    "ASSERTION_FAIL": 42,
+    "DATA_MISMATCH": 75,
+    "ECC_UNCORRECTABLE": 28,
+    "FIFO_OVERFLOW": 77,
     "PROTOCOL_VIOLATION": 33,
-    "RETENTION_FAIL": 4,
-    "THERMAL_SHUTDOWN": 20,
-    "TIMEOUT": 67
+    "RETENTION_FAIL": 26,
+    "THERMAL_SHUTDOWN": 35,
+    "TIMEOUT": 85
   },
   "files": {
     "config.csv": {
@@ -334,7 +334,7 @@
     },
     "transactions.csv": {
       "rows": 10852,
-      "bytes": 2369107,
+      "bytes": 2369707,
       "columns": [
         "run_id",
         "txn_id",
@@ -380,7 +380,7 @@
     },
     "outcomes.csv": {
       "rows": 1500,
-      "bytes": 189823,
+      "bytes": 191098,
       "columns": [
         "run_id",
         "test_id",

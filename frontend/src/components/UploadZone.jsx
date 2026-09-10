@@ -14,7 +14,10 @@ export default function UploadZone({ onUpload, onSample }) {
     e.preventDefault()
     e.stopPropagation()
     setDragActive(false)
-    const files = Array.from(e.dataTransfer.files).filter(f => f.name.endsWith('.log'))
+    const validExts = ['.log', '.csv', '.vcd', '.fsdb', '.wlf']
+    const files = Array.from(e.dataTransfer.files).filter(f =>
+      validExts.some(ext => f.name.toLowerCase().endsWith(ext))
+    )
     if (files.length > 0) onUpload(files)
   }
 
@@ -26,7 +29,7 @@ export default function UploadZone({ onUpload, onSample }) {
   return (
     <div className="upload-container">
       <div className="upload-card">
-        <h2>Upload UVM Simulation Logs</h2>
+        <h2>Upload Verification Files</h2>
 
         <div
           className={`dropzone ${dragActive ? 'active' : ''}`}
@@ -39,13 +42,13 @@ export default function UploadZone({ onUpload, onSample }) {
             <svg className="dropzone-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
               <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
-            <p className="dropzone-text">Drag .log files here or click to select</p>
-            <p className="dropzone-hint">Max 512 MB per upload</p>
+            <p className="dropzone-text">Drag files here (.log, .csv, .vcd, .fsdb, .wlf) or click to browse</p>
+            <p className="dropzone-hint">Multi-file ingestion (Config, Randomization, Coverage, Telemetry, Waveforms)</p>
           </div>
           <input
             type="file"
             multiple
-            accept=".log"
+            accept=".log,.csv,.vcd,.fsdb,.wlf"
             onChange={handleChange}
             className="file-input"
           />

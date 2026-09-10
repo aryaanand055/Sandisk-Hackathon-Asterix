@@ -53,8 +53,12 @@ def pareto_frontier(
 ) -> Dict[str, Any]:
     """Aggregate runs by configuration and extract the frontier."""
     df = runs.copy()
+    if "throughput_mbps" not in df.columns:
+        df["throughput_mbps"] = 1.0
+    if "execution_time_ms" not in df.columns:
+        df["execution_time_ms"] = 0.0
     df["_risk"] = predicted_risk
-    features = group_features(runs, features, importance_order,
+    features = group_features(df, features, importance_order,
                               n_group_features=n_group_features)
     df["_sig"] = _signature(df, features)
 

@@ -8,6 +8,7 @@ import Recommendations from './components/Recommendations'
 import ConfigDiff from './components/ConfigDiff'
 import RunExplorer from './components/RunExplorer'
 import AllDetails from './components/AllDetails'
+import AICopilot from './components/AICopilot'
 import './App.css'
 
 export default function App() {
@@ -17,6 +18,15 @@ export default function App() {
   const [loading, setLoading] = useState(false)
   const [activeTab, setActiveTab] = useState('summary')
   const [error, setError] = useState(null)
+
+  const handleReset = () => {
+    setJobId(null)
+    setProgress(null)
+    setResult(null)
+    setLoading(false)
+    setError(null)
+    setActiveTab('summary')
+  }
 
   useEffect(() => {
     if (!jobId) return
@@ -97,6 +107,14 @@ export default function App() {
 
       {error && <div className="error-box">{error}</div>}
 
+      {jobId && (
+        <div style={{ textAlign: 'right', padding: '0 24px', marginBottom: '12px' }}>
+          <button className="btn btn-secondary" onClick={handleReset} style={{ fontSize: '0.875rem' }}>
+            ← Analyze New Files / Reset
+          </button>
+        </div>
+      )}
+
       {!jobId ? (
         <UploadZone onUpload={handleUpload} onSample={handleSample} />
       ) : (
@@ -122,6 +140,7 @@ export default function App() {
               <div className="tab-buttons">
                 {[
                   { id: 'summary', label: 'Executive Summary' },
+                  { id: 'copilot', label: '🤖 AI Copilot' },
                   { id: 'fingerprints', label: 'Failure Fingerprints' },
                   { id: 'tradeoff', label: 'Tradeoff Matrix' },
                   { id: 'recommendations', label: 'Recommendations' },
@@ -141,6 +160,7 @@ export default function App() {
 
               <div className="tab-content">
                 {activeTab === 'summary' && <ExecutiveSummary data={result} />}
+                {activeTab === 'copilot' && <AICopilot jobId={jobId} result={result} />}
                 {activeTab === 'fingerprints' && <FailureFingerprints data={result} />}
                 {activeTab === 'tradeoff' && <TradeoffMatrix data={result} />}
                 {activeTab === 'recommendations' && <Recommendations data={result} />}

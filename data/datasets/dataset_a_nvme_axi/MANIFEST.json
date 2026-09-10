@@ -85,7 +85,7 @@
     },
     "transactions.csv": {
       "rows": 50572,
-      "bytes": 11047695,
+      "bytes": 11049293,
       "columns": [
         "run_id",
         "txn_id",
@@ -131,7 +131,7 @@
     },
     "telemetry.csv": {
       "rows": 6000,
-      "bytes": 886175,
+      "bytes": 885711,
       "columns": [
         "run_id",
         "host",
@@ -158,7 +158,7 @@
     },
     "outcomes.csv": {
       "rows": 6000,
-      "bytes": 756221,
+      "bytes": 761963,
       "columns": [
         "run_id",
         "test_id",
@@ -183,7 +183,7 @@
     },
     "registers.csv": {
       "rows": 24000,
-      "bytes": 2126668,
+      "bytes": 2126678,
       "columns": [
         "run_id",
         "access_time_ns",
@@ -201,7 +201,7 @@
     },
     "uvm.log": {
       "rows": 6000,
-      "bytes": 11146163,
+      "bytes": 11197788,
       "columns": [
         "<uvm log grammar>"
       ]
@@ -209,15 +209,21 @@
   },
   "waveforms": [
     {
-      "path": "waveforms/RUN-000001.vcd",
-      "run_id": "RUN-000001",
+      "path": "waveforms/RUN-000009.vcd",
+      "run_id": "RUN-000009",
       "verdict": "FAIL",
       "bytes": 23447
     },
     {
-      "path": "waveforms/RUN-000011.vcd",
-      "run_id": "RUN-000011",
+      "path": "waveforms/RUN-000010.vcd",
+      "run_id": "RUN-000010",
       "verdict": "FAIL",
+      "bytes": 23447
+    },
+    {
+      "path": "waveforms/RUN-000001.vcd",
+      "run_id": "RUN-000001",
+      "verdict": "PASS",
       "bytes": 23447
     },
     {
@@ -225,16 +231,10 @@
       "run_id": "RUN-000002",
       "verdict": "PASS",
       "bytes": 23447
-    },
-    {
-      "path": "waveforms/RUN-000003.vcd",
-      "run_id": "RUN-000003",
-      "verdict": "PASS",
-      "bytes": 23447
     }
   ],
-  "pass_rate": 0.7637,
-  "fail_rate": 0.2363,
+  "pass_rate": 0.739,
+  "fail_rate": 0.261,
   "column_aliases": {},
   "absent_categories": []
 }

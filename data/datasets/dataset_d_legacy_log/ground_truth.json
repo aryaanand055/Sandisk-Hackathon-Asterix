@@ -9,8 +9,8 @@
     "dut": "nvme_ssd_controller",
     "base_fail_prob": 0.012,
     "exec_ceiling_ms": 2000.0,
-    "observed_fail_rate": 0.223,
-    "observed_pass_rate": 0.777,
+    "observed_fail_rate": 0.2415,
+    "observed_pass_rate": 0.7585,
     "files_provided": [
       "uvm.log"
     ],
@@ -51,9 +51,9 @@
       "observed": {
         "rows_matched": 102,
         "match_share": 0.051,
-        "fail_rate_when_fired": 0.8824,
-        "fail_rate_otherwise": 0.1876,
-        "lift": 4.704
+        "fail_rate_when_fired": 0.7843,
+        "fail_rate_otherwise": 0.2123,
+        "lift": 3.694
       }
     },
     {
@@ -76,9 +76,9 @@
       "observed": {
         "rows_matched": 564,
         "match_share": 0.282,
-        "fail_rate_when_fired": 0.4504,
-        "fail_rate_otherwise": 0.1337,
-        "lift": 3.368
+        "fail_rate_when_fired": 0.4734,
+        "fail_rate_otherwise": 0.1504,
+        "lift": 3.147
       }
     },
     {
@@ -106,9 +106,9 @@
       "observed": {
         "rows_matched": 74,
         "match_share": 0.037,
-        "fail_rate_when_fired": 0.5946,
-        "fail_rate_otherwise": 0.2087,
-        "lift": 2.849
+        "fail_rate_when_fired": 0.5676,
+        "fail_rate_otherwise": 0.229,
+        "lift": 2.479
       }
     },
     {
@@ -121,12 +121,12 @@
         {
           "field": "temperature_c",
           "op": ">",
-          "value": 85.0
+          "value": 80.0
         },
         {
           "field": "voltage_mv",
           "op": "<",
-          "value": 1100.0
+          "value": 1120.0
         }
       ],
       "effect": "add",
@@ -134,11 +134,11 @@
       "error_tag": "RETENTION_FAIL",
       "deterministic": false,
       "observed": {
-        "rows_matched": 12,
-        "match_share": 0.006,
-        "fail_rate_when_fired": 0.5833,
-        "fail_rate_otherwise": 0.2208,
-        "lift": 2.642
+        "rows_matched": 56,
+        "match_share": 0.028,
+        "fail_rate_when_fired": 0.5714,
+        "fail_rate_otherwise": 0.232,
+        "lift": 2.463
       }
     },
     {
@@ -171,9 +171,9 @@
       "observed": {
         "rows_matched": 29,
         "match_share": 0.0145,
-        "fail_rate_when_fired": 0.9655,
-        "fail_rate_otherwise": 0.2121,
-        "lift": 4.553
+        "fail_rate_when_fired": 1.0,
+        "fail_rate_otherwise": 0.2303,
+        "lift": 4.341
       }
     },
     {
@@ -201,9 +201,9 @@
       "observed": {
         "rows_matched": 315,
         "match_share": 0.1575,
-        "fail_rate_when_fired": 0.4032,
-        "fail_rate_otherwise": 0.1893,
-        "lift": 2.13
+        "fail_rate_when_fired": 0.4603,
+        "fail_rate_otherwise": 0.2006,
+        "lift": 2.295
       }
     },
     {
@@ -237,9 +237,9 @@
       "observed": {
         "rows_matched": 59,
         "match_share": 0.0295,
-        "fail_rate_when_fired": 0.339,
-        "fail_rate_otherwise": 0.2195,
-        "lift": 1.545
+        "fail_rate_when_fired": 0.3729,
+        "fail_rate_otherwise": 0.2375,
+        "lift": 1.57
       }
     },
     {
@@ -265,28 +265,28 @@
       "error_tag": "THERMAL_SHUTDOWN",
       "deterministic": false,
       "observed": {
-        "rows_matched": 97,
-        "match_share": 0.0485,
-        "fail_rate_when_fired": 0.4536,
-        "fail_rate_otherwise": 0.2112,
-        "lift": 2.147
+        "rows_matched": 169,
+        "match_share": 0.0845,
+        "fail_rate_when_fired": 0.4675,
+        "fail_rate_otherwise": 0.2206,
+        "lift": 2.119
       }
     }
   ],
   "error_tag_distribution": {
-    "ASSERTION_FAIL": 64,
-    "DATA_MISMATCH": 102,
-    "ECC_UNCORRECTABLE": 37,
-    "FIFO_OVERFLOW": 90,
-    "PROTOCOL_VIOLATION": 28,
-    "RETENTION_FAIL": 5,
-    "THERMAL_SHUTDOWN": 29,
-    "TIMEOUT": 91
+    "ASSERTION_FAIL": 67,
+    "DATA_MISMATCH": 101,
+    "ECC_UNCORRECTABLE": 36,
+    "FIFO_OVERFLOW": 80,
+    "PROTOCOL_VIOLATION": 29,
+    "RETENTION_FAIL": 26,
+    "THERMAL_SHUTDOWN": 36,
+    "TIMEOUT": 108
   },
   "files": {
     "uvm.log": {
       "rows": 2000,
-      "bytes": 3694845,
+      "bytes": 3711553,
       "columns": [
         "<uvm log grammar>"
       ]

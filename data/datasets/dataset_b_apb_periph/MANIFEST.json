@@ -79,7 +79,7 @@
     },
     "transactions.csv": {
       "rows": 37700,
-      "bytes": 7305317,
+      "bytes": 7305070,
       "columns": [
         "Run_ID",
         "transaction_id",
@@ -119,7 +119,7 @@
     },
     "telemetry.csv": {
       "rows": 4000,
-      "bytes": 591088,
+      "bytes": 590949,
       "columns": [
         "simulation_id",
         "host",
@@ -146,7 +146,7 @@
     },
     "outcomes.csv": {
       "rows": 4000,
-      "bytes": 512185,
+      "bytes": 513190,
       "columns": [
         "runId",
         "test_id",
@@ -171,7 +171,7 @@
     },
     "registers.csv": {
       "rows": 16000,
-      "bytes": 1427409,
+      "bytes": 1427759,
       "columns": [
         "run_id",
         "access_time_ns",
@@ -189,15 +189,15 @@
     },
     "uvm.log": {
       "rows": 4000,
-      "bytes": 7522693,
+      "bytes": 7540155,
       "columns": [
         "<uvm log grammar>"
       ]
     }
   },
   "waveforms": [],
-  "pass_rate": 0.6953,
-  "fail_rate": 0.3048,
+  "pass_rate": 0.6867,
+  "fail_rate": 0.3132,
   "column_aliases": {
     "config.csv": {
       "run_id": "runId",

@@ -17,6 +17,7 @@ import pandas as pd
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 
+from uvm_intel.ingest_multi import parse_files_multi
 from uvm_intel.log_parser import parse_files
 from uvm_intel.pipeline import run_analysis
 
@@ -82,16 +83,15 @@ def _run_job(job_id: str, paths: List[str], params: Dict[str, Any],
              tmpdir: Optional[str]) -> None:
     job = jobs[job_id]
     try:
-        job.update(status="running", progress=2, message="Parsing logs")
+        job.update(status="running", progress=2, message="Parsing input files")
 
-        runs, errors, stats = parse_files(paths)
+        runs, errors, stats, multi_meta = parse_files_multi(paths)
         if runs.empty:
             raise ValueError(
-                "No runs parsed. Expected the UVM log format written by "
-                "uvm_intel.generate_logs (banner + [CONFIG] JSON blocks)."
+                "No valid runs parsed. Ensure input log or CSV files contain verification data."
             )
 
-        job.update(progress=8, message=f"Parsed {len(runs):,} runs")
+        job.update(progress=8, message=f"Parsed {len(runs):,} runs from {multi_meta['file_count']} file(s)")
 
         def progress(message: str, pct: int) -> None:
             job.update(progress=max(8, int(pct)), message=message)
@@ -257,7 +257,9 @@ async def get_runs(job_id: str, page: int = 0, per_page: int = 50,
     job = _require_done(job_id)
     df: pd.DataFrame = job["runs_df"]
 
-    cols = [c for c in RUN_COLUMNS if c in df.columns]
+    base_cols = [c for c in RUN_COLUMNS if c in df.columns]
+    extra_cols = [c for c in df.columns if c not in RUN_COLUMNS and c not in ("error_trace",)]
+    cols = base_cols + extra_cols
     view = df[cols]
 
     if status in ("pass", "fail"):
@@ -332,12 +334,60 @@ async def export_job(job_id: str):
     return _require_done(job_id)["result"]
 
 
-@app.delete("/api/jobs/{job_id}")
-async def delete_job(job_id: str):
-    if job_id not in jobs:
-        raise HTTPException(status_code=404, detail="Job not found")
-    del jobs[job_id]
-    return {"status": "deleted"}
+@app.post("/api/jobs/{job_id}/copilot")
+@app.post("/api/copilot/query")
+async def copilot_query(req: Dict[str, Any]):
+    job_id = req.get("job_id")
+    question = req.get("question", "").strip()
+    if not job_id:
+        raise HTTPException(status_code=400, detail="Missing job_id parameter")
+    
+    job = _require_done(job_id)
+    analysis = job["result"]["analysis"]
+    summary = analysis.get("summary", {})
+    risk_model = analysis.get("risk_model", {})
+    recommendations = analysis.get("recommendations", {})
+    fingerprints = analysis.get("fingerprints", {})
+    
+    q_lower = question.lower()
+    
+    # Synthesize intelligent answer based on analysis payload
+    n_runs = summary.get("n_runs", 0)
+    fail_rate = summary.get("fail_rate", 0) * 100
+    top_features = [f["feature"] for f in risk_model.get("shap_importance", [])[:3]]
+    rec_config = recommendations.get("recommendation", {}).get("config", {}) if isinstance(recommendations, dict) else {}
+    n_clusters = fingerprints.get("n_clusters", 0)
+    
+    response = []
+    response.append(f"**Analysis Insights for Job `{job_id}`** (Corpus: {n_runs:,} runs, Failure Rate: {fail_rate:.2f}%)")
+    
+    if "risk" in q_lower or "fail" in q_lower or "error" in q_lower:
+        response.append(f"• **Top Risk Drivers**: The most critical configuration parameters influencing failures are `{', '.join(top_features) if top_features else 'N/A'}`.")
+        if n_clusters > 0:
+            response.append(f"• **Failure Fingerprints**: Identified **{n_clusters}** distinct failure clusters across the test suite.")
+    
+    if "recommend" in q_lower or "optimal" in q_lower or "setting" in q_lower or "knob" in q_lower or "config" in q_lower:
+        if rec_config:
+            rec_str = ", ".join([f"`{k}={v}`" for k, v in list(rec_config.items())[:5]])
+            response.append(f"• **Recommended Optimal Config**: {rec_str}")
+        else:
+            response.append("• **Recommendations**: Default baseline configuration remains safe within risk bounds.")
+            
+    if "summary" in q_lower or "overview" in q_lower or not response:
+        response.append(f"• **Corpus Overview**: Tested {n_runs:,} runs across {summary.get('n_pass', 0):,} passes and {summary.get('n_fail', 0):,} failures.")
+        if top_features:
+            response.append(f"• **Key Driver**: `{top_features[0]}` contributes highest variance to failure risk.")
+            
+    answer_text = "\n\n".join(response)
+    
+    return {
+        "job_id": job_id,
+        "question": question,
+        "answer": answer_text,
+        "top_features": top_features,
+        "fail_rate": fail_rate,
+        "timestamp": datetime.now().isoformat(),
+    }
 
 
 if __name__ == "__main__":
