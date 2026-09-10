@@ -49,7 +49,7 @@ class FieldSpec:
 # ═══════════════════════════════════════════════════════════════════════════
 
 SCHEMA: List[FieldSpec] = [
-    # ── Configuration Fields (5) ──────────────────────────────────────────
+    # ── Configuration Fields (10) ─────────────────────────────────────────
     FieldSpec(
         name="cache_size",
         category="configuration",
@@ -83,7 +83,44 @@ SCHEMA: List[FieldSpec] = [
         is_integer=True,
     ),
 
-    # ── Randomization Fields (5) ──────────────────────────────────────────
+    FieldSpec(
+        name="prefetch_depth",
+        category="configuration",
+        field_type="numeric",
+        domain=[0, 2, 4, 8, 16],
+        is_discrete_set=True,
+        is_integer=True,
+    ),
+    FieldSpec(
+        name="compression",
+        category="configuration",
+        field_type="categorical",
+        # "off" rather than "none": ingest.py treats "none" as a null token,
+        # which would silently blank out a quarter of this column.
+        domain=["off", "lz4", "zstd", "gzip"],
+    ),
+    FieldSpec(
+        name="queue_depth",
+        category="configuration",
+        field_type="numeric",
+        domain=[1, 4, 16, 32, 64, 128],
+        is_discrete_set=True,
+        is_integer=True,
+    ),
+    FieldSpec(
+        name="power_mode",
+        category="configuration",
+        field_type="categorical",
+        domain=["eco", "balanced", "turbo"],
+    ),
+    FieldSpec(
+        name="ecc_mode",
+        category="configuration",
+        field_type="categorical",
+        domain=["off", "parity", "sec_ded", "bch"],
+    ),
+
+    # ── Randomization Fields (10) ─────────────────────────────────────────
     FieldSpec(
         name="random_seed",
         category="randomization",
@@ -115,6 +152,42 @@ SCHEMA: List[FieldSpec] = [
         field_type="numeric",
         domain=(100, 10000),
         is_integer=True,
+    ),
+
+    FieldSpec(
+        name="burst_length",
+        category="randomization",
+        field_type="numeric",
+        domain=(1, 256),
+        is_integer=True,
+    ),
+    FieldSpec(
+        name="access_pattern",
+        category="randomization",
+        field_type="categorical",
+        domain=["sequential", "random", "stride", "mixed"],
+    ),
+    FieldSpec(
+        name="concurrency",
+        category="randomization",
+        field_type="numeric",
+        domain=[1, 2, 4, 8, 16, 32],
+        is_discrete_set=True,
+        is_integer=True,
+    ),
+    FieldSpec(
+        name="injection_rate",
+        category="randomization",
+        field_type="numeric",
+        domain=(0.0, 0.30),
+        decimal_places=3,
+    ),
+    FieldSpec(
+        name="payload_entropy",
+        category="randomization",
+        field_type="numeric",
+        domain=(0.0, 1.0),
+        decimal_places=3,
     ),
 
     # ── Environment Fields (2) ────────────────────────────────────────────
@@ -165,7 +238,8 @@ SCHEMA: List[FieldSpec] = [
         name="error_type",
         category="outcome",
         field_type="categorical",
-        domain=["none", "timeout", "overflow", "corruption", "assertion"],
+        domain=["none", "timeout", "overflow", "corruption", "assertion",
+                "thermal", "ecc_uncorrectable"],
     ),
 ]
 

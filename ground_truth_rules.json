@@ -2,17 +2,45 @@
   "rules": [
     {
       "id": "rule_1",
-      "description": "Dynamic scheduler with high traffic and small cache causes frequent timeouts",
+      "description": "Deep queues under high concurrency on the static scheduler starve the dispatcher and time out",
       "conditions": [
+        {
+          "field": "queue_depth",
+          "op": ">=",
+          "value": 64
+        },
+        {
+          "field": "concurrency",
+          "op": ">=",
+          "value": 16
+        },
         {
           "field": "scheduler",
           "op": "==",
-          "value": "dynamic"
+          "value": "static"
+        }
+      ],
+      "effect": {
+        "type": "failure_multiplier",
+        "target": "pass_fail",
+        "value": 3.5
+      },
+      "error_type_bias": "timeout",
+      "phase": "outcome"
+    },
+    {
+      "id": "rule_2",
+      "description": "zstd compression on high-entropy payloads with a small cache overruns the codec window and corrupts data",
+      "conditions": [
+        {
+          "field": "compression",
+          "op": "==",
+          "value": "zstd"
         },
         {
-          "field": "traffic_pattern",
-          "op": "==",
-          "value": "high"
+          "field": "payload_entropy",
+          "op": ">",
+          "value": 0.8
         },
         {
           "field": "cache_size",
@@ -23,19 +51,92 @@
       "effect": {
         "type": "failure_multiplier",
         "target": "pass_fail",
-        "value": 3.0
+        "value": 4.0
       },
-      "error_type_bias": "timeout",
+      "error_type_bias": "corruption",
       "phase": "outcome"
     },
     {
-      "id": "rule_2",
-      "description": "Small cache with large workload causes execution time degradation",
+      "id": "rule_3",
+      "description": "Turbo power mode above 75 \u00b0C trips thermal protection",
       "conditions": [
         {
-          "field": "cache_size",
+          "field": "power_mode",
           "op": "==",
-          "value": "small"
+          "value": "turbo"
+        },
+        {
+          "field": "temperature",
+          "op": ">",
+          "value": 75.0
+        }
+      ],
+      "effect": {
+        "type": "failure_multiplier",
+        "target": "pass_fail",
+        "value": 3.0
+      },
+      "error_type_bias": "thermal",
+      "phase": "outcome"
+    },
+    {
+      "id": "rule_4",
+      "description": "ECC disabled while fault injection exceeds 20 % leaves bit flips uncorrected",
+      "conditions": [
+        {
+          "field": "ecc_mode",
+          "op": "==",
+          "value": "off"
+        },
+        {
+          "field": "injection_rate",
+          "op": ">",
+          "value": 0.2
+        }
+      ],
+      "effect": {
+        "type": "failure_multiplier",
+        "target": "pass_fail",
+        "value": 2.8
+      },
+      "error_type_bias": "ecc_uncorrectable",
+      "phase": "outcome"
+    },
+    {
+      "id": "rule_5",
+      "description": "Aggressive prefetch under random access with little memory thrashes the line fill buffer and slows execution",
+      "conditions": [
+        {
+          "field": "prefetch_depth",
+          "op": ">=",
+          "value": 8
+        },
+        {
+          "field": "access_pattern",
+          "op": "==",
+          "value": "random"
+        },
+        {
+          "field": "memory_size",
+          "op": "<=",
+          "value": 512
+        }
+      ],
+      "effect": {
+        "type": "exec_time_multiplier",
+        "target": "execution_time",
+        "value": 2.2
+      },
+      "phase": "outcome"
+    },
+    {
+      "id": "rule_6",
+      "description": "Eco power mode on large workloads clamps the clock and stretches execution time",
+      "conditions": [
+        {
+          "field": "power_mode",
+          "op": "==",
+          "value": "eco"
         },
         {
           "field": "workload",
@@ -46,121 +147,93 @@
       "effect": {
         "type": "exec_time_multiplier",
         "target": "execution_time",
-        "value": 2.0
+        "value": 1.8
       },
       "phase": "outcome"
     },
     {
-      "id": "rule_3",
-      "description": "Feature X enabled at high temperatures causes data corruption failures",
+      "id": "rule_7",
+      "description": "Long bursts into a shallow queue under high traffic overflow the ingress FIFO",
       "conditions": [
         {
-          "field": "feature_x",
-          "op": "==",
-          "value": "ON"
+          "field": "burst_length",
+          "op": ">",
+          "value": 200
         },
         {
-          "field": "temperature",
-          "op": ">",
-          "value": 80.0
-        }
-      ],
-      "effect": {
-        "type": "failure_multiplier",
-        "target": "pass_fail",
-        "value": 2.5
-      },
-      "error_type_bias": "corruption",
-      "phase": "outcome"
-    },
-    {
-      "id": "rule_4",
-      "description": "Certain seed ranges trigger edge-case large workload selection",
-      "conditions": [
-        {
-          "field": "random_seed",
+          "field": "queue_depth",
           "op": "<=",
-          "value": 1000
-        }
-      ],
-      "effect": {
-        "type": "value_bias",
-        "target": "workload",
-        "value": "large",
-        "probability": 0.7
-      },
-      "phase": "sampling"
-    },
-    {
-      "id": "rule_5",
-      "description": "Low voltage combined with large memory causes corruption failures",
-      "conditions": [
-        {
-          "field": "voltage",
-          "op": "<",
-          "value": 0.85
+          "value": 4
         },
         {
-          "field": "memory_size",
-          "op": ">=",
-          "value": 2048
+          "field": "traffic_pattern",
+          "op": "==",
+          "value": "high"
         }
       ],
       "effect": {
         "type": "failure_multiplier",
         "target": "pass_fail",
-        "value": 2.0
-      },
-      "error_type_bias": "corruption",
-      "phase": "outcome"
-    },
-    {
-      "id": "rule_6",
-      "description": "Feature Y with adaptive scheduler and large inputs causes overflow failures",
-      "conditions": [
-        {
-          "field": "feature_y",
-          "op": "==",
-          "value": "ON"
-        },
-        {
-          "field": "scheduler",
-          "op": "==",
-          "value": "adaptive"
-        },
-        {
-          "field": "input_size",
-          "op": ">",
-          "value": 8000
-        }
-      ],
-      "effect": {
-        "type": "failure_multiplier",
-        "target": "pass_fail",
-        "value": 2.0
+        "value": 3.2
       },
       "error_type_bias": "overflow",
       "phase": "outcome"
     },
     {
-      "id": "rule_7",
-      "description": "Late timing at elevated temperatures causes execution time degradation",
+      "id": "rule_8",
+      "description": "High seed ranges bias the constraint solver toward strided access patterns",
       "conditions": [
         {
-          "field": "timing",
-          "op": "==",
-          "value": "late"
-        },
-        {
-          "field": "temperature",
-          "op": ">",
-          "value": 70.0
+          "field": "random_seed",
+          "op": ">=",
+          "value": 90000
         }
       ],
       "effect": {
-        "type": "exec_time_multiplier",
-        "target": "execution_time",
-        "value": 1.5
+        "type": "value_bias",
+        "target": "access_pattern",
+        "value": "stride",
+        "probability": 0.75
+      },
+      "phase": "sampling"
+    },
+    {
+      "id": "rule_9",
+      "description": "High concurrency drives the traffic generator into its high-rate profile",
+      "conditions": [
+        {
+          "field": "concurrency",
+          "op": ">=",
+          "value": 16
+        }
+      ],
+      "effect": {
+        "type": "value_bias",
+        "target": "traffic_pattern",
+        "value": "high",
+        "probability": 0.6
+      },
+      "phase": "sampling"
+    },
+    {
+      "id": "rule_10",
+      "description": "gzip compression under concurrency of 8 or more serialises on the codec and collapses throughput",
+      "conditions": [
+        {
+          "field": "compression",
+          "op": "==",
+          "value": "gzip"
+        },
+        {
+          "field": "concurrency",
+          "op": ">=",
+          "value": 8
+        }
+      ],
+      "effect": {
+        "type": "throughput_multiplier",
+        "target": "throughput",
+        "value": 0.55
       },
       "phase": "outcome"
     }

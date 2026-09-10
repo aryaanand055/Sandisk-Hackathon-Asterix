@@ -39,149 +39,209 @@ from data_model import SCHEMA, FieldSpec, get_field, get_fields_by_category
 #   phase = "outcome"   →  modifies pass_fail / execution_time
 #
 # Effect types:
-#   failure_multiplier   — multiplies base failure probability
-#   exec_time_multiplier — multiplies base execution time
-#   value_bias           — overrides a column value with given probability
+#   failure_multiplier     — multiplies base failure probability
+#   exec_time_multiplier   — multiplies base execution time
+#   throughput_multiplier  — multiplies derived throughput
+#   value_bias             — overrides a column value with given probability
 #
 # error_type_bias (optional): when a row fails AND this rule had the
 # highest failure multiplier among matching rules, assign this error type.
 
 RULES: List[Dict] = [
-    # ── Rule 1: 3-way config × randomization interaction ─────────────────
+    # ── Rule 1: 3-way config × randomization → queue starvation ──────────
     {
         "id": "rule_1",
         "description": (
-            "Dynamic scheduler with high traffic and small cache "
-            "causes frequent timeouts"
+            "Deep queues under high concurrency on the static scheduler "
+            "starve the dispatcher and time out"
         ),
         "conditions": [
-            {"field": "scheduler",      "op": "==", "value": "dynamic"},
-            {"field": "traffic_pattern", "op": "==", "value": "high"},
+            {"field": "queue_depth",  "op": ">=", "value": 64},
+            {"field": "concurrency",  "op": ">=", "value": 16},
+            {"field": "scheduler",    "op": "==", "value": "static"},
+        ],
+        "effect": {
+            "type": "failure_multiplier",
+            "target": "pass_fail",
+            "value": 3.5,
+        },
+        "error_type_bias": "timeout",
+        "phase": "outcome",
+    },
+
+    # ── Rule 2: 3-way config × randomization → codec corruption ──────────
+    {
+        "id": "rule_2",
+        "description": (
+            "zstd compression on high-entropy payloads with a small cache "
+            "overruns the codec window and corrupts data"
+        ),
+        "conditions": [
+            {"field": "compression",     "op": "==", "value": "zstd"},
+            {"field": "payload_entropy", "op": ">",  "value": 0.80},
             {"field": "cache_size",      "op": "==", "value": "small"},
+        ],
+        "effect": {
+            "type": "failure_multiplier",
+            "target": "pass_fail",
+            "value": 4.0,
+        },
+        "error_type_bias": "corruption",
+        "phase": "outcome",
+    },
+
+    # ── Rule 3: config × environment → thermal runaway ───────────────────
+    {
+        "id": "rule_3",
+        "description": (
+            "Turbo power mode above 75 °C trips thermal protection"
+        ),
+        "conditions": [
+            {"field": "power_mode",  "op": "==", "value": "turbo"},
+            {"field": "temperature", "op": ">",  "value": 75.0},
         ],
         "effect": {
             "type": "failure_multiplier",
             "target": "pass_fail",
             "value": 3.0,
         },
-        "error_type_bias": "timeout",
+        "error_type_bias": "thermal",
         "phase": "outcome",
     },
 
-    # ── Rule 2: config × randomization → performance ─────────────────────
+    # ── Rule 4: config × randomization → unprotected fault injection ─────
     {
-        "id": "rule_2",
+        "id": "rule_4",
         "description": (
-            "Small cache with large workload causes execution time "
-            "degradation"
+            "ECC disabled while fault injection exceeds 20 % leaves "
+            "bit flips uncorrected"
         ),
         "conditions": [
-            {"field": "cache_size", "op": "==", "value": "small"},
+            {"field": "ecc_mode",       "op": "==", "value": "off"},
+            {"field": "injection_rate", "op": ">",  "value": 0.20},
+        ],
+        "effect": {
+            "type": "failure_multiplier",
+            "target": "pass_fail",
+            "value": 2.8,
+        },
+        "error_type_bias": "ecc_uncorrectable",
+        "phase": "outcome",
+    },
+
+    # ── Rule 5: 3-way config × randomization → prefetch thrashing ────────
+    {
+        "id": "rule_5",
+        "description": (
+            "Aggressive prefetch under random access with little memory "
+            "thrashes the line fill buffer and slows execution"
+        ),
+        "conditions": [
+            {"field": "prefetch_depth", "op": ">=", "value": 8},
+            {"field": "access_pattern", "op": "==", "value": "random"},
+            {"field": "memory_size",    "op": "<=", "value": 512},
+        ],
+        "effect": {
+            "type": "exec_time_multiplier",
+            "target": "execution_time",
+            "value": 2.2,
+        },
+        "phase": "outcome",
+    },
+
+    # ── Rule 6: config × randomization → eco-mode clamp ──────────────────
+    {
+        "id": "rule_6",
+        "description": (
+            "Eco power mode on large workloads clamps the clock and "
+            "stretches execution time"
+        ),
+        "conditions": [
+            {"field": "power_mode", "op": "==", "value": "eco"},
             {"field": "workload",   "op": "==", "value": "large"},
         ],
         "effect": {
             "type": "exec_time_multiplier",
             "target": "execution_time",
-            "value": 2.0,
+            "value": 1.8,
         },
         "phase": "outcome",
     },
 
-    # ── Rule 3: config × environment → thermal failure ───────────────────
+    # ── Rule 7: 3-way randomization × config → burst overflow ────────────
     {
-        "id": "rule_3",
+        "id": "rule_7",
         "description": (
-            "Feature X enabled at high temperatures causes "
-            "data corruption failures"
+            "Long bursts into a shallow queue under high traffic overflow "
+            "the ingress FIFO"
         ),
         "conditions": [
-            {"field": "feature_x",   "op": "==", "value": "ON"},
-            {"field": "temperature", "op": ">",  "value": 80.0},
+            {"field": "burst_length",    "op": ">",  "value": 200},
+            {"field": "queue_depth",     "op": "<=", "value": 4},
+            {"field": "traffic_pattern", "op": "==", "value": "high"},
         ],
         "effect": {
             "type": "failure_multiplier",
             "target": "pass_fail",
-            "value": 2.5,
-        },
-        "error_type_bias": "corruption",
-        "phase": "outcome",
-    },
-
-    # ── Rule 4: seed-driven edge-case workload bias ──────────────────────
-    {
-        "id": "rule_4",
-        "description": (
-            "Certain seed ranges trigger edge-case large workload "
-            "selection"
-        ),
-        "conditions": [
-            {"field": "random_seed", "op": "<=", "value": 1000},
-        ],
-        "effect": {
-            "type": "value_bias",
-            "target": "workload",
-            "value": "large",
-            "probability": 0.70,
-        },
-        "phase": "sampling",
-    },
-
-    # ── Rule 5: environment × config → voltage-induced corruption ────────
-    {
-        "id": "rule_5",
-        "description": (
-            "Low voltage combined with large memory causes "
-            "corruption failures"
-        ),
-        "conditions": [
-            {"field": "voltage",     "op": "<",  "value": 0.85},
-            {"field": "memory_size", "op": ">=", "value": 2048},
-        ],
-        "effect": {
-            "type": "failure_multiplier",
-            "target": "pass_fail",
-            "value": 2.0,
-        },
-        "error_type_bias": "corruption",
-        "phase": "outcome",
-    },
-
-    # ── Rule 6: 3-way config × randomization → overflow ──────────────────
-    {
-        "id": "rule_6",
-        "description": (
-            "Feature Y with adaptive scheduler and large inputs "
-            "causes overflow failures"
-        ),
-        "conditions": [
-            {"field": "feature_y",  "op": "==", "value": "ON"},
-            {"field": "scheduler",  "op": "==", "value": "adaptive"},
-            {"field": "input_size", "op": ">",  "value": 8000},
-        ],
-        "effect": {
-            "type": "failure_multiplier",
-            "target": "pass_fail",
-            "value": 2.0,
+            "value": 3.2,
         },
         "error_type_bias": "overflow",
         "phase": "outcome",
     },
 
-    # ── Rule 7: randomization × environment → sustained-heat slowdown ────
+    # ── Rule 8: seed-driven access-pattern bias (sampling) ───────────────
     {
-        "id": "rule_7",
+        "id": "rule_8",
         "description": (
-            "Late timing at elevated temperatures causes "
-            "execution time degradation"
+            "High seed ranges bias the constraint solver toward strided "
+            "access patterns"
         ),
         "conditions": [
-            {"field": "timing",      "op": "==", "value": "late"},
-            {"field": "temperature", "op": ">",  "value": 70.0},
+            {"field": "random_seed", "op": ">=", "value": 90000},
         ],
         "effect": {
-            "type": "exec_time_multiplier",
-            "target": "execution_time",
-            "value": 1.5,
+            "type": "value_bias",
+            "target": "access_pattern",
+            "value": "stride",
+            "probability": 0.75,
+        },
+        "phase": "sampling",
+    },
+
+    # ── Rule 9: concurrency-driven traffic bias (sampling) ───────────────
+    {
+        "id": "rule_9",
+        "description": (
+            "High concurrency drives the traffic generator into its "
+            "high-rate profile"
+        ),
+        "conditions": [
+            {"field": "concurrency", "op": ">=", "value": 16},
+        ],
+        "effect": {
+            "type": "value_bias",
+            "target": "traffic_pattern",
+            "value": "high",
+            "probability": 0.60,
+        },
+        "phase": "sampling",
+    },
+
+    # ── Rule 10: config × randomization → throughput collapse ────────────
+    {
+        "id": "rule_10",
+        "description": (
+            "gzip compression under concurrency of 8 or more serialises on "
+            "the codec and collapses throughput"
+        ),
+        "conditions": [
+            {"field": "compression", "op": "==", "value": "gzip"},
+            {"field": "concurrency", "op": ">=", "value": 8},
+        ],
+        "effect": {
+            "type": "throughput_multiplier",
+            "target": "throughput",
+            "value": 0.55,
         },
         "phase": "outcome",
     },
@@ -268,6 +328,7 @@ def _apply_outcome_rules(
     rules: List[Dict],
     fail_prob: np.ndarray,
     exec_time: np.ndarray,
+    tp_mult: np.ndarray,
 ) -> pd.Series:
     """Apply outcome-phase rules.  Returns rule-assigned error-type Series."""
     error_bias = pd.Series("", index=df.index)
@@ -289,6 +350,9 @@ def _apply_outcome_rules(
 
         elif eff["type"] == "exec_time_multiplier":
             exec_time[mask.values] *= eff["value"]
+
+        elif eff["type"] == "throughput_multiplier":
+            tp_mult[mask.values] *= eff["value"]
 
     return error_bias
 
@@ -322,8 +386,10 @@ def generate(n_runs: int, seed: int = 42) -> pd.DataFrame:
     exec_time = rng.lognormal(et_p["mean"], et_p["std"], size=n_runs)
     exec_time = np.clip(exec_time, *et_spec.domain)
 
+    tp_mult = np.ones(n_runs, dtype=np.float64)
+
     # 5 ── Outcome-phase rules ─────────────────────────────────────────────
-    error_bias = _apply_outcome_rules(df, RULES, fail_prob, exec_time)
+    error_bias = _apply_outcome_rules(df, RULES, fail_prob, exec_time, tp_mult)
 
     # 6 ── Resolve pass / fail ─────────────────────────────────────────────
     fail_prob = np.minimum(fail_prob, 0.95)
@@ -336,7 +402,7 @@ def generate(n_runs: int, seed: int = 42) -> pd.DataFrame:
 
     # 8 ── Throughput (inversely proportional + noise) ─────────────────────
     tp_spec = get_field("throughput")
-    throughput = 500_000.0 / exec_time + rng.normal(0, 200, size=n_runs)
+    throughput = (500_000.0 / exec_time) * tp_mult + rng.normal(0, 200, size=n_runs)
     throughput = np.clip(throughput, *tp_spec.domain)
     df["throughput"] = np.round(throughput).astype(int)
 
@@ -366,6 +432,42 @@ def write_ground_truth(path: str) -> None:
 
 
 # ═══════════════════════════════════════════════════════════════════════════
+# Raw Log Export
+# ═══════════════════════════════════════════════════════════════════════════
+
+def write_raw_log(df: pd.DataFrame, path: str) -> None:
+    """Emit the same runs as UVM-style block logs.
+
+    The banner line is what `ingest._find_banner` latches onto; everything
+    else is plain ``key : value`` so the block parser can harvest it without
+    a format-specific reader.  Written streaming — 50k blocks is far too much
+    to build as one string.
+    """
+    cfg = [f.name for f in get_fields_by_category("configuration")]
+    rnd = [f.name for f in get_fields_by_category("randomization")]
+    env = [f.name for f in get_fields_by_category("environment")]
+
+    sections = (("CONFIG", cfg), ("RANDOMIZATION", rnd), ("ENVIRONMENT", env))
+    records = df.to_dict("records")
+
+    with open(path, "w", newline="\n") as fh:
+        fh.write("# UVM simulation log - Configuration Intelligence testbench\n")
+        fh.write(f"# runs={len(df)} schema_version=2\n")
+        for rec in records:
+            verdict = "PASSED" if rec["pass_fail"] == "pass" else "FAILED"
+            fh.write(f"UVM_INFO @0: RUN_START :: {rec['run_id']}\n")
+            for title, names in sections:
+                fh.write(f"  [{title}]\n")
+                for name in names:
+                    fh.write(f"    {name} : {rec[name]}\n")
+            fh.write("  [RESULT]\n")
+            fh.write(f"    verdict : {verdict}\n")
+            fh.write(f"    execution_time : {rec['execution_time']}\n")
+            fh.write(f"    throughput : {rec['throughput']}\n")
+            fh.write(f"    error_type : {rec['error_type']}\n")
+
+
+# ═══════════════════════════════════════════════════════════════════════════
 # CLI
 # ═══════════════════════════════════════════════════════════════════════════
 
@@ -389,12 +491,21 @@ def main() -> None:
         "--rules-output", default="ground_truth_rules.json",
         help="Output path for ground-truth rules JSON",
     )
+    parser.add_argument(
+        "--log-output", default=None,
+        help="Also emit raw UVM-style block logs to this path",
+    )
     args = parser.parse_args()
 
     print(f"Generating {args.n_runs:,} test runs (seed={args.seed}) ...")
     df = generate(args.n_runs, args.seed)
     df.to_csv(args.output, index=False)
     print(f"  -> {args.output}  ({len(df):,} rows, {len(df.columns)} columns)")
+
+    if args.log_output:
+        write_raw_log(df, args.log_output)
+        size_mb = Path(args.log_output).stat().st_size / 1e6
+        print(f"  -> {args.log_output}  ({size_mb:,.1f} MB raw log)")
 
     write_ground_truth(args.rules_output)
     print(f"  -> {args.rules_output}  ({len(RULES)} rules)")

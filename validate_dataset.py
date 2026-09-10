@@ -130,31 +130,36 @@ def main() -> None:
 
     overall = _fail_rate(df["pass_fail"])
 
-    # Rule 1 signal: scheduler=dynamic & traffic_pattern=high & cache_size=small
-    r1_mask = ((df.get("scheduler") == "dynamic") &
-               (df.get("traffic_pattern") == "high") &
-               (df.get("cache_size") == "small"))
-    if r1_mask.any():
-        r1_rate = _fail_rate(df.loc[r1_mask, "pass_fail"])
-        print(f"\n    scheduler=dynamic & traffic=high & cache=small")
-        print(f"      fail_rate = {r1_rate:.3f}  (overall: {overall:.3f}, "
-              f"ratio: {r1_rate / overall:.1f}x, n={r1_mask.sum()})")
+    # One spot check per planted failure rule.  Each is a label plus the mask
+    # that isolates it, so retuning a rule means editing one line here.
+    spot_checks = [
+        ("queue_depth>=64 & concurrency>=16 & scheduler=static",
+         lambda d: (d["queue_depth"] >= 64) & (d["concurrency"] >= 16) &
+                   (d["scheduler"] == "static")),
+        ("compression=zstd & payload_entropy>0.80 & cache=small",
+         lambda d: (d["compression"] == "zstd") & (d["payload_entropy"] > 0.80) &
+                   (d["cache_size"] == "small")),
+        ("power_mode=turbo & temperature>75",
+         lambda d: (d["power_mode"] == "turbo") & (d["temperature"] > 75.0)),
+        ("ecc_mode=off & injection_rate>0.20",
+         lambda d: (d["ecc_mode"] == "off") & (d["injection_rate"] > 0.20)),
+        ("burst_length>200 & queue_depth<=4 & traffic=high",
+         lambda d: (d["burst_length"] > 200) & (d["queue_depth"] <= 4) &
+                   (d["traffic_pattern"] == "high")),
+    ]
 
-    # Rule 3 signal: feature_x=ON & temperature > 80
-    r3_mask = ((df.get("feature_x") == "ON") & (df.get("temperature") > 80))
-    if r3_mask.any():
-        r3_rate = _fail_rate(df.loc[r3_mask, "pass_fail"])
-        print(f"\n    feature_x=ON & temperature>80")
-        print(f"      fail_rate = {r3_rate:.3f}  (ratio: {r3_rate / overall:.1f}x, "
-              f"n={r3_mask.sum()})")
-
-    # Rule 5 signal: voltage < 0.85 & memory_size >= 2048
-    r5_mask = ((df.get("voltage") < 0.85) & (df.get("memory_size") >= 2048))
-    if r5_mask.any():
-        r5_rate = _fail_rate(df.loc[r5_mask, "pass_fail"])
-        print(f"\n    voltage<0.85 & memory_size>=2048")
-        print(f"      fail_rate = {r5_rate:.3f}  (ratio: {r5_rate / overall:.1f}x, "
-              f"n={r5_mask.sum()})")
+    print(f"\n    (overall fail_rate: {overall:.3f})")
+    for label, build_mask in spot_checks:
+        try:
+            mask = build_mask(df)
+        except KeyError:
+            continue
+        if not mask.any():
+            continue
+        rate = _fail_rate(df.loc[mask, "pass_fail"])
+        print(f"\n    {label}")
+        print(f"      fail_rate = {rate:.3f}  "
+              f"(ratio: {rate / overall:.1f}x, n={mask.sum()})")
 
     print(f"\n{sep}")
     print("  Validation complete.")

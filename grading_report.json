@@ -1,72 +1,139 @@
 {
   "feature_coverage": {
-    "top_k": 8,
+    "top_k": 5,
     "top_features": [
-      "cache_size",
       "input_size",
       "memory_size",
       "random_seed",
-      "scheduler",
       "temperature",
-      "traffic_pattern",
       "voltage"
     ],
     "per_rule": [
       {
         "rule_id": "rule_1",
-        "description": "Dynamic scheduler with high traffic and small cache causes frequent timeouts",
+        "description": "Deep queues under high concurrency on the static scheduler starve the dispatcher and time out",
         "effect_type": "failure_multiplier",
         "rule_features": [
-          "cache_size",
-          "scheduler",
-          "traffic_pattern"
+          "concurrency",
+          "queue_depth",
+          "scheduler"
         ],
-        "matched_features": [
-          "cache_size",
-          "scheduler",
-          "traffic_pattern"
+        "matched_features": [],
+        "missed_features": [
+          "concurrency",
+          "queue_depth",
+          "scheduler"
         ],
-        "missed_features": [],
-        "coverage": 1.0,
-        "fully_detected": true
+        "coverage": 0.0,
+        "fully_detected": false
       },
       {
         "rule_id": "rule_2",
-        "description": "Small cache with large workload causes execution time degradation",
-        "effect_type": "exec_time_multiplier",
+        "description": "zstd compression on high-entropy payloads with a small cache overruns the codec window and corrupts data",
+        "effect_type": "failure_multiplier",
         "rule_features": [
           "cache_size",
-          "workload"
+          "compression",
+          "payload_entropy"
         ],
-        "matched_features": [
-          "cache_size"
-        ],
+        "matched_features": [],
         "missed_features": [
-          "workload"
+          "cache_size",
+          "compression",
+          "payload_entropy"
         ],
-        "coverage": 0.5,
+        "coverage": 0.0,
         "fully_detected": false
       },
       {
         "rule_id": "rule_3",
-        "description": "Feature X enabled at high temperatures causes data corruption failures",
+        "description": "Turbo power mode above 75 \u00b0C trips thermal protection",
         "effect_type": "failure_multiplier",
         "rule_features": [
-          "feature_x",
+          "power_mode",
           "temperature"
         ],
         "matched_features": [
           "temperature"
         ],
         "missed_features": [
-          "feature_x"
+          "power_mode"
         ],
         "coverage": 0.5,
         "fully_detected": false
       },
       {
         "rule_id": "rule_4",
-        "description": "Certain seed ranges trigger edge-case large workload selection",
+        "description": "ECC disabled while fault injection exceeds 20 % leaves bit flips uncorrected",
+        "effect_type": "failure_multiplier",
+        "rule_features": [
+          "ecc_mode",
+          "injection_rate"
+        ],
+        "matched_features": [],
+        "missed_features": [
+          "ecc_mode",
+          "injection_rate"
+        ],
+        "coverage": 0.0,
+        "fully_detected": false
+      },
+      {
+        "rule_id": "rule_5",
+        "description": "Aggressive prefetch under random access with little memory thrashes the line fill buffer and slows execution",
+        "effect_type": "exec_time_multiplier",
+        "rule_features": [
+          "access_pattern",
+          "memory_size",
+          "prefetch_depth"
+        ],
+        "matched_features": [
+          "memory_size"
+        ],
+        "missed_features": [
+          "access_pattern",
+          "prefetch_depth"
+        ],
+        "coverage": 0.3333333333333333,
+        "fully_detected": false
+      },
+      {
+        "rule_id": "rule_6",
+        "description": "Eco power mode on large workloads clamps the clock and stretches execution time",
+        "effect_type": "exec_time_multiplier",
+        "rule_features": [
+          "power_mode",
+          "workload"
+        ],
+        "matched_features": [],
+        "missed_features": [
+          "power_mode",
+          "workload"
+        ],
+        "coverage": 0.0,
+        "fully_detected": false
+      },
+      {
+        "rule_id": "rule_7",
+        "description": "Long bursts into a shallow queue under high traffic overflow the ingress FIFO",
+        "effect_type": "failure_multiplier",
+        "rule_features": [
+          "burst_length",
+          "queue_depth",
+          "traffic_pattern"
+        ],
+        "matched_features": [],
+        "missed_features": [
+          "burst_length",
+          "queue_depth",
+          "traffic_pattern"
+        ],
+        "coverage": 0.0,
+        "fully_detected": false
+      },
+      {
+        "rule_id": "rule_8",
+        "description": "High seed ranges bias the constraint solver toward strided access patterns",
         "effect_type": "value_bias",
         "rule_features": [
           "random_seed"
@@ -79,84 +146,70 @@
         "fully_detected": true
       },
       {
-        "rule_id": "rule_5",
-        "description": "Low voltage combined with large memory causes corruption failures",
-        "effect_type": "failure_multiplier",
+        "rule_id": "rule_9",
+        "description": "High concurrency drives the traffic generator into its high-rate profile",
+        "effect_type": "value_bias",
         "rule_features": [
-          "memory_size",
-          "voltage"
+          "concurrency"
         ],
-        "matched_features": [
-          "memory_size",
-          "voltage"
-        ],
-        "missed_features": [],
-        "coverage": 1.0,
-        "fully_detected": true
-      },
-      {
-        "rule_id": "rule_6",
-        "description": "Feature Y with adaptive scheduler and large inputs causes overflow failures",
-        "effect_type": "failure_multiplier",
-        "rule_features": [
-          "feature_y",
-          "input_size",
-          "scheduler"
-        ],
-        "matched_features": [
-          "input_size",
-          "scheduler"
-        ],
+        "matched_features": [],
         "missed_features": [
-          "feature_y"
+          "concurrency"
         ],
-        "coverage": 0.6666666666666666,
+        "coverage": 0.0,
         "fully_detected": false
       },
       {
-        "rule_id": "rule_7",
-        "description": "Late timing at elevated temperatures causes execution time degradation",
-        "effect_type": "exec_time_multiplier",
+        "rule_id": "rule_10",
+        "description": "gzip compression under concurrency of 8 or more serialises on the codec and collapses throughput",
+        "effect_type": "throughput_multiplier",
         "rule_features": [
-          "temperature",
-          "timing"
+          "compression",
+          "concurrency"
         ],
-        "matched_features": [
-          "temperature"
-        ],
+        "matched_features": [],
         "missed_features": [
-          "timing"
+          "compression",
+          "concurrency"
         ],
-        "coverage": 0.5,
+        "coverage": 0.0,
         "fully_detected": false
       }
     ],
-    "aggregate_feature_recall": 0.7333333333333333
+    "aggregate_feature_recall": 0.13636363636363635
   },
   "interaction_matching": {
-    "total_failure_rules": 4,
-    "rules_detected": 4,
-    "rule_recall": 1.0,
+    "total_failure_rules": 5,
+    "rules_detected": 1,
+    "rule_recall": 0.2,
     "per_rule": [
       {
         "rule_id": "rule_1",
-        "description": "Dynamic scheduler with high traffic and small cache causes frequent timeouts",
+        "description": "Deep queues under high concurrency on the static scheduler starve the dispatcher and time out",
+        "rule_features": [
+          "concurrency",
+          "queue_depth",
+          "scheduler"
+        ],
+        "detected": false,
+        "match_score": 0.0
+      },
+      {
+        "rule_id": "rule_2",
+        "description": "zstd compression on high-entropy payloads with a small cache overruns the codec window and corrupts data",
         "rule_features": [
           "cache_size",
-          "scheduler",
-          "traffic_pattern"
+          "compression",
+          "payload_entropy"
         ],
-        "detected": true,
-        "match_score": 1.0,
-        "matched_interaction": "traffic_pattern=high AND cache_size=small AND scheduler=dynamic",
-        "interaction_lift": 2.69,
-        "interaction_support": 398
+        "detected": false,
+        "match_score": 0.0
       },
       {
         "rule_id": "rule_3",
-        "description": "Feature X enabled at high temperatures causes data corruption failures",
+        "description": "Turbo power mode above 75 \u00b0C trips thermal protection",
         "rule_features": [
-          "feature_x",
+          "power_mode",
           "temperature"
         ],
         "detected": true,
@@ -166,41 +219,35 @@
         "interaction_support": 392
       },
       {
-        "rule_id": "rule_5",
-        "description": "Low voltage combined with large memory causes corruption failures",
+        "rule_id": "rule_4",
+        "description": "ECC disabled while fault injection exceeds 20 % leaves bit flips uncorrected",
         "rule_features": [
-          "memory_size",
-          "voltage"
+          "ecc_mode",
+          "injection_rate"
         ],
-        "detected": true,
-        "match_score": 1.0,
-        "matched_interaction": "random_seed=random_seed[4.0-33726.0] AND voltage=voltage[0.8-1.0] AND memory_size=memory_size[2048.0-4096.0]",
-        "interaction_lift": 1.44,
-        "interaction_support": 204
+        "detected": false,
+        "match_score": 0.0
       },
       {
-        "rule_id": "rule_6",
-        "description": "Feature Y with adaptive scheduler and large inputs causes overflow failures",
+        "rule_id": "rule_7",
+        "description": "Long bursts into a shallow queue under high traffic overflow the ingress FIFO",
         "rule_features": [
-          "feature_y",
-          "input_size",
-          "scheduler"
+          "burst_length",
+          "queue_depth",
+          "traffic_pattern"
         ],
-        "detected": true,
-        "match_score": 0.67,
-        "matched_interaction": "input_size=input_size[3367.0-6670.0] AND traffic_pattern=high AND scheduler=dynamic",
-        "interaction_lift": 1.69,
-        "interaction_support": 386
+        "detected": false,
+        "match_score": 0.0
       }
     ]
   },
   "overall": {
-    "composite_score": 89.3,
-    "grade": "A",
-    "assessment": "Excellent -- model reliably identifies planted failure patterns",
+    "composite_score": 17.5,
+    "grade": "F",
+    "assessment": "Failing -- model does not detect planted patterns",
     "feature_recall_weight": 0.4,
     "interaction_recall_weight": 0.6,
-    "feature_recall": 0.7333,
-    "rule_recall": 1.0
+    "feature_recall": 0.1364,
+    "rule_recall": 0.2
   }
 }

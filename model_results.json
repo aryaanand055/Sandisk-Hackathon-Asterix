@@ -2,73 +2,123 @@
   "model": "random_forest",
   "seed": 42,
   "metrics": {
-    "accuracy": 0.813,
-    "precision_fail": 0.3846,
-    "recall_fail": 0.1297,
-    "f1_fail": 0.194,
-    "roc_auc": 0.5666,
-    "pr_auc": 0.257
+    "accuracy": 0.7738,
+    "precision_fail": 0.4615,
+    "recall_fail": 0.4282,
+    "f1_fail": 0.4442,
+    "roc_auc": 0.6625,
+    "pr_auc": 0.3986
   },
   "feature_importances": [
     {
-      "feature": "input_size",
-      "importance": 0.1572,
+      "feature": "injection_rate",
+      "importance": 0.1141,
       "rank": 1
     },
     {
-      "feature": "random_seed",
-      "importance": 0.1479,
+      "feature": "ecc_mode",
+      "importance": 0.0894,
       "rank": 2
     },
     {
-      "feature": "temperature",
-      "importance": 0.1465,
+      "feature": "burst_length",
+      "importance": 0.0726,
       "rank": 3
     },
     {
-      "feature": "voltage",
-      "importance": 0.1372,
+      "feature": "payload_entropy",
+      "importance": 0.0667,
       "rank": 4
     },
     {
-      "feature": "memory_size",
-      "importance": 0.073,
+      "feature": "temperature",
+      "importance": 0.065,
       "rank": 5
     },
     {
-      "feature": "traffic_pattern",
-      "importance": 0.0589,
+      "feature": "queue_depth",
+      "importance": 0.0607,
       "rank": 6
     },
     {
-      "feature": "cache_size",
-      "importance": 0.0557,
+      "feature": "random_seed",
+      "importance": 0.0592,
       "rank": 7
     },
     {
-      "feature": "scheduler",
-      "importance": 0.0545,
+      "feature": "input_size",
+      "importance": 0.0575,
       "rank": 8
     },
     {
-      "feature": "workload",
-      "importance": 0.051,
+      "feature": "voltage",
+      "importance": 0.0551,
       "rank": 9
     },
     {
-      "feature": "timing",
-      "importance": 0.0498,
+      "feature": "concurrency",
+      "importance": 0.0464,
       "rank": 10
     },
     {
-      "feature": "feature_y",
-      "importance": 0.0347,
+      "feature": "scheduler",
+      "importance": 0.036,
       "rank": 11
     },
     {
-      "feature": "feature_x",
-      "importance": 0.0338,
+      "feature": "traffic_pattern",
+      "importance": 0.0323,
       "rank": 12
+    },
+    {
+      "feature": "compression",
+      "importance": 0.0321,
+      "rank": 13
+    },
+    {
+      "feature": "prefetch_depth",
+      "importance": 0.0291,
+      "rank": 14
+    },
+    {
+      "feature": "memory_size",
+      "importance": 0.0279,
+      "rank": 15
+    },
+    {
+      "feature": "power_mode",
+      "importance": 0.0273,
+      "rank": 16
+    },
+    {
+      "feature": "cache_size",
+      "importance": 0.027,
+      "rank": 17
+    },
+    {
+      "feature": "access_pattern",
+      "importance": 0.0263,
+      "rank": 18
+    },
+    {
+      "feature": "workload",
+      "importance": 0.0224,
+      "rank": 19
+    },
+    {
+      "feature": "timing",
+      "importance": 0.0223,
+      "rank": 20
+    },
+    {
+      "feature": "feature_x",
+      "importance": 0.0153,
+      "rank": 21
+    },
+    {
+      "feature": "feature_y",
+      "importance": 0.0153,
+      "rank": 22
     }
   ],
   "lineage": {
@@ -77,6 +127,15 @@
     ],
     "input_size": [
       "input_size"
+    ],
+    "burst_length": [
+      "burst_length"
+    ],
+    "injection_rate": [
+      "injection_rate"
+    ],
+    "payload_entropy": [
+      "payload_entropy"
     ],
     "temperature": [
       "temperature"
@@ -109,6 +168,38 @@
       "memory_size_2048",
       "memory_size_4096"
     ],
+    "prefetch_depth": [
+      "prefetch_depth_0",
+      "prefetch_depth_2",
+      "prefetch_depth_4",
+      "prefetch_depth_8",
+      "prefetch_depth_16"
+    ],
+    "compression": [
+      "compression_gzip",
+      "compression_lz4",
+      "compression_off",
+      "compression_zstd"
+    ],
+    "queue_depth": [
+      "queue_depth_1",
+      "queue_depth_4",
+      "queue_depth_16",
+      "queue_depth_32",
+      "queue_depth_64",
+      "queue_depth_128"
+    ],
+    "power_mode": [
+      "power_mode_balanced",
+      "power_mode_eco",
+      "power_mode_turbo"
+    ],
+    "ecc_mode": [
+      "ecc_mode_bch",
+      "ecc_mode_off",
+      "ecc_mode_parity",
+      "ecc_mode_sec_ded"
+    ],
     "workload": [
       "workload_large",
       "workload_medium",
@@ -123,6 +214,20 @@
       "timing_early",
       "timing_late",
       "timing_mid"
+    ],
+    "access_pattern": [
+      "access_pattern_mixed",
+      "access_pattern_random",
+      "access_pattern_sequential",
+      "access_pattern_stride"
+    ],
+    "concurrency": [
+      "concurrency_1",
+      "concurrency_2",
+      "concurrency_4",
+      "concurrency_8",
+      "concurrency_16",
+      "concurrency_32"
     ]
   },
   "roles": {
@@ -143,17 +248,27 @@
       "feature_x",
       "feature_y",
       "memory_size",
+      "prefetch_depth",
+      "compression",
+      "queue_depth",
+      "power_mode",
+      "ecc_mode",
       "workload",
       "traffic_pattern",
-      "timing"
+      "timing",
+      "access_pattern",
+      "concurrency"
     ],
     "numeric": [
       "random_seed",
       "input_size",
+      "burst_length",
+      "injection_rate",
+      "payload_entropy",
       "temperature",
       "voltage"
     ]
   },
-  "n_train": 8000,
-  "n_test": 2000
+  "n_train": 40000,
+  "n_test": 10000
 }

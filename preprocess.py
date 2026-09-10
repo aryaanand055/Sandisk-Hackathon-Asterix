@@ -46,6 +46,22 @@ _ID_PATTERNS = re.compile(
 )
 
 
+def _is_text_dtype(series: pd.Series) -> bool:
+    """True for text-like columns.
+
+    pandas < 3 stored strings as ``object``; pandas >= 3 uses a dedicated
+    ``str`` dtype, so an ``== object`` test silently misses every string
+    column and sends it downstream as a numeric predictor.  Test by what the
+    column is *not* instead, which holds across versions.
+    """
+    return not (
+        pd.api.types.is_numeric_dtype(series)
+        or pd.api.types.is_bool_dtype(series)
+        or pd.api.types.is_datetime64_any_dtype(series)
+        or pd.api.types.is_timedelta64_dtype(series)
+    )
+
+
 def _is_identifier(series: pd.Series) -> bool:
     """Heuristic: column is an identifier if nearly all values are unique
     or the name matches common ID patterns."""
@@ -53,7 +69,7 @@ def _is_identifier(series: pd.Series) -> bool:
     if _ID_PATTERNS.match(name):
         return True
     # >95% unique values in a string/object column is a strong signal
-    if series.dtype == object and series.nunique() / max(len(series), 1) > 0.95:
+    if _is_text_dtype(series) and series.nunique() / max(len(series), 1) > 0.95:
         return True
     return False
 
@@ -137,7 +153,7 @@ def detect_column_roles(
             roles["outcome"].append(col)
             continue
         # Predictor: categorical vs numeric
-        if df[col].dtype == object or df[col].dtype.name == "category":
+        if _is_text_dtype(df[col]) or df[col].dtype.name == "category":
             roles["categorical"].append(col)
         elif df[col].nunique() <= 10 and df[col].dtype in ("int64", "int32"):
             # Low-cardinality integers treated as categorical (e.g. memory_size)
