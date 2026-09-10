@@ -21,26 +21,44 @@ export default function App() {
   useEffect(() => {
     if (!jobId) return
 
+    let cancelled = false
+    let interval = null
+
+    const stop = () => {
+      if (interval) clearInterval(interval)
+      interval = null
+    }
+
     const pollStatus = async () => {
       try {
         const res = await axios.get(`/api/jobs/${jobId}`)
+        if (cancelled) return
         setProgress(res.data)
 
         if (res.data.status === 'completed') {
+          stop()
           const resultRes = await axios.get(`/api/jobs/${jobId}/result`)
+          if (cancelled) return
           setResult(resultRes.data)
           setLoading(false)
         } else if (res.data.status === 'failed') {
+          stop()
           setError('Analysis failed: ' + res.data.error)
           setLoading(false)
         }
       } catch (err) {
+        if (cancelled) return
+        stop()
         setError('Error fetching status: ' + err.message)
+        setLoading(false)
       }
     }
 
-    const interval = setInterval(pollStatus, 1000)
-    return () => clearInterval(interval)
+    interval = setInterval(pollStatus, 1000)
+    return () => {
+      cancelled = true
+      stop()
+    }
   }, [jobId])
 
   const handleUpload = async (files) => {
@@ -77,6 +95,8 @@ export default function App() {
         <p>Upload UVM simulation logs, get parsed and clustered analysis</p>
       </header>
 
+      {error && <div className="error-box">{error}</div>}
+
       {!jobId ? (
         <UploadZone onUpload={handleUpload} onSample={handleSample} />
       ) : (
@@ -95,8 +115,6 @@ export default function App() {
               )}
             </div>
           )}
-
-          {error && <div className="error-box">{error}</div>}
 
           {result && (
             <div className="tabs-container">
@@ -126,7 +144,7 @@ export default function App() {
                 {activeTab === 'tradeoff' && <TradeoffMatrix data={result} />}
                 {activeTab === 'recommendations' && <Recommendations data={result} />}
                 {activeTab === 'diff' && <ConfigDiff data={result} jobId={jobId} />}
-                {activeTab === 'explorer' && <RunExplorer data={result} jobId={jobId} />}
+                {activeTab === 'explorer' && <RunExplorer jobId={jobId} />}
                 {activeTab === 'details' && <AllDetails data={result} />}
               </div>
             </div>

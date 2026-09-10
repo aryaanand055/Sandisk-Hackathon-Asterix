@@ -7,10 +7,14 @@ export default function ConfigDiff({ data, jobId }) {
   const failure_by_field = data.analysis.failure_by_field || []
 
   const deltas = config_diff.field_deltas || []
-  const chartData = failure_by_field.map(f => ({
-    field: f.field,
-    lift: f.lift.toFixed(2)
-  }))
+  // Each field carries per-value levels; chart the worst-offending value per field.
+  const chartData = failure_by_field.map(f => {
+    const lifts = (f.levels || []).map(lv => lv.lift)
+    return {
+      field: f.field,
+      lift: lifts.length ? Number(Math.max(...lifts).toFixed(2)) : 0
+    }
+  })
 
   return (
     <div className="diff-container">
@@ -74,22 +78,22 @@ export default function ConfigDiff({ data, jobId }) {
 
       <style>{`
         .diff-container .diff-summary {
-        .diff-summary {
+        .diff-container .diff-summary {
           background: white;
           padding: 20px;
           border-radius: 6px;
           margin-bottom: 20px;
           box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
-        .diff-summary h3 {
+        .diff-container .diff-summary h3 {
           margin: 0 0 10px 0;
         }
-        .diff-summary p {
+        .diff-container .diff-summary p {
           margin: 0 0 15px 0;
           color: #6b7280;
           font-size: 14px;
         }
-        .summary-stat {
+        .diff-container .summary-stat {
           display: flex;
           justify-content: space-between;
           align-items: center;
@@ -97,36 +101,36 @@ export default function ConfigDiff({ data, jobId }) {
           background: #f3f4f6;
           border-radius: 4px;
         }
-        .stat-label {
+        .diff-container .stat-label {
           color: #6b7280;
           font-size: 13px;
           font-weight: 600;
         }
-        .stat-value {
+        .diff-container .stat-value {
           color: #1f2937;
           font-size: 18px;
           font-weight: 700;
         }
-        .deltas-table {
+        .diff-container .deltas-table {
           background: white;
           padding: 20px;
           border-radius: 6px;
           box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
           margin-top: 20px;
         }
-        .deltas-table h3 {
+        .diff-container .deltas-table h3 {
           margin: 0 0 5px 0;
         }
-        .table-desc {
+        .diff-container .table-desc {
           margin: 0 0 15px 0;
           color: #6b7280;
           font-size: 13px;
         }
-        table {
+        .diff-container table {
           width: 100%;
           border-collapse: collapse;
         }
-        th {
+        .diff-container th {
           background: #f3f4f6;
           padding: 12px;
           text-align: left;
@@ -135,30 +139,30 @@ export default function ConfigDiff({ data, jobId }) {
           font-size: 13px;
           border-bottom: 2px solid #e5e7eb;
         }
-        td {
+        .diff-container td {
           padding: 12px;
           border-bottom: 1px solid #e5e7eb;
           color: #6b7280;
         }
-        tr.critical:hover {
+        .diff-container tr.critical:hover {
           background: #fef2f2;
         }
-        tr.high:hover {
+        .diff-container tr.high:hover {
           background: #fffbf0;
         }
-        tr.medium:hover {
+        .diff-container tr.medium:hover {
           background: #fffde7;
         }
-        .rank {
+        .diff-container .rank {
           font-weight: 600;
           color: #1f2937;
           width: 40px;
         }
-        .field-name {
+        .diff-container .field-name {
           font-weight: 500;
           color: #1f2937;
         }
-        .rate-badge {
+        .diff-container .rate-badge {
           background: #dbeafe;
           color: #1e40af;
           padding: 4px 8px;
@@ -166,21 +170,21 @@ export default function ConfigDiff({ data, jobId }) {
           font-size: 12px;
           font-weight: 600;
         }
-        .impact-badge {
+        .diff-container .impact-badge {
           padding: 4px 8px;
           border-radius: 4px;
           font-size: 12px;
           font-weight: 600;
         }
-        .impact-critical {
+        .diff-container .impact-critical {
           background: #fee2e2;
           color: #991b1b;
         }
-        .impact-high {
+        .diff-container .impact-high {
           background: #fed7aa;
           color: #92400e;
         }
-        .impact-medium {
+        .diff-container .impact-medium {
           background: #fef3c7;
           color: #78350f;
         }
