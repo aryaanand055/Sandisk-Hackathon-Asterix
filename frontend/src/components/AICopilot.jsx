@@ -1,5 +1,167 @@
 import { useState, useEffect } from 'react'
 
+function renderFormattedMarkdown(content) {
+  if (!content) return null
+  const lines = content.split('\n')
+  const elements = []
+  let tableRows = []
+  let inTable = false
+  let tableKey = 0
+
+  const parseInline = (text) => {
+    // Bold italic
+    let parts = [text]
+    // Parse bold **text**
+    const boldRegex = /\*\*(.*?)\*\*/g
+    const res = []
+    
+    let lastIdx = 0
+    let match
+    while ((match = boldRegex.exec(text)) !== null) {
+      if (match.index > lastIdx) {
+        res.push(text.substring(lastIdx, match.index))
+      }
+      res.push(<strong key={match.index} style={{ color: '#60a5fa', fontWeight: 600 }}>{match[1]}</strong>)
+      lastIdx = boldRegex.lastIndex
+    }
+    if (lastIdx < text.length) {
+      res.push(text.substring(lastIdx))
+    }
+    return res.length > 0 ? res : text
+  }
+
+  const flushTable = () => {
+    if (tableRows.length > 0) {
+      const headerRow = tableRows[0]
+      const bodyRows = tableRows.slice(1).filter(r => !r.every(c => c.match(/^:?-+:?$/)))
+      elements.push(
+        <div key={`table-${tableKey++}`} style={{ overflowX: 'auto', margin: '14px 0' }}>
+          <table style={{
+            width: '100%', borderCollapse: 'collapse', fontSize: '0.85rem',
+            background: 'rgba(15, 23, 42, 0.6)', borderRadius: '8px', overflow: 'hidden',
+            border: '1px solid #334155'
+          }}>
+            <thead>
+              <tr style={{ background: '#1e293b', borderBottom: '2px solid #3b82f6' }}>
+                {headerRow.map((h, i) => (
+                  <th key={i} style={{ padding: '10px 14px', textAlign: 'left', color: '#93c5fd', fontWeight: 600 }}>
+                    {parseInline(h.trim())}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {bodyRows.map((row, rIdx) => (
+                <tr key={rIdx} style={{
+                  borderBottom: '1px solid #1e293b',
+                  background: rIdx % 2 === 0 ? 'transparent' : 'rgba(30, 41, 59, 0.4)'
+                }}>
+                  {row.map((cell, cIdx) => (
+                    <td key={cIdx} style={{ padding: '9px 14px', color: '#e2e8f0' }}>
+                      {parseInline(cell.trim())}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )
+      tableRows = []
+    }
+    inTable = false
+  }
+
+  lines.forEach((line, idx) => {
+    const trimmed = line.trim()
+
+    // Table Row detection
+    if (trimmed.startsWith('|') && trimmed.endsWith('|')) {
+      inTable = true
+      const cells = trimmed.split('|').slice(1, -1)
+      tableRows.push(cells)
+      return
+    } else if (inTable) {
+      flushTable()
+    }
+
+    // Horizontal rule
+    if (trimmed === '---' || trimmed === '***') {
+      elements.push(<hr key={idx} style={{ border: 'none', borderTop: '1px solid #334155', margin: '16px 0' }} />)
+      return
+    }
+
+    // Headers
+    if (trimmed.startsWith('### ')) {
+      elements.push(
+        <h4 key={idx} style={{ color: '#38bdf8', fontSize: '1.05rem', fontWeight: 600, marginTop: '14px', marginBottom: '8px' }}>
+          {parseInline(trimmed.replace(/^###\s+/, ''))}
+        </h4>
+      )
+      return
+    }
+    if (trimmed.startsWith('## ')) {
+      elements.push(
+        <h3 key={idx} style={{ color: '#60a5fa', fontSize: '1.15rem', fontWeight: 700, marginTop: '16px', marginBottom: '10px' }}>
+          {parseInline(trimmed.replace(/^##\s+/, ''))}
+        </h3>
+      )
+      return
+    }
+    if (trimmed.startsWith('# ')) {
+      elements.push(
+        <h2 key={idx} style={{ color: '#818cf8', fontSize: '1.25rem', fontWeight: 800, marginTop: '18px', marginBottom: '12px' }}>
+          {parseInline(trimmed.replace(/^#\s+/, ''))}
+        </h2>
+      )
+      return
+    }
+
+    // Bullet Lists
+    if (trimmed.startsWith('* ') || trimmed.startsWith('- ') || trimmed.startsWith('• ')) {
+      const bulletText = trimmed.replace(/^(\*|-|•)\s+/, '')
+      elements.push(
+        <div key={idx} style={{ display: 'flex', gap: '8px', marginLeft: '8px', marginBottom: '6px', lineHeight: '1.5' }}>
+          <span style={{ color: '#3b82f6', fontWeight: 'bold' }}>•</span>
+          <div style={{ flex: 1 }}>{parseInline(bulletText)}</div>
+        </div>
+      )
+      return
+    }
+
+    // Numbered lists
+    const numMatch = trimmed.match(/^(\d+)\.\s+(.*)$/)
+    if (numMatch) {
+      elements.push(
+        <div key={idx} style={{ display: 'flex', gap: '8px', marginLeft: '8px', marginBottom: '6px', lineHeight: '1.5' }}>
+          <span style={{ color: '#818cf8', fontWeight: 600, minWidth: '18px' }}>{numMatch[1]}.</span>
+          <div style={{ flex: 1 }}>{parseInline(numMatch[2])}</div>
+        </div>
+      )
+      return
+    }
+
+    // Empty lines
+    if (!trimmed) {
+      elements.push(<div key={idx} style={{ height: '6px' }} />)
+      return
+    }
+
+    // Regular paragraphs
+    elements.push(
+      <p key={idx} style={{ margin: '4px 0', lineHeight: '1.6' }}>
+        {parseInline(trimmed)}
+      </p>
+    )
+  })
+
+  if (inTable) {
+    flushTable()
+  }
+
+  return elements
+}
+
 export default function AICopilot({ jobId, result }) {
   const [apiKey, setApiKey] = useState(() => localStorage.getItem('gemini_api_key') || '')
   const [showKeyInput, setShowKeyInput] = useState(false)
@@ -184,10 +346,10 @@ export default function AICopilot({ jobId, result }) {
             border: m.sender === 'user' ? 'none' : '1px solid #334155',
             boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)'
           }}>
-            {m.text}
+            {m.sender === 'assistant' ? renderFormattedMarkdown(m.text) : m.text}
             {m.model && (
-              <div style={{ marginTop: '8px', fontSize: '0.725rem', color: '#94a3b8', fontStyle: 'italic', borderTop: '1px solid #334155', paddingTop: '4px' }}>
-                Answer generated by {m.model} with full dashboard context
+              <div style={{ marginTop: '12px', fontSize: '0.725rem', color: '#94a3b8', fontStyle: 'italic', borderTop: '1px solid #334155', paddingTop: '6px' }}>
+                Answer generated by <strong style={{ color: '#38bdf8' }}>{m.model}</strong> with full dashboard context
               </div>
             )}
           </div>
