@@ -1,0 +1,504 @@
+{
+  "dataset": "Dataset B - APB peripheral subsystem, aliased columns, no waveform",
+  "profile": "apb_periph",
+  "generator": "tools/generate_structured_dataset.py",
+  "metadata": {
+    "n_runs": 4000,
+    "seed": 2024,
+    "protocol": "APB",
+    "dut": "apb_peripheral_subsystem",
+    "base_fail_prob": 0.02,
+    "exec_ceiling_ms": 800.0,
+    "observed_fail_rate": 0.3048,
+    "observed_pass_rate": 0.6953,
+    "files_provided": [
+      "config.csv",
+      "outcomes.csv",
+      "randomization.csv",
+      "registers.csv",
+      "telemetry.csv",
+      "transactions.csv",
+      "uvm.log"
+    ],
+    "categories_absent": [
+      "waveform"
+    ],
+    "column_aliases": {
+      "config.csv": {
+        "run_id": "runId",
+        "test_name": "testcase"
+      },
+      "randomization.csv": {},
+      "transactions.csv": {
+        "run_id": "Run_ID",
+        "txn_id": "transaction_id"
+      },
+      "telemetry.csv": {
+        "run_id": "simulation_id"
+      },
+      "outcomes.csv": {
+        "run_id": "runId",
+        "status": "result",
+        "failure_type": "failure_class",
+        "error_code": "err_code"
+      }
+    }
+  },
+  "rules": [
+    {
+      "id": "B1",
+      "description": "Static arbitration with 8+ select lines starves the low-priority master",
+      "files": [
+        "config.csv"
+      ],
+      "conditions": [
+        {
+          "field": "arbitration_scheme",
+          "op": "==",
+          "value": "static"
+        },
+        {
+          "field": "psel_count",
+          "op": ">=",
+          "value": 8
+        }
+      ],
+      "effect": "set",
+      "value": 0.78,
+      "error_tag": "BUS_STARVATION",
+      "deterministic": false,
+      "observed": {
+        "rows_matched": 414,
+        "match_share": 0.1035,
+        "fail_rate_when_fired": 0.7899,
+        "fail_rate_otherwise": 0.2487,
+        "lift": 3.175
+      }
+    },
+    {
+      "id": "B2",
+      "description": "No parity at 921600+ baud corrupts UART frames",
+      "files": [
+        "config.csv"
+      ],
+      "conditions": [
+        {
+          "field": "parity_mode",
+          "op": "==",
+          "value": "none"
+        },
+        {
+          "field": "baud_rate",
+          "op": ">=",
+          "value": 921600
+        }
+      ],
+      "effect": "add",
+      "value": 0.34,
+      "error_tag": "FRAMING_ERROR",
+      "deterministic": false,
+      "observed": {
+        "rows_matched": 473,
+        "match_share": 0.1182,
+        "fail_rate_when_fired": 0.5581,
+        "fail_rate_otherwise": 0.2708,
+        "lift": 2.061
+      }
+    },
+    {
+      "id": "B3",
+      "description": "DMA enabled against a shallow FIFO underruns the stream",
+      "files": [
+        "config.csv"
+      ],
+      "conditions": [
+        {
+          "field": "dma_enable",
+          "op": "==",
+          "value": 1
+        },
+        {
+          "field": "fifo_depth",
+          "op": "<=",
+          "value": 8
+        }
+      ],
+      "effect": "add",
+      "value": 0.3,
+      "error_tag": "FIFO_UNDERRUN",
+      "deterministic": false,
+      "observed": {
+        "rows_matched": 734,
+        "match_share": 0.1835,
+        "fail_rate_when_fired": 0.515,
+        "fail_rate_otherwise": 0.2575,
+        "lift": 2.0
+      }
+    },
+    {
+      "id": "B4",
+      "description": "Edge-triggered interrupts on a slow clock drop events",
+      "files": [
+        "config.csv"
+      ],
+      "conditions": [
+        {
+          "field": "irq_mode",
+          "op": "==",
+          "value": "edge"
+        },
+        {
+          "field": "clk_mhz",
+          "op": "<=",
+          "value": 50
+        }
+      ],
+      "effect": "add",
+      "value": 0.22,
+      "error_tag": "IRQ_LOST",
+      "deterministic": false,
+      "observed": {
+        "rows_matched": 886,
+        "match_share": 0.2215,
+        "fail_rate_when_fired": 0.4526,
+        "fail_rate_otherwise": 0.2627,
+        "lift": 1.723
+      }
+    },
+    {
+      "id": "B5",
+      "description": "Deterministic RTL bug: APB3 with 4+ wait states and no retry hangs the PSLVERR handshake",
+      "files": [
+        "config.csv"
+      ],
+      "conditions": [
+        {
+          "field": "bus_protocol",
+          "op": "==",
+          "value": "APB3"
+        },
+        {
+          "field": "wait_state_cfg",
+          "op": ">=",
+          "value": 4
+        },
+        {
+          "field": "retry_limit",
+          "op": "==",
+          "value": 0
+        }
+      ],
+      "effect": "set",
+      "value": 0.95,
+      "error_tag": "PSLVERR_TIMEOUT",
+      "deterministic": true,
+      "observed": {
+        "rows_matched": 264,
+        "match_share": 0.066,
+        "fail_rate_when_fired": 0.947,
+        "fail_rate_otherwise": 0.2594,
+        "lift": 3.651
+      }
+    },
+    {
+      "id": "B6",
+      "description": "Undervoltage above 70 C makes the CDC synchroniser metastable (telemetry.csv only)",
+      "files": [
+        "telemetry.csv"
+      ],
+      "conditions": [
+        {
+          "field": "voltage_mv",
+          "op": "<",
+          "value": 1080.0
+        },
+        {
+          "field": "temperature_c",
+          "op": ">",
+          "value": 70.0
+        }
+      ],
+      "effect": "add",
+      "value": 0.2,
+      "error_tag": "METASTABILITY",
+      "deterministic": false,
+      "observed": {
+        "rows_matched": 101,
+        "match_share": 0.0253,
+        "fail_rate_when_fired": 0.5644,
+        "fail_rate_otherwise": 0.298,
+        "lift": 1.894
+      }
+    },
+    {
+      "id": "B7",
+      "description": "Hotspot burst traffic with long randomized wait states stalls PREADY (randomization.csv x config.csv)",
+      "files": [
+        "randomization.csv"
+      ],
+      "conditions": [
+        {
+          "field": "rand_traffic_pattern",
+          "op": "==",
+          "value": "burst_hotspot"
+        },
+        {
+          "field": "rand_wait_states",
+          "op": ">=",
+          "value": 6
+        }
+      ],
+      "effect": "add",
+      "value": 0.25,
+      "error_tag": "PREADY_TIMEOUT",
+      "deterministic": false,
+      "observed": {
+        "rows_matched": 560,
+        "match_share": 0.14,
+        "fail_rate_when_fired": 0.4875,
+        "fail_rate_otherwise": 0.275,
+        "lift": 1.773
+      }
+    }
+  ],
+  "error_tag_distribution": {
+    "ASSERTION_FAIL": 11,
+    "BUS_STARVATION": 296,
+    "FIFO_UNDERRUN": 231,
+    "FRAMING_ERROR": 195,
+    "IRQ_LOST": 97,
+    "METASTABILITY": 12,
+    "PREADY_TIMEOUT": 108,
+    "PSLVERR_TIMEOUT": 250,
+    "REG_MISMATCH": 19
+  },
+  "files": {
+    "config.csv": {
+      "rows": 4000,
+      "bytes": 989104,
+      "columns": [
+        "runId",
+        "test_id",
+        "testcase",
+        "bus_protocol",
+        "arbitration_scheme",
+        "psel_count",
+        "wait_state_cfg",
+        "retry_limit",
+        "parity_mode",
+        "baud_rate",
+        "fifo_depth",
+        "dma_enable",
+        "irq_mode",
+        "clk_mhz",
+        "apb_data_width",
+        "addr_width_bits",
+        "timeout_us",
+        "num_agents",
+        "agent_mode",
+        "env_mode",
+        "test_mode_enabled",
+        "reset_cycles",
+        "coverage_enable",
+        "assertion_enable",
+        "uvm_verbosity",
+        "debug_mode",
+        "error_injection_enable",
+        "error_injection_rate",
+        "compile_options",
+        "sim_options",
+        "vendor_ip_rev",
+        "lint_waivers",
+        "num_transactions",
+        "clock_period_ns",
+        "test_class",
+        "sequence_name",
+        "protocol"
+      ]
+    },
+    "randomization.csv": {
+      "rows": 4000,
+      "bytes": 625101,
+      "columns": [
+        "run_id",
+        "sequence_name",
+        "seed",
+        "rand_mode",
+        "constraint_set",
+        "rand_addr_base",
+        "rand_addr_range_kb",
+        "rand_data_pattern",
+        "payload_entropy",
+        "rand_rw_ratio",
+        "rand_opcode_mix",
+        "rand_packet_len_bytes",
+        "rand_delay_min_ns",
+        "rand_delay_max_ns",
+        "rand_idle_cycles",
+        "rand_wait_states",
+        "rand_priority_mode",
+        "rand_traffic_pattern",
+        "rand_workload",
+        "rand_order",
+        "rand_err_inj_mode",
+        "rand_transaction_count"
+      ]
+    },
+    "transactions.csv": {
+      "rows": 37700,
+      "bytes": 7305317,
+      "columns": [
+        "Run_ID",
+        "transaction_id",
+        "sequence_id",
+        "sequence_name",
+        "txn_type",
+        "start_time_ns",
+        "end_time_ns",
+        "clock_cycle",
+        "channel_id",
+        "src_id",
+        "dst_id",
+        "priority",
+        "addr",
+        "wdata",
+        "rdata",
+        "expected_data",
+        "observed_data",
+        "checker_result",
+        "error_id",
+        "opcode",
+        "PADDR",
+        "PWRITE",
+        "PWDATA",
+        "PRDATA",
+        "PSEL",
+        "PENABLE",
+        "PREADY",
+        "PSLVERR",
+        "PSTRB",
+        "uart_tx_byte",
+        "uart_rx_byte",
+        "parity_error",
+        "framing_error",
+        "irq_out"
+      ]
+    },
+    "telemetry.csv": {
+      "rows": 4000,
+      "bytes": 591088,
+      "columns": [
+        "simulation_id",
+        "host",
+        "os_release",
+        "simulator",
+        "simulator_version",
+        "cpu_model",
+        "cpu_cores_allocated",
+        "cpu_util_avg_pct",
+        "cpu_util_peak_pct",
+        "mem_util_avg_pct",
+        "peak_mem_mb",
+        "disk_io_mb",
+        "wall_time_s",
+        "cpu_time_s",
+        "license_wait_s",
+        "sim_perf_cycles_per_sec",
+        "temperature_c",
+        "voltage_mv",
+        "power_mode",
+        "power_w",
+        "grid_queue"
+      ]
+    },
+    "outcomes.csv": {
+      "rows": 4000,
+      "bytes": 512185,
+      "columns": [
+        "runId",
+        "test_id",
+        "seed",
+        "result",
+        "pass_fail",
+        "failure_class",
+        "err_code",
+        "error_id",
+        "first_error_time_ns",
+        "uvm_error_count",
+        "uvm_warning_count",
+        "uvm_fatal_count",
+        "assertion_failures",
+        "scoreboard_mismatches",
+        "execution_time_ms",
+        "throughput_mbps",
+        "sim_cycles",
+        "exit_code",
+        "verdict_source"
+      ]
+    },
+    "registers.csv": {
+      "rows": 16000,
+      "bytes": 1427409,
+      "columns": [
+        "run_id",
+        "access_time_ns",
+        "access_type",
+        "block",
+        "reg_name",
+        "reg_addr",
+        "reg_value",
+        "expected_value",
+        "field_name",
+        "field_value",
+        "status",
+        "mem_block_id"
+      ]
+    },
+    "uvm.log": {
+      "rows": 4000,
+      "bytes": 7522693,
+      "columns": [
+        "<uvm log grammar>"
+      ]
+    }
+  },
+  "waveforms": [],
+  "invariants": [
+    "outcomes.status == FAIL  <=>  uvm.log verdict is '** TEST FAILED **'",
+    "outcomes.uvm_error_count == count of UVM_ERROR lines for that run in uvm.log",
+    "outcomes.uvm_fatal_count == count of UVM_FATAL lines for that run in uvm.log",
+    "outcomes.scoreboard_mismatches == rows in transactions.csv with checker_result == MISMATCH for that run",
+    "outcomes.failure_type == NONE for every passing run",
+    "every start_time_ns in transactions.csv < execution_time_ms * 1000",
+    "run_id is the join key across every file that carries one"
+  ],
+  "raw_vs_derived": {
+    "raw_in_files": [
+      "config knobs",
+      "seed and randomized fields",
+      "transaction inputs/outputs",
+      "protocol signal values",
+      "UVM report lines",
+      "assertion events",
+      "register accesses",
+      "environment telemetry",
+      "PASS/FAIL verdict",
+      "execution_time_ms",
+      "throughput_mbps",
+      "sim_cycles"
+    ],
+    "must_be_derived_by_analytics": [
+      "latency",
+      "failure_probability",
+      "risk_score",
+      "failure_rate",
+      "feature importance",
+      "SHAP",
+      "correlation",
+      "cluster id",
+      "pareto rank",
+      "recommended configuration",
+      "confidence"
+    ]
+  }
+}

@@ -1,206 +1,129 @@
-export default function Recommendations({ data }) {
-  if (!data?.analysis?.recommendations) return <div>Loading recommendations...</div>
+import {
+  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
+} from 'recharts'
+import { card, th, td, mono, num, pct, fixed, PASS_BADGE, FAIL_BADGE } from './ui'
 
-  const rec = data.analysis.recommendations
-  const configs = rec.best_configs || []
+export default function Recommendations({ data }) {
+  const r = data?.analysis?.recommendations
+  if (!r) return <div>Loading recommendations…</div>
+
+  if (r.skipped) {
+    return (
+      <div style={{ ...card, color: '#6b7280' }}>
+        The recommender was disabled for this job.
+      </div>
+    )
+  }
+
+  const feasible = r.constraint_satisfiable
+  const recs = (feasible ? r.recommendations : r.fallback_recommendations) || []
+  const history = (r.history || []).map((h, i) => ({
+    trial: h.trial ?? i,
+    value: h.value ?? h.throughput ?? null,
+  })).filter((h) => h.value != null)
+
+  // Union of keys across recommended configs, so the table adapts to whatever
+  // knobs the search space actually contained.
+  const configKeys = [...new Set(recs.flatMap((x) => Object.keys(x.config || {})))]
 
   return (
-    <div className="recommendations-container">
-      <div className="rec-summary">
-        <h3>Constrained Optimization Results</h3>
-        <div className="summary-stats">
-          <div className="stat">
-            <span className="stat-label">Trials Executed</span>
-            <span className="stat-value">{rec.n_trials}</span>
-          </div>
-          <div className="stat">
-            <span className="stat-label">Risk Ceiling</span>
-            <span className="stat-value">{(rec.max_risk * 100).toFixed(1)}%</span>
-          </div>
-          <div className="stat">
-            <span className="stat-label">Search Space</span>
-            <span className="stat-value">{Object.keys(rec.search_space || {}).length} params</span>
-          </div>
+    <div>
+      <div style={{
+        background: feasible ? '#f0fdf4' : '#fffbeb',
+        borderLeft: `4px solid ${feasible ? '#16a34a' : '#d97706'}`,
+        padding: '12px 16px', borderRadius: 4, marginBottom: 20,
+        fontSize: 13, color: feasible ? '#14532d' : '#78350f',
+      }}>
+        {feasible
+          ? <>Found {num(r.n_feasible)} configuration(s) under the {pct(r.max_risk)} risk
+             ceiling across {num(r.n_trials)} trials.</>
+          : <>No configuration reached the {pct(r.max_risk)} risk ceiling. Lowest achievable
+             risk was {pct(r.min_achievable_risk, 2)} — showing the lowest-risk configs found.</>}
+      </div>
+
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(160px,1fr))', gap: 16, marginBottom: 24 }}>
+        <Stat label="Trials" value={num(r.n_trials)} />
+        <Stat label="Feasible" value={num(r.n_feasible)} />
+        <Stat label="Feasible Rate" value={pct(r.feasible_rate)} />
+        <Stat label="Min Achievable Risk" value={pct(r.min_achievable_risk, 2)} />
+        <Stat label="Throughput Uplift" value={r.throughput_uplift_pct != null ? `${fixed(r.throughput_uplift_pct, 1)}%` : '—'} />
+      </div>
+
+      {history.length > 0 && (
+        <div style={{ ...card, marginBottom: 20 }}>
+          <h3 style={{ marginTop: 0 }}>Optimisation History</h3>
+          <ResponsiveContainer width="100%" height={240}>
+            <LineChart data={history}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="trial" label={{ value: 'Trial', position: 'bottom', offset: -2 }} />
+              <YAxis />
+              <Tooltip formatter={(v) => fixed(v)} />
+              <Line dataKey="value" stroke="#8b5cf6" dot={false} strokeWidth={2} name="Objective" />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+      )}
+
+      <div style={{ ...card, marginBottom: 20 }}>
+        <h3 style={{ marginTop: 0 }}>
+          {feasible ? 'Recommended Configurations' : 'Lowest-Risk Configurations Found'}
+        </h3>
+        <div style={{ overflowX: 'auto' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+            <thead>
+              <tr style={{ background: '#f3f4f6' }}>
+                <th style={th}>#</th>
+                <th style={{ ...th, textAlign: 'right' }}>Throughput</th>
+                <th style={{ ...th, textAlign: 'right' }}>Predicted Risk</th>
+                <th style={th}>Status</th>
+                {configKeys.map((k) => <th key={k} style={th}>{k}</th>)}
+              </tr>
+            </thead>
+            <tbody>
+              {recs.map((rec, i) => (
+                <tr key={i}>
+                  <td style={{ ...td, fontWeight: 600 }}>{i + 1}</td>
+                  <td style={{ ...td, textAlign: 'right', fontWeight: 600 }}>
+                    {fixed(rec.predicted_throughput_mbps)} Mbps
+                  </td>
+                  <td style={{ ...td, textAlign: 'right' }}>{pct(rec.predicted_risk, 2)}</td>
+                  <td style={td}>
+                    <span style={rec.feasible ? PASS_BADGE : FAIL_BADGE}>
+                      {rec.feasible ? 'within ceiling' : 'over ceiling'}
+                    </span>
+                  </td>
+                  {configKeys.map((k) => (
+                    <td key={k} style={{ ...td, ...mono }}>{String(rec.config?.[k] ?? '—')}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
 
-      <div className="search-space">
-        <h3>Search Space Definition</h3>
-        <div className="space-grid">
-          {Object.entries(rec.search_space || {}).map(([param, values]) => (
-            <div key={param} className="space-item">
-              <span className="space-param">{param}</span>
-              <span className="space-values">
-                {Array.isArray(values) ? values.join(', ') : `[${values}]`}
-              </span>
+      <div style={card}>
+        <h3 style={{ marginTop: 0 }}>Derived Search Space</h3>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))', gap: 14 }}>
+          {Object.entries(r.search_space || {}).map(([k, v]) => (
+            <div key={k} style={{ padding: 12, background: '#f9fafb', borderRadius: 4, borderLeft: '3px solid #3b82f6' }}>
+              <div style={{ fontWeight: 600, fontSize: 13, color: '#111827' }}>{k}</div>
+              <div style={{ ...mono, color: '#6b7280', marginTop: 4 }}>
+                {Array.isArray(v) ? v.join(', ') : JSON.stringify(v)}
+              </div>
             </div>
           ))}
         </div>
       </div>
+    </div>
+  )
+}
 
-      <div className="configs-table">
-        <h3>Optimal Configurations</h3>
-        <p className="table-desc">Top configurations satisfying the risk constraint</p>
-        <table>
-          <thead>
-            <tr>
-              <th>Rank</th>
-              <th>Throughput</th>
-              <th>Predicted Risk</th>
-              <th>test_mode</th>
-              <th>cache_policy</th>
-              <th>queue_depth</th>
-            </tr>
-          </thead>
-          <tbody>
-            {configs.slice(0, 10).map((cfg, i) => (
-              <tr key={i} className={cfg.predicted_risk <= rec.max_risk ? 'compliant' : 'violated'}>
-                <td className="rank">{i + 1}</td>
-                <td className="throughput">{cfg.throughput.toFixed(1)} Mbps</td>
-                <td>
-                  <span className={`risk-badge ${cfg.predicted_risk <= rec.max_risk ? 'safe' : 'unsafe'}`}>
-                    {(cfg.predicted_risk * 100).toFixed(2)}%
-                  </span>
-                </td>
-                <td>{cfg.test_mode_enabled}</td>
-                <td>{cfg.cache_policy}</td>
-                <td>{cfg.queue_depth}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
-      <style>{`
-        .recommendations-container .rec-summary {
-        .recommendations-container .rec-summary {
-          background: white;
-          padding: 20px;
-          border-radius: 6px;
-          margin-bottom: 20px;
-          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
-        .recommendations-container .rec-summary h3 {
-          margin: 0 0 15px 0;
-          font-size: 18px;
-        }
-        .recommendations-container .summary-stats {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-          gap: 15px;
-        }
-        .recommendations-container .stat {
-          display: flex;
-          flex-direction: column;
-          padding: 15px;
-          background: #f3f4f6;
-          border-radius: 4px;
-        }
-        .recommendations-container .stat-label {
-          color: #6b7280;
-          font-size: 12px;
-          font-weight: 600;
-          text-transform: uppercase;
-          margin-bottom: 5px;
-        }
-        .recommendations-container .stat-value {
-          color: #1f2937;
-          font-size: 20px;
-          font-weight: 700;
-        }
-        .recommendations-container .search-space {
-          background: white;
-          padding: 20px;
-          border-radius: 6px;
-          margin-bottom: 20px;
-          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
-        .recommendations-container .search-space h3 {
-          margin: 0 0 15px 0;
-        }
-        .recommendations-container .space-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-          gap: 15px;
-        }
-        .recommendations-container .space-item {
-          display: flex;
-          flex-direction: column;
-          padding: 12px;
-          background: #f9fafb;
-          border-radius: 4px;
-          border-left: 3px solid #3b82f6;
-        }
-        .recommendations-container .space-param {
-          font-weight: 600;
-          color: #1f2937;
-          font-size: 13px;
-        }
-        .recommendations-container .space-values {
-          color: #6b7280;
-          font-size: 12px;
-          margin-top: 4px;
-          font-family: monospace;
-        }
-        .recommendations-container .configs-table {
-          background: white;
-          padding: 20px;
-          border-radius: 6px;
-          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
-        .recommendations-container .configs-table h3 {
-          margin: 0 0 5px 0;
-        }
-        .recommendations-container .table-desc {
-          margin: 0 0 15px 0;
-          color: #6b7280;
-          font-size: 14px;
-        }
-        .recommendations-container table {
-          width: 100%;
-          border-collapse: collapse;
-        }
-        .recommendations-container th {
-          background: #f3f4f6;
-          padding: 12px;
-          text-align: left;
-          font-weight: 600;
-          color: #374151;
-          font-size: 13px;
-          border-bottom: 2px solid #e5e7eb;
-        }
-        .recommendations-container td {
-          padding: 12px;
-          border-bottom: 1px solid #e5e7eb;
-          color: #6b7280;
-          font-size: 13px;
-        }
-        .recommendations-container tr:hover {
-          background: #f9fafb;
-        }
-        .recommendations-container .rank {
-          font-weight: 600;
-          color: #1f2937;
-        }
-        .recommendations-container .throughput {
-          font-weight: 600;
-          color: #1f2937;
-        }
-        .recommendations-container .risk-badge {
-          padding: 4px 8px;
-          border-radius: 4px;
-          font-size: 12px;
-          font-weight: 600;
-        }
-        .recommendations-container .risk-badge.safe {
-          background: #d1fae5;
-          color: #065f46;
-        }
-        .recommendations-container .risk-badge.unsafe {
-          background: #fee2e2;
-          color: #991b1b;
-        }
-      `}</style>
+function Stat({ label, value }) {
+  return (
+    <div style={{ ...card, padding: 18 }}>
+      <div style={{ fontSize: 24, fontWeight: 700, color: '#111827' }}>{value}</div>
+      <div style={{ fontSize: 12, color: '#6b7280', marginTop: 4 }}>{label}</div>
     </div>
   )
 }

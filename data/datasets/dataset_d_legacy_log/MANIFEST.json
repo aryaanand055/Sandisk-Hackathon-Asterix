@@ -1,0 +1,30 @@
+{
+  "dataset": "Dataset D - legacy mode, uvm.log only",
+  "profile": "nvme_axi",
+  "n_runs": 2000,
+  "seed": 4242,
+  "protocol": "AXI4",
+  "join_key": "run_id",
+  "files": {
+    "uvm.log": {
+      "rows": 2000,
+      "bytes": 3694845,
+      "columns": [
+        "<uvm log grammar>"
+      ]
+    }
+  },
+  "waveforms": [],
+  "pass_rate": 0.777,
+  "fail_rate": 0.223,
+  "column_aliases": {},
+  "absent_categories": [
+    "config.csv",
+    "outcomes.csv",
+    "randomization.csv",
+    "registers.csv",
+    "telemetry.csv",
+    "transactions.csv",
+    "waveform"
+  ]
+}

@@ -71,7 +71,7 @@ export default function App() {
       const res = await axios.post('/api/analyze', formData)
       setJobId(res.data.job_id)
     } catch (err) {
-      setError('Upload failed: ' + err.message)
+      setError('Upload failed: ' + (err.response?.data?.detail || err.message))
       setLoading(false)
     }
   }
@@ -83,7 +83,7 @@ export default function App() {
       const res = await axios.post('/api/analyze-sample')
       setJobId(res.data.job_id)
     } catch (err) {
-      setError('Sample analysis failed: ' + err.message)
+      setError('Sample analysis failed: ' + (err.response?.data?.detail || err.message))
       setLoading(false)
     }
   }
@@ -103,11 +103,12 @@ export default function App() {
         <>
           {loading && (
             <div className="progress-box">
-              <h3>Analysis in progress...</h3>
+              <h3>Analysing…</h3>
               {progress && (
                 <>
-                  <p>Status: {progress.status}</p>
-                  <p>Progress: {progress.progress}%</p>
+                  <p style={{ color: '#374151' }}>
+                    {progress.message || progress.status} — {progress.progress}%
+                  </p>
                   <div className="progress-bar">
                     <div className="progress-fill" style={{ width: `${progress.progress}%` }} />
                   </div>

@@ -1,155 +1,127 @@
-import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line } from 'recharts'
+import {
+  ScatterChart, Scatter, XAxis, YAxis, CartesianGrid,
+  Tooltip, Legend, ResponsiveContainer,
+} from 'recharts'
+import { card, th, td, mono, num, pct, fixed } from './ui'
 
 export default function TradeoffMatrix({ data }) {
-  if (!data?.analysis?.pareto) return <div>Loading Pareto analysis...</div>
+  const p = data?.analysis?.pareto
+  if (!p) return <div>Loading Pareto analysis…</div>
 
-  const pareto = data.analysis.pareto
-  const frontierData = (pareto.frontier || []).map((p, i) => ({
-    throughput: p.throughput,
-    risk: p.predicted_risk,
-    configs: p.n_configs,
-    label: ['Best Safe', 'Knee Point', 'Peak Throughput'][i] || `Config ${i}`
-  }))
+  const points = p.points || []
+  const frontier = p.frontier || []
 
-  const operatingPoints = [
-    { name: 'Best Safe Config', ...pareto.best_safe, color: '#10b981' },
-    { name: 'Knee Point', ...pareto.knee, color: '#f59e0b' },
-    { name: 'Peak Throughput', ...pareto.peak, color: '#ef4444' }
+  const operating = [
+    ['Best Safe', p.best_safe_config, '#10b981'],
+    ['Knee', p.knee_config, '#f59e0b'],
+    ['Max Throughput', p.max_throughput_config, '#ef4444'],
+    ['Lowest Risk', p.lowest_risk_config, '#3b82f6'],
   ]
 
   return (
-    <div className="tradeoff-container">
-      <div className="summary-info">
-        <p>Pareto frontier analysis based on {pareto.n_points} unique configurations</p>
+    <div>
+      <div style={{
+        background: '#f0f9ff', borderLeft: '4px solid #0284c7', padding: '12px 16px',
+        borderRadius: 4, marginBottom: 20, fontSize: 13, color: '#0c4a6e',
+      }}>
+        {num(p.n_configs)} configurations grouped over{' '}
+        <strong>{(p.group_features || []).join(', ')}</strong> (min {p.min_runs_per_config} runs
+        each) · {num(p.n_frontier)} on the frontier
       </div>
 
-      <div className="chart-box">
-        <h3>Performance vs Risk Tradeoff</h3>
-        <ResponsiveContainer width="100%" height={400}>
-          <ScatterChart margin={{ top: 20, right: 20, bottom: 60, left: 60 }}>
+      <div style={{ ...card, marginBottom: 20 }}>
+        <h3 style={{ marginTop: 0 }}>Throughput vs Predicted Risk</h3>
+        <ResponsiveContainer width="100%" height={380}>
+          <ScatterChart margin={{ top: 10, right: 20, bottom: 24, left: 10 }}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis
-              dataKey="throughput"
-              name="Throughput (Mbps)"
-              label={{ value: 'Throughput (Mbps)', position: 'bottom', offset: 10 }}
-            />
-            <YAxis
-              dataKey="risk"
-              name="Predicted Failure Risk"
-              label={{ value: 'Risk', angle: -90, position: 'insideLeft' }}
-            />
+            <XAxis dataKey="throughput_mbps" type="number" name="Throughput"
+                   label={{ value: 'Throughput (Mbps)', position: 'bottom', offset: 4 }} />
+            <YAxis dataKey="predicted_risk" type="number" name="Predicted risk"
+                   tickFormatter={(v) => v.toFixed(2)}
+                   label={{ value: 'Predicted risk', angle: -90, position: 'insideLeft' }} />
             <Tooltip
               cursor={{ strokeDasharray: '3 3' }}
-              contentStyle={{ background: '#fff', border: '1px solid #ccc', borderRadius: '4px' }}
-              formatter={(value) => typeof value === 'number' ? value.toFixed(3) : value}
+              content={({ payload }) => {
+                if (!payload?.length) return null
+                const d = payload[0].payload
+                return (
+                  <div style={{ background: '#fff', border: '1px solid #d1d5db', padding: 10, borderRadius: 6 }}>
+                    <div style={{ ...mono, fontWeight: 600 }}>{d.signature}</div>
+                    <div style={{ fontSize: 12, marginTop: 6, color: '#4b5563' }}>
+                      throughput {fixed(d.throughput_mbps)} Mbps<br />
+                      predicted risk {pct(d.predicted_risk, 2)}<br />
+                      observed {pct(d.observed_fail_rate, 2)} · {num(d.n_runs)} runs
+                    </div>
+                  </div>
+                )
+              }}
             />
-            <Legend />
-            <Scatter
-              name="Pareto Frontier"
-              data={frontierData}
-              fill="#3b82f6"
-              shape="circle"
-              isAnimationActive={true}
-            />
+            <Legend verticalAlign="top" />
+            <Scatter name="All configs" data={points} fill="#cbd5e1" />
+            <Scatter name="Pareto frontier" data={frontier} fill="#2563eb" />
           </ScatterChart>
         </ResponsiveContainer>
       </div>
 
-      <div className="operating-points">
-        <h3>Operating Point Recommendations</h3>
-        <div className="point-cards">
-          {operatingPoints.map((p, i) => (
-            <div key={i} className="point-card" style={{ borderLeftColor: p.color }}>
-              <div className="point-header">
-                <h4>{p.name}</h4>
-                <span className="point-badge" style={{ backgroundColor: p.color }}>
-                  {i === 0 ? '✓ Safest' : i === 1 ? '⚖ Balanced' : '⚡ Peak'}
-                </span>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))', gap: 16, marginBottom: 20 }}>
+        {operating.map(([label, cfg, color]) => (
+          <div key={label} style={{ ...card, borderLeft: `4px solid ${color}` }}>
+            <h4 style={{ margin: '0 0 10px', fontSize: 15 }}>{label}</h4>
+            {cfg ? (
+              <>
+                <Row k="Throughput" v={`${fixed(cfg.throughput_mbps)} Mbps`} />
+                <Row k="Predicted risk" v={pct(cfg.predicted_risk, 2)} />
+                <Row k="Observed" v={pct(cfg.observed_fail_rate, 2)} />
+                <Row k="Runs" v={num(cfg.n_runs)} />
+                <div style={{ ...mono, marginTop: 8, color: '#6b7280' }}>{cfg.signature}</div>
+              </>
+            ) : (
+              <div style={{ fontSize: 13, color: '#9ca3af' }}>
+                No configuration met this criterion.
               </div>
-              <div className="point-details">
-                <div className="point-metric">
-                  <span className="metric-label">Throughput</span>
-                  <span className="metric-value">{p.throughput.toFixed(1)} Mbps</span>
-                </div>
-                <div className="point-metric">
-                  <span className="metric-label">Risk</span>
-                  <span className="metric-value">{(p.predicted_risk * 100).toFixed(1)}%</span>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+            )}
+          </div>
+        ))}
       </div>
 
-      <style>{`
-        .tradeoff-container .summary-info {
-        .tradeoff-container .summary-info {
-          background: #f0f9ff;
-          border-left: 4px solid #0284c7;
-          padding: 12px 16px;
-          border-radius: 4px;
-          margin-bottom: 20px;
-          color: #0c4a6e;
-          font-size: 14px;
-        }
-        .tradeoff-container .operating-points {
-          margin-top: 30px;
-        }
-        .tradeoff-container .point-cards {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-          gap: 20px;
-          margin-top: 20px;
-        }
-        .tradeoff-container .point-card {
-          background: white;
-          border-left: 4px solid;
-          border-radius: 6px;
-          padding: 20px;
-          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-          transition: box-shadow 0.2s;
-        }
-        .tradeoff-container .point-card:hover {
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        }
-        .tradeoff-container .point-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-bottom: 15px;
-        }
-        .tradeoff-container .point-header h4 {
-          margin: 0;
-          color: #1f2937;
-          font-size: 16px;
-        }
-        .tradeoff-container .point-badge {
-          color: white;
-          padding: 4px 10px;
-          border-radius: 20px;
-          font-size: 11px;
-          font-weight: 600;
-        }
-        .tradeoff-container .point-details {
-          display: flex;
-          flex-direction: column;
-          gap: 12px;
-        }
-        .tradeoff-container .point-metric {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-        }
-        .tradeoff-container .metric-label {
-          color: #6b7280;
-          font-size: 13px;
-        }
-        .tradeoff-container .metric-value {
-          color: #1f2937;
-          font-weight: 600;
-          font-size: 14px;
-        }
-      `}</style>
+      <div style={card}>
+        <h3 style={{ marginTop: 0 }}>Frontier</h3>
+        <div style={{ overflowX: 'auto' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+            <thead>
+              <tr style={{ background: '#f3f4f6' }}>
+                <th style={th}>Signature</th>
+                <th style={{ ...th, textAlign: 'right' }}>Throughput</th>
+                <th style={{ ...th, textAlign: 'right' }}>Predicted Risk</th>
+                <th style={{ ...th, textAlign: 'right' }}>Observed</th>
+                <th style={{ ...th, textAlign: 'right' }}>Exec Time</th>
+                <th style={{ ...th, textAlign: 'right' }}>Runs</th>
+              </tr>
+            </thead>
+            <tbody>
+              {frontier.map((f) => (
+                <tr key={f.signature}>
+                  <td style={{ ...td, ...mono }}>{f.signature}</td>
+                  <td style={{ ...td, textAlign: 'right', fontWeight: 600 }}>{fixed(f.throughput_mbps)}</td>
+                  <td style={{ ...td, textAlign: 'right' }}>{pct(f.predicted_risk, 2)}</td>
+                  <td style={{ ...td, textAlign: 'right' }}>{pct(f.observed_fail_rate, 2)}</td>
+                  <td style={{ ...td, textAlign: 'right' }}>{fixed(f.execution_time_ms)} ms</td>
+                  <td style={{ ...td, textAlign: 'right' }}>{num(f.n_runs)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function Row({ k, v }) {
+  return (
+    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13, padding: '3px 0' }}>
+      <span style={{ color: '#6b7280' }}>{k}</span>
+      <span style={{ fontWeight: 600, color: '#111827' }}>{v}</span>
     </div>
   )
 }

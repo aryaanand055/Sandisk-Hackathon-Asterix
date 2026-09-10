@@ -1,0 +1,334 @@
+{
+  "dataset": "Dataset D - legacy mode, uvm.log only",
+  "profile": "nvme_axi",
+  "generator": "tools/generate_structured_dataset.py",
+  "metadata": {
+    "n_runs": 2000,
+    "seed": 4242,
+    "protocol": "AXI4",
+    "dut": "nvme_ssd_controller",
+    "base_fail_prob": 0.012,
+    "exec_ceiling_ms": 2000.0,
+    "observed_fail_rate": 0.223,
+    "observed_pass_rate": 0.777,
+    "files_provided": [
+      "uvm.log"
+    ],
+    "categories_absent": [
+      "config.csv",
+      "outcomes.csv",
+      "randomization.csv",
+      "registers.csv",
+      "telemetry.csv",
+      "transactions.csv",
+      "waveform"
+    ],
+    "column_aliases": {}
+  },
+  "rules": [
+    {
+      "id": "A1",
+      "description": "Back_To_Back_Program on the Adaptive cache policy overruns the write FIFO",
+      "files": [
+        "config.csv"
+      ],
+      "conditions": [
+        {
+          "field": "test_name",
+          "op": "==",
+          "value": "Back_To_Back_Program"
+        },
+        {
+          "field": "cache_policy",
+          "op": "==",
+          "value": "Adaptive"
+        }
+      ],
+      "effect": "set",
+      "value": 0.85,
+      "error_tag": "FIFO_OVERFLOW",
+      "deterministic": false,
+      "observed": {
+        "rows_matched": 102,
+        "match_share": 0.051,
+        "fail_rate_when_fired": 0.8824,
+        "fail_rate_otherwise": 0.1876,
+        "lift": 4.704
+      }
+    },
+    {
+      "id": "A2",
+      "description": "Test mode raises failure probability across every run",
+      "files": [
+        "config.csv"
+      ],
+      "conditions": [
+        {
+          "field": "test_mode_enabled",
+          "op": "==",
+          "value": 1
+        }
+      ],
+      "effect": "add",
+      "value": 0.35,
+      "error_tag": null,
+      "deterministic": false,
+      "observed": {
+        "rows_matched": 564,
+        "match_share": 0.282,
+        "fail_rate_when_fired": 0.4504,
+        "fail_rate_otherwise": 0.1337,
+        "lift": 3.368
+      }
+    },
+    {
+      "id": "A3",
+      "description": "Deep queues with ECC disabled surface uncorrectable bit errors",
+      "files": [
+        "config.csv"
+      ],
+      "conditions": [
+        {
+          "field": "queue_depth",
+          "op": ">=",
+          "value": 32
+        },
+        {
+          "field": "ecc_mode",
+          "op": "==",
+          "value": "Disabled"
+        }
+      ],
+      "effect": "add",
+      "value": 0.32,
+      "error_tag": "ECC_UNCORRECTABLE",
+      "deterministic": false,
+      "observed": {
+        "rows_matched": 74,
+        "match_share": 0.037,
+        "fail_rate_when_fired": 0.5946,
+        "fail_rate_otherwise": 0.2087,
+        "lift": 2.849
+      }
+    },
+    {
+      "id": "A4",
+      "description": "Hot and undervolted NAND loses charge retention (requires joining config.csv with telemetry.csv)",
+      "files": [
+        "telemetry.csv"
+      ],
+      "conditions": [
+        {
+          "field": "temperature_c",
+          "op": ">",
+          "value": 85.0
+        },
+        {
+          "field": "voltage_mv",
+          "op": "<",
+          "value": 1100.0
+        }
+      ],
+      "effect": "add",
+      "value": 0.3,
+      "error_tag": "RETENTION_FAIL",
+      "deterministic": false,
+      "observed": {
+        "rows_matched": 12,
+        "match_share": 0.006,
+        "fail_rate_when_fired": 0.5833,
+        "fail_rate_otherwise": 0.2208,
+        "lift": 2.642
+      }
+    },
+    {
+      "id": "A5",
+      "description": "Deterministic RTL bug: 4 planes + 64-beat burst + scrambler terminates the AXI burst illegally at a fixed address",
+      "files": [
+        "config.csv"
+      ],
+      "conditions": [
+        {
+          "field": "num_planes",
+          "op": "==",
+          "value": 4
+        },
+        {
+          "field": "burst_length",
+          "op": "==",
+          "value": 64
+        },
+        {
+          "field": "scrambler_enable",
+          "op": "==",
+          "value": 1
+        }
+      ],
+      "effect": "set",
+      "value": 0.97,
+      "error_tag": "PROTOCOL_VIOLATION",
+      "deterministic": true,
+      "observed": {
+        "rows_matched": 29,
+        "match_share": 0.0145,
+        "fail_rate_when_fired": 0.9655,
+        "fail_rate_otherwise": 0.2121,
+        "lift": 4.553
+      }
+    },
+    {
+      "id": "A6",
+      "description": "High clock with deep prefetch starves the monitor and trips the watchdog",
+      "files": [
+        "config.csv"
+      ],
+      "conditions": [
+        {
+          "field": "clock_freq_mhz",
+          "op": ">=",
+          "value": 1000
+        },
+        {
+          "field": "prefetch_depth",
+          "op": ">",
+          "value": 8
+        }
+      ],
+      "effect": "add",
+      "value": 0.28,
+      "error_tag": "TIMEOUT",
+      "deterministic": false,
+      "observed": {
+        "rows_matched": 315,
+        "match_share": 0.1575,
+        "fail_rate_when_fired": 0.4032,
+        "fail_rate_otherwise": 0.1893,
+        "lift": 2.13
+      }
+    },
+    {
+      "id": "A7",
+      "description": "High-entropy payloads on a wide bus with the scrambler off mismatch the scoreboard (config.csv x randomization.csv)",
+      "files": [
+        "config.csv",
+        "randomization.csv"
+      ],
+      "conditions": [
+        {
+          "field": "payload_entropy",
+          "op": ">",
+          "value": 0.8
+        },
+        {
+          "field": "scrambler_enable",
+          "op": "==",
+          "value": 0
+        },
+        {
+          "field": "data_width_bits",
+          "op": ">=",
+          "value": 128
+        }
+      ],
+      "effect": "add",
+      "value": 0.26,
+      "error_tag": "DATA_MISMATCH",
+      "deterministic": false,
+      "observed": {
+        "rows_matched": 59,
+        "match_share": 0.0295,
+        "fail_rate_when_fired": 0.339,
+        "fail_rate_otherwise": 0.2195,
+        "lift": 1.545
+      }
+    },
+    {
+      "id": "A8",
+      "description": "Turbo power mode above 75 C trips thermal protection (telemetry.csv only - invisible without it)",
+      "files": [
+        "telemetry.csv"
+      ],
+      "conditions": [
+        {
+          "field": "power_mode",
+          "op": "==",
+          "value": "turbo"
+        },
+        {
+          "field": "temperature_c",
+          "op": ">",
+          "value": 75.0
+        }
+      ],
+      "effect": "add",
+      "value": 0.25,
+      "error_tag": "THERMAL_SHUTDOWN",
+      "deterministic": false,
+      "observed": {
+        "rows_matched": 97,
+        "match_share": 0.0485,
+        "fail_rate_when_fired": 0.4536,
+        "fail_rate_otherwise": 0.2112,
+        "lift": 2.147
+      }
+    }
+  ],
+  "error_tag_distribution": {
+    "ASSERTION_FAIL": 64,
+    "DATA_MISMATCH": 102,
+    "ECC_UNCORRECTABLE": 37,
+    "FIFO_OVERFLOW": 90,
+    "PROTOCOL_VIOLATION": 28,
+    "RETENTION_FAIL": 5,
+    "THERMAL_SHUTDOWN": 29,
+    "TIMEOUT": 91
+  },
+  "files": {
+    "uvm.log": {
+      "rows": 2000,
+      "bytes": 3694845,
+      "columns": [
+        "<uvm log grammar>"
+      ]
+    }
+  },
+  "waveforms": [],
+  "invariants": [
+    "outcomes.status == FAIL  <=>  uvm.log verdict is '** TEST FAILED **'",
+    "outcomes.uvm_error_count == count of UVM_ERROR lines for that run in uvm.log",
+    "outcomes.uvm_fatal_count == count of UVM_FATAL lines for that run in uvm.log",
+    "outcomes.scoreboard_mismatches == rows in transactions.csv with checker_result == MISMATCH for that run",
+    "outcomes.failure_type == NONE for every passing run",
+    "every start_time_ns in transactions.csv < execution_time_ms * 1000",
+    "run_id is the join key across every file that carries one"
+  ],
+  "raw_vs_derived": {
+    "raw_in_files": [
+      "config knobs",
+      "seed and randomized fields",
+      "transaction inputs/outputs",
+      "protocol signal values",
+      "UVM report lines",
+      "assertion events",
+      "register accesses",
+      "environment telemetry",
+      "PASS/FAIL verdict",
+      "execution_time_ms",
+      "throughput_mbps",
+      "sim_cycles"
+    ],
+    "must_be_derived_by_analytics": [
+      "latency",
+      "failure_probability",
+      "risk_score",
+      "failure_rate",
+      "feature importance",
+      "SHAP",
+      "correlation",
+      "cluster id",
+      "pareto rank",
+      "recommended configuration",
+      "confidence"
+    ]
+  }
+}

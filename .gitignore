@@ -1,2 +1,6 @@
 __pycache__
 node_modules
+
+# Generated log corpus (56 MB at 50k runs). Regenerate with:
+#   python -m uvm_intel.generate_logs --n-runs 50000 --parts 10
+data/uvm_logs/

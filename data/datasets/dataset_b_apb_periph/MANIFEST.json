@@ -1,0 +1,224 @@
+{
+  "dataset": "Dataset B - APB peripheral subsystem, aliased columns, no waveform",
+  "profile": "apb_periph",
+  "n_runs": 4000,
+  "seed": 2024,
+  "protocol": "APB",
+  "join_key": "run_id",
+  "files": {
+    "config.csv": {
+      "rows": 4000,
+      "bytes": 989104,
+      "columns": [
+        "runId",
+        "test_id",
+        "testcase",
+        "bus_protocol",
+        "arbitration_scheme",
+        "psel_count",
+        "wait_state_cfg",
+        "retry_limit",
+        "parity_mode",
+        "baud_rate",
+        "fifo_depth",
+        "dma_enable",
+        "irq_mode",
+        "clk_mhz",
+        "apb_data_width",
+        "addr_width_bits",
+        "timeout_us",
+        "num_agents",
+        "agent_mode",
+        "env_mode",
+        "test_mode_enabled",
+        "reset_cycles",
+        "coverage_enable",
+        "assertion_enable",
+        "uvm_verbosity",
+        "debug_mode",
+        "error_injection_enable",
+        "error_injection_rate",
+        "compile_options",
+        "sim_options",
+        "vendor_ip_rev",
+        "lint_waivers",
+        "num_transactions",
+        "clock_period_ns",
+        "test_class",
+        "sequence_name",
+        "protocol"
+      ]
+    },
+    "randomization.csv": {
+      "rows": 4000,
+      "bytes": 625101,
+      "columns": [
+        "run_id",
+        "sequence_name",
+        "seed",
+        "rand_mode",
+        "constraint_set",
+        "rand_addr_base",
+        "rand_addr_range_kb",
+        "rand_data_pattern",
+        "payload_entropy",
+        "rand_rw_ratio",
+        "rand_opcode_mix",
+        "rand_packet_len_bytes",
+        "rand_delay_min_ns",
+        "rand_delay_max_ns",
+        "rand_idle_cycles",
+        "rand_wait_states",
+        "rand_priority_mode",
+        "rand_traffic_pattern",
+        "rand_workload",
+        "rand_order",
+        "rand_err_inj_mode",
+        "rand_transaction_count"
+      ]
+    },
+    "transactions.csv": {
+      "rows": 37700,
+      "bytes": 7305317,
+      "columns": [
+        "Run_ID",
+        "transaction_id",
+        "sequence_id",
+        "sequence_name",
+        "txn_type",
+        "start_time_ns",
+        "end_time_ns",
+        "clock_cycle",
+        "channel_id",
+        "src_id",
+        "dst_id",
+        "priority",
+        "addr",
+        "wdata",
+        "rdata",
+        "expected_data",
+        "observed_data",
+        "checker_result",
+        "error_id",
+        "opcode",
+        "PADDR",
+        "PWRITE",
+        "PWDATA",
+        "PRDATA",
+        "PSEL",
+        "PENABLE",
+        "PREADY",
+        "PSLVERR",
+        "PSTRB",
+        "uart_tx_byte",
+        "uart_rx_byte",
+        "parity_error",
+        "framing_error",
+        "irq_out"
+      ]
+    },
+    "telemetry.csv": {
+      "rows": 4000,
+      "bytes": 591088,
+      "columns": [
+        "simulation_id",
+        "host",
+        "os_release",
+        "simulator",
+        "simulator_version",
+        "cpu_model",
+        "cpu_cores_allocated",
+        "cpu_util_avg_pct",
+        "cpu_util_peak_pct",
+        "mem_util_avg_pct",
+        "peak_mem_mb",
+        "disk_io_mb",
+        "wall_time_s",
+        "cpu_time_s",
+        "license_wait_s",
+        "sim_perf_cycles_per_sec",
+        "temperature_c",
+        "voltage_mv",
+        "power_mode",
+        "power_w",
+        "grid_queue"
+      ]
+    },
+    "outcomes.csv": {
+      "rows": 4000,
+      "bytes": 512185,
+      "columns": [
+        "runId",
+        "test_id",
+        "seed",
+        "result",
+        "pass_fail",
+        "failure_class",
+        "err_code",
+        "error_id",
+        "first_error_time_ns",
+        "uvm_error_count",
+        "uvm_warning_count",
+        "uvm_fatal_count",
+        "assertion_failures",
+        "scoreboard_mismatches",
+        "execution_time_ms",
+        "throughput_mbps",
+        "sim_cycles",
+        "exit_code",
+        "verdict_source"
+      ]
+    },
+    "registers.csv": {
+      "rows": 16000,
+      "bytes": 1427409,
+      "columns": [
+        "run_id",
+        "access_time_ns",
+        "access_type",
+        "block",
+        "reg_name",
+        "reg_addr",
+        "reg_value",
+        "expected_value",
+        "field_name",
+        "field_value",
+        "status",
+        "mem_block_id"
+      ]
+    },
+    "uvm.log": {
+      "rows": 4000,
+      "bytes": 7522693,
+      "columns": [
+        "<uvm log grammar>"
+      ]
+    }
+  },
+  "waveforms": [],
+  "pass_rate": 0.6953,
+  "fail_rate": 0.3048,
+  "column_aliases": {
+    "config.csv": {
+      "run_id": "runId",
+      "test_name": "testcase"
+    },
+    "randomization.csv": {},
+    "transactions.csv": {
+      "run_id": "Run_ID",
+      "txn_id": "transaction_id"
+    },
+    "telemetry.csv": {
+      "run_id": "simulation_id"
+    },
+    "outcomes.csv": {
+      "run_id": "runId",
+      "status": "result",
+      "failure_type": "failure_class",
+      "error_code": "err_code"
+    }
+  },
+  "absent_categories": [
+    "waveform"
+  ]
+}

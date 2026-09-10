@@ -1,14 +1,26 @@
-import uuid
-import json
-import os
-import random
-from datetime import datetime
-from fastapi import FastAPI, UploadFile, File, HTTPException
-from fastapi.middleware.cors import CORSMiddleware
-import threading
-import asyncio
+"""FastAPI service wrapping the uvm_intel analysis pipeline.
 
-app = FastAPI()
+Uploaded .log files are parsed by uvm_intel.log_parser and analysed by
+uvm_intel.pipeline. Analysis runs on a worker thread; the UI polls /api/jobs.
+"""
+
+import glob
+import os
+import shutil
+import tempfile
+import threading
+import uuid
+from datetime import datetime
+from typing import Any, Dict, List, Optional
+
+import pandas as pd
+from fastapi import FastAPI, File, HTTPException, UploadFile
+from fastapi.middleware.cors import CORSMiddleware
+
+from uvm_intel.log_parser import parse_files
+from uvm_intel.pipeline import run_analysis
+
+app = FastAPI(title="UVM Configuration Intelligence")
 
 app.add_middleware(
     CORSMiddleware,
@@ -18,290 +30,207 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-jobs = {}
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+SAMPLE_DIR = os.path.join(REPO_ROOT, "data", "uvm_logs")
+MAX_UPLOAD_BYTES = 512 * 1024 * 1024
 
-def generate_sample_result():
-    return {
-        "meta": {
-            "job_id": "sample_analysis",
-            "status": "done",
-            "progress": 100,
-            "message": "Complete",
-            "elapsed": 18.94,
-            "n_runs": 50000
-        },
-        "analysis": {
-            "summary": {
-                "n_runs": 50000,
-                "n_pass": 43648,
-                "n_fail": 6352,
-                "fail_rate": 0.127,
-                "n_error_lines": 13665,
-                "error_tag_distribution": {
-                    "DATA_MISMATCH": 3085,
-                    "FIFO_OVERFLOW": 1183,
-                    "TIMEOUT": 925,
-                    "RETENTION_FAIL": 672,
-                    "ASSERTION_FAIL": 487
-                },
-                "severity_distribution": {
-                    "ERROR": 12740,
-                    "FATAL": 925
-                },
-                "metric_stats": {
-                    "execution_time_ms": {
-                        "mean": 105.85,
-                        "median": 20.58,
-                        "p95": 425.99,
-                        "min": 1.0,
-                        "max": 2000.0
-                    },
-                    "throughput_mbps": {
-                        "mean": 41.17,
-                        "median": 16.3,
-                        "p95": 165.13,
-                        "min": 0.0,
-                        "max": 1008.95
-                    },
-                    "cycles": {
-                        "mean": 78492661.93,
-                        "median": 15372771.0,
-                        "p95": 292384763.9,
-                        "min": 400000.0,
-                        "max": 2398987283.0
-                    }
-                },
-                "parse_stats": {
-                    "files": 10,
-                    "lines": 1007312,
-                    "runs": 50000,
-                    "error_lines": 13665,
-                    "malformed_blocks": 0,
-                    "unparsed_lines": 0
-                }
+# Columns surfaced in the Run Explorer table, in display order.
+RUN_COLUMNS = [
+    "run_id", "test_name", "pass_fail", "primary_error_tag",
+    "execution_time_ms", "throughput_mbps", "cache_policy",
+    "queue_depth", "test_mode_enabled", "clock_freq_mhz", "seed",
+]
+
+# Columns that describe what happened rather than how the run was configured.
+# Split out in /diff so a config difference isn't confused with an outcome.
+OUTCOME_COLUMNS = {
+    "run_id", "seed", "execution_time_ms", "throughput_mbps", "cycles",
+    "uvm_error_count", "uvm_fatal_count", "verdict", "pass_fail",
+    "uvm_error_total", "uvm_fatal_total", "uvm_warning_total",
+    "primary_error_tag", "distinct_error_tags", "trace_fingerprint",
+    "error_trace",
+}
+
+jobs: Dict[str, Dict[str, Any]] = {}
+
+
+def sample_files() -> List[str]:
+    return sorted(glob.glob(os.path.join(SAMPLE_DIR, "*.log")))
+
+
+def _py(v: Any) -> Any:
+    """Coerce numpy/pandas scalars to JSON-serialisable Python natives.
+
+    DataFrame cells come back as numpy types, which FastAPI's encoder rejects.
+    """
+    if v is None or (isinstance(v, float) and pd.isna(v)):
+        return None
+    if hasattr(v, "item"):  # numpy scalar
+        try:
+            return v.item()
+        except (ValueError, AttributeError):
+            return str(v)
+    try:
+        if pd.isna(v):
+            return None
+    except (TypeError, ValueError):
+        pass
+    return v
+
+
+def _run_job(job_id: str, paths: List[str], params: Dict[str, Any],
+             tmpdir: Optional[str]) -> None:
+    job = jobs[job_id]
+    try:
+        job.update(status="running", progress=2, message="Parsing logs")
+
+        runs, errors, stats = parse_files(paths)
+        if runs.empty:
+            raise ValueError(
+                "No runs parsed. Expected the UVM log format written by "
+                "uvm_intel.generate_logs (banner + [CONFIG] JSON blocks)."
+            )
+
+        job.update(progress=8, message=f"Parsed {len(runs):,} runs")
+
+        def progress(message: str, pct: int) -> None:
+            job.update(progress=max(8, int(pct)), message=message)
+
+        analysis = run_analysis(
+            runs, errors, stats.as_dict(),
+            max_risk=params["max_risk"],
+            n_trials=params["n_trials"],
+            dbscan_eps=params["dbscan_eps"],
+            enable_recommender=params["enable_recommender"],
+            progress=progress,
+        )
+
+        job["runs_df"] = runs
+        job["result"] = {
+            "meta": {
+                "job_id": job_id,
+                "status": "done",
+                "progress": 100,
+                "message": "Complete",
+                "files": job.get("files", []),
+                "params": params,
+                "created": job["created"],
+                "elapsed": analysis.get("total_seconds"),
+                "error": None,
+                "n_runs": int(len(runs)),
             },
-            "risk_model": {
-                "n_train": 40000,
-                "n_test": 10000,
-                "fail_rate": 0.127,
-                "metrics": {
-                    "accuracy": 0.94,
-                    "precision": 0.89,
-                    "recall": 0.85,
-                    "f1": 0.87,
-                    "roc_auc": 0.92
-                },
-                "confusion_matrix": {
-                    "tp": 8539,
-                    "fp": 1461,
-                    "tn": 8539,
-                    "fn": 1461
-                },
-                "shap_importance": [
-                    {"feature": "test_mode_enabled", "mean_abs_shap": 0.285},
-                    {"feature": "cache_policy", "mean_abs_shap": 0.228},
-                    {"feature": "queue_depth", "mean_abs_shap": 0.195},
-                    {"feature": "clock_freq_mhz", "mean_abs_shap": 0.142},
-                    {"feature": "ecc_mode", "mean_abs_shap": 0.089}
-                ]
-            },
-            "fingerprints": {
-                "n_clusters": 8,
-                "n_templates": 127,
-                "clusters": [
-                    {
-                        "id": "c1",
-                        "error_type": "DATA_MISMATCH",
-                        "n_runs": 2841,
-                        "n_distinct_templates": 1,
-                        "determinism": 0.998,
-                        "is_rtl_bug": True
-                    },
-                    {
-                        "id": "c2",
-                        "error_type": "FIFO_OVERFLOW",
-                        "n_runs": 1183,
-                        "n_distinct_templates": 12,
-                        "determinism": 0.145,
-                        "is_rtl_bug": False
-                    },
-                    {
-                        "id": "c3",
-                        "error_type": "TIMEOUT",
-                        "n_runs": 925,
-                        "n_distinct_templates": 8,
-                        "determinism": 0.089,
-                        "is_rtl_bug": False
-                    }
-                ]
-            },
-            "pareto": {
-                "n_points": 318,
-                "frontier": [
-                    {"throughput": 850.2, "predicted_risk": 0.012, "n_configs": 5},
-                    {"throughput": 920.5, "predicted_risk": 0.018, "n_configs": 8},
-                    {"throughput": 1010.3, "predicted_risk": 0.040, "n_configs": 12}
-                ],
-                "best_safe": {"throughput": 850.2, "predicted_risk": 0.012},
-                "knee": {"throughput": 920.5, "predicted_risk": 0.018},
-                "peak": {"throughput": 1010.3, "predicted_risk": 0.040}
-            },
-            "recommendations": {
-                "n_trials": 150,
-                "max_risk": 0.02,
-                "search_space": {
-                    "test_mode_enabled": [0, 1],
-                    "cache_policy": ["Disabled", "LRU", "Adaptive"],
-                    "queue_depth": [8, 16, 32, 64],
-                    "ecc_mode": ["Disabled", "Enabled"]
-                },
-                "best_configs": [
-                    {"throughput": 848.1, "predicted_risk": 0.011, "test_mode_enabled": 0, "cache_policy": "LRU", "queue_depth": 16},
-                    {"throughput": 825.3, "predicted_risk": 0.013, "test_mode_enabled": 0, "cache_policy": "LRU", "queue_depth": 8},
-                    {"throughput": 810.5, "predicted_risk": 0.009, "test_mode_enabled": 1, "cache_policy": "Adaptive", "queue_depth": 16}
-                ]
-            },
-            "config_diff": {
-                "n_twins": 4126,
-                "field_deltas": [
-                    {"field": "test_mode_enabled", "fail_vs_pass_rate": 0.92, "rank": 1},
-                    {"field": "cache_policy", "fail_vs_pass_rate": 0.84, "rank": 2},
-                    {"field": "queue_depth", "fail_vs_pass_rate": 0.76, "rank": 3}
-                ]
-            },
-            "failure_by_field": [
-                {
-                    "field": "test_mode_enabled",
-                    "levels": [
-                        {"level": "1", "n": 13999, "fail_rate": 0.3402, "lift": 2.679},
-                        {"level": "0", "n": 36001, "fail_rate": 0.0442, "lift": 0.348}
-                    ]
-                },
-                {
-                    "field": "cache_policy",
-                    "levels": [
-                        {"level": "Disabled", "n": 12500, "fail_rate": 0.2201, "lift": 1.733},
-                        {"level": "Adaptive", "n": 18700, "fail_rate": 0.1804, "lift": 1.421},
-                        {"level": "LRU", "n": 18800, "fail_rate": 0.0902, "lift": 0.710}
-                    ]
-                },
-                {
-                    "field": "queue_depth",
-                    "levels": [
-                        {"level": "64", "n": 9800, "fail_rate": 0.2812, "lift": 2.215},
-                        {"level": "32", "n": 12400, "fail_rate": 0.2405, "lift": 1.894},
-                        {"level": "16", "n": 14300, "fail_rate": 0.1203, "lift": 0.947},
-                        {"level": "8", "n": 13500, "fail_rate": 0.1001, "lift": 0.788}
-                    ]
-                }
-            ],
-            "stage_log": [
-                {"stage": "summary", "status": "ok", "seconds": 0.06},
-                {"stage": "risk_model", "status": "ok", "seconds": 2.86},
-                {"stage": "risk_meter", "status": "ok", "seconds": 0.34},
-                {"stage": "fingerprints", "status": "ok", "seconds": 0.09},
-                {"stage": "pareto", "status": "ok", "seconds": 4.53},
-                {"stage": "aggregate_delta", "status": "ok", "seconds": 0.34},
-                {"stage": "nearest_twin_diff", "status": "ok", "seconds": 0.95},
-                {"stage": "recommender", "status": "ok", "seconds": 9.77}
-            ],
-            "total_seconds": 18.94
+            "analysis": analysis,
         }
+        job.update(status="completed", progress=100, message="Complete")
+
+    except Exception as exc:  # surfaced to the UI rather than lost on a thread
+        job.update(status="failed", error=f"{type(exc).__name__}: {exc}")
+    finally:
+        if tmpdir:
+            shutil.rmtree(tmpdir, ignore_errors=True)
+
+
+def _create_job(files: List[str], display_names: List[str],
+                params: Dict[str, Any], tmpdir: Optional[str]) -> str:
+    job_id = uuid.uuid4().hex[:12]
+    jobs[job_id] = {
+        "status": "queued",
+        "progress": 0,
+        "message": "Queued",
+        "files": display_names,
+        "created": datetime.now().timestamp(),
+        "error": None,
+    }
+    t = threading.Thread(target=_run_job, args=(job_id, files, params, tmpdir),
+                         daemon=True)
+    t.start()
+    return job_id
+
+
+def _params(max_risk: float, n_trials: int, dbscan_eps: float,
+            enable_recommender: bool) -> Dict[str, Any]:
+    return {
+        "max_risk": max_risk,
+        "n_trials": n_trials,
+        "dbscan_eps": dbscan_eps,
+        "enable_recommender": enable_recommender,
     }
 
-TEST_NAMES = [
-    "Back_To_Back_Program", "Read_Disturb", "Erase_Suspend",
-    "Garbage_Collect", "Mixed_RW", "Sequential_Write",
-]
-ERROR_TAGS = [
-    "DATA_MISMATCH", "FIFO_OVERFLOW", "TIMEOUT",
-    "RETENTION_FAIL", "ASSERTION_FAIL",
-]
-CACHE_POLICIES = ["Disabled", "LRU", "Adaptive"]
 
+def _require_done(job_id: str) -> Dict[str, Any]:
+    if job_id not in jobs:
+        raise HTTPException(status_code=404, detail="Job not found")
+    job = jobs[job_id]
+    if job["status"] == "failed":
+        raise HTTPException(status_code=500, detail=job.get("error"))
+    if "result" not in job:
+        raise HTTPException(status_code=202, detail="Job not yet complete")
+    return job
 
-def generate_runs(n=2000):
-    """Deterministic synthetic run rows for the Run Explorer table."""
-    rng = random.Random(20260910)
-    rows = []
-    for i in range(1, n + 1):
-        failed = rng.random() < 0.127
-        rows.append({
-            "run_id": f"RUN-{i:06d}",
-            "test_name": rng.choice(TEST_NAMES),
-            "status": "fail" if failed else "pass",
-            "error_tag": rng.choice(ERROR_TAGS) if failed else None,
-            "cache_policy": rng.choice(CACHE_POLICIES),
-            "queue_depth": rng.choice([8, 16, 32, 64]),
-            "test_mode_enabled": rng.choice([0, 1]),
-            "execution_time_ms": round(rng.uniform(1.0, 2000.0), 1),
-            "throughput_mbps": round(rng.uniform(0.0, 1008.95), 1),
-        })
-    return rows
-
-
-def analyze_job(job_id, files):
-    try:
-        jobs[job_id]["status"] = "running"
-        jobs[job_id]["progress"] = 10
-
-        # Simulate file parsing
-        jobs[job_id]["progress"] = 30
-
-        # Simulate analysis
-        jobs[job_id]["progress"] = 70
-
-        # Load sample data
-        result = generate_sample_result()
-        result["meta"]["job_id"] = job_id
-        result["meta"]["files"] = jobs[job_id].get("uploaded_files", [])
-
-        jobs[job_id]["result"] = result
-        jobs[job_id]["runs"] = generate_runs()
-        jobs[job_id]["progress"] = 100
-        jobs[job_id]["status"] = "completed"
-    except Exception as e:
-        jobs[job_id]["status"] = "failed"
-        jobs[job_id]["error"] = str(e)
 
 @app.get("/api/health")
 async def health():
+    files = sample_files()
     return {
         "status": "ok",
-        "bundled_sample_available": True
+        "bundled_sample_available": bool(files),
+        "bundled_sample_files": len(files),
+        "sample_dir": SAMPLE_DIR,
     }
+
 
 @app.post("/api/analyze")
-async def analyze(files: list[UploadFile] = File(...)):
-    job_id = str(uuid.uuid4())
-    jobs[job_id] = {
-        "status": "queued",
-        "progress": 0,
-        "uploaded_files": [f.filename for f in files],
-        "created_at": datetime.now().isoformat()
-    }
+async def analyze(
+    files: List[UploadFile] = File(...),
+    max_risk: float = 0.02,
+    n_trials: int = 150,
+    dbscan_eps: float = 0.35,
+    enable_recommender: bool = True,
+):
+    tmpdir = tempfile.mkdtemp(prefix="uvm_upload_")
+    paths, names, total = [], [], 0
+    try:
+        for f in files:
+            dest = os.path.join(tmpdir, os.path.basename(f.filename or "upload.log"))
+            with open(dest, "wb") as out:
+                while chunk := await f.read(1 << 20):
+                    total += len(chunk)
+                    if total > MAX_UPLOAD_BYTES:
+                        raise HTTPException(status_code=413,
+                                            detail="Upload exceeds 512 MB cap")
+                    out.write(chunk)
+            paths.append(dest)
+            names.append(os.path.basename(dest))
+    except Exception:
+        shutil.rmtree(tmpdir, ignore_errors=True)
+        raise
 
-    thread = threading.Thread(target=analyze_job, args=(job_id, files))
-    thread.daemon = True
-    thread.start()
+    if not paths:
+        shutil.rmtree(tmpdir, ignore_errors=True)
+        raise HTTPException(status_code=400, detail="No files uploaded")
 
-    return {"job_id": job_id}
+    params = _params(max_risk, n_trials, dbscan_eps, enable_recommender)
+    return {"job_id": _create_job(paths, names, params, tmpdir)}
+
 
 @app.post("/api/analyze-sample")
-async def analyze_sample():
-    job_id = str(uuid.uuid4())
-    jobs[job_id] = {
-        "status": "queued",
-        "progress": 0,
-        "uploaded_files": ["bundled sample"],
-        "created_at": datetime.now().isoformat()
-    }
+async def analyze_sample(
+    max_risk: float = 0.02,
+    n_trials: int = 150,
+    dbscan_eps: float = 0.35,
+    enable_recommender: bool = True,
+):
+    paths = sample_files()
+    if not paths:
+        raise HTTPException(
+            status_code=404,
+            detail=("No bundled corpus. Generate one with: "
+                    "python -m uvm_intel.generate_logs --n-runs 50000 --parts 10"),
+        )
+    params = _params(max_risk, n_trials, dbscan_eps, enable_recommender)
+    names = [os.path.basename(p) for p in paths]
+    return {"job_id": _create_job(paths, names, params, None)}
 
-    thread = threading.Thread(target=analyze_job, args=(job_id, []))
-    thread.daemon = True
-    thread.start()
-
-    return {"job_id": job_id}
 
 @app.get("/api/jobs/{job_id}")
 async def get_job(job_id: str):
@@ -311,73 +240,97 @@ async def get_job(job_id: str):
     return {
         "status": job["status"],
         "progress": job.get("progress", 0),
-        "error": job.get("error")
+        "message": job.get("message", ""),
+        "error": job.get("error"),
     }
+
 
 @app.get("/api/jobs/{job_id}/result")
 async def get_result(job_id: str):
-    if job_id not in jobs:
-        raise HTTPException(status_code=404, detail="Job not found")
-    if "result" not in jobs[job_id]:
-        raise HTTPException(status_code=202, detail="Job not yet completed")
-    return jobs[job_id]["result"]
+    return _require_done(job_id)["result"]
+
 
 @app.get("/api/jobs/{job_id}/runs")
-async def get_runs(
-    job_id: str,
-    page: int = 0,
-    per_page: int = 50,
-    search: str = "",
-    status: str = "all",
-):
-    if job_id not in jobs:
-        raise HTTPException(status_code=404, detail="Job not found")
-    if "result" not in jobs[job_id]:
-        raise HTTPException(status_code=202, detail="Job not yet completed")
+async def get_runs(job_id: str, page: int = 0, per_page: int = 50,
+                   search: str = "", status: str = "all",
+                   sort: str = "", desc: bool = False):
+    job = _require_done(job_id)
+    df: pd.DataFrame = job["runs_df"]
 
-    runs = jobs[job_id].get("runs", [])
+    cols = [c for c in RUN_COLUMNS if c in df.columns]
+    view = df[cols]
 
     if status in ("pass", "fail"):
-        runs = [r for r in runs if r["status"] == status]
+        view = view[view["pass_fail"] == status]
     if search:
         needle = search.lower()
-        runs = [
-            r for r in runs
-            if needle in r["run_id"].lower() or needle in r["test_name"].lower()
-        ]
+        mask = (view["run_id"].astype(str).str.lower().str.contains(needle, regex=False)
+                | view["test_name"].astype(str).str.lower().str.contains(needle, regex=False))
+        view = view[mask]
+    if sort and sort in view.columns:
+        view = view.sort_values(sort, ascending=not desc, kind="stable")
 
     per_page = max(1, min(per_page, 200))
-    total = len(runs)
-    start = page * per_page
+    total = int(len(view))
+    start = max(0, page) * per_page
+    page_df = view.iloc[start:start + per_page]
+
     return {
         "total": total,
         "page": page,
         "per_page": per_page,
         "n_pages": max(1, (total + per_page - 1) // per_page),
-        "runs": runs[start:start + per_page],
+        "columns": cols,
+        "runs": [{k: _py(v) for k, v in rec.items()}
+                 for rec in page_df.to_dict("records")],
     }
+
 
 @app.get("/api/jobs/{job_id}/diff")
-async def get_diff(job_id: str, run1_id: str, run2_id: str):
-    if job_id not in jobs:
-        raise HTTPException(status_code=404, detail="Job not found")
-    if "result" not in jobs[job_id]:
-        raise HTTPException(status_code=202, detail="Job not yet completed")
+async def get_diff(job_id: str, run_a: str, run_b: str):
+    job = _require_done(job_id)
+    df: pd.DataFrame = job["runs_df"]
 
+    rows = df[df["run_id"].isin([run_a, run_b])]
+    got = set(rows["run_id"])
+    missing = [r for r in (run_a, run_b) if r not in got]
+    if missing:
+        raise HTTPException(status_code=404,
+                            detail=f"Unknown run_id(s): {', '.join(missing)}")
+
+    a = rows[rows["run_id"] == run_a].iloc[0]
+    b = rows[rows["run_id"] == run_b].iloc[0]
+
+    fields = []
+    for col in df.columns:
+        if col == "error_trace":
+            continue
+        va, vb = a[col], b[col]
+        fields.append({
+            "field": col,
+            "kind": "outcome" if col in OUTCOME_COLUMNS else "config",
+            "run_a": _py(va),
+            "run_b": _py(vb),
+            "changed": bool(str(va) != str(vb)),
+        })
+
+    changed = [f for f in fields if f["changed"]]
     return {
-        "run1": run1_id,
-        "run2": run2_id,
-        "differences": []
+        "run_a": run_a,
+        "run_b": run_b,
+        "n_changed": len(changed),
+        "n_config_changed": sum(1 for f in changed if f["kind"] == "config"),
+        "n_outcome_changed": sum(1 for f in changed if f["kind"] == "outcome"),
+        "fields": fields,
+        "trace_a": str(a.get("error_trace", "")),
+        "trace_b": str(b.get("error_trace", "")),
     }
+
 
 @app.get("/api/jobs/{job_id}/export")
 async def export_job(job_id: str):
-    if job_id not in jobs:
-        raise HTTPException(status_code=404, detail="Job not found")
-    if "result" not in jobs[job_id]:
-        raise HTTPException(status_code=202, detail="Job not yet completed")
+    return _require_done(job_id)["result"]
 
-    return jobs[job_id]["result"]
 
 @app.delete("/api/jobs/{job_id}")
 async def delete_job(job_id: str):
@@ -385,6 +338,7 @@ async def delete_job(job_id: str):
         raise HTTPException(status_code=404, detail="Job not found")
     del jobs[job_id]
     return {"status": "deleted"}
+
 
 if __name__ == "__main__":
     import uvicorn

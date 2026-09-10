@@ -1,0 +1,252 @@
+{
+  "metadata": {
+    "n_runs": 50000,
+    "seed": 42,
+    "parts": 10,
+    "base_fail_prob": 0.012,
+    "observed_fail_rate": 0.2404,
+    "exec_ceiling_ms": 2000.0
+  },
+  "rules": [
+    {
+      "id": "R1",
+      "description": "Back_To_Back_Program with Adaptive cache policy overflows the write FIFO",
+      "conditions": [
+        {
+          "field": "test_name",
+          "op": "==",
+          "value": "Back_To_Back_Program"
+        },
+        {
+          "field": "cache_policy",
+          "op": "==",
+          "value": "Adaptive"
+        }
+      ],
+      "effect": "set",
+      "value": 0.85,
+      "error_tag": "FIFO_OVERFLOW",
+      "deterministic": false,
+      "observed": {
+        "rows_matched": 2891,
+        "match_share": 0.0578,
+        "fail_rate_when_fired": 0.8506,
+        "fail_rate_otherwise": 0.203,
+        "lift": 4.191
+      }
+    },
+    {
+      "id": "R2",
+      "description": "Test mode raises failure probability across all runs",
+      "conditions": [
+        {
+          "field": "test_mode_enabled",
+          "op": "==",
+          "value": 1
+        }
+      ],
+      "effect": "add",
+      "value": 0.35,
+      "error_tag": null,
+      "deterministic": false,
+      "observed": {
+        "rows_matched": 13999,
+        "match_share": 0.28,
+        "fail_rate_when_fired": 0.4733,
+        "fail_rate_otherwise": 0.1498,
+        "lift": 3.159
+      }
+    },
+    {
+      "id": "R3",
+      "description": "Deep queues with ECC disabled surface uncorrectable errors",
+      "conditions": [
+        {
+          "field": "queue_depth",
+          "op": ">=",
+          "value": 32
+        },
+        {
+          "field": "ecc_mode",
+          "op": "==",
+          "value": "Disabled"
+        }
+      ],
+      "effect": "add",
+      "value": 0.35,
+      "error_tag": "ECC_UNCORRECTABLE",
+      "deterministic": false,
+      "observed": {
+        "rows_matched": 1976,
+        "match_share": 0.0395,
+        "fail_rate_when_fired": 0.5744,
+        "fail_rate_otherwise": 0.2267,
+        "lift": 2.534
+      }
+    },
+    {
+      "id": "R4",
+      "description": "Hot and undervolted NAND loses retention",
+      "conditions": [
+        {
+          "field": "temperature_c",
+          "op": ">",
+          "value": 85.0
+        },
+        {
+          "field": "voltage_mv",
+          "op": "<",
+          "value": 1100.0
+        }
+      ],
+      "effect": "add",
+      "value": 0.3,
+      "error_tag": "RETENTION_FAIL",
+      "deterministic": false,
+      "observed": {
+        "rows_matched": 281,
+        "match_share": 0.0056,
+        "fail_rate_when_fired": 0.5587,
+        "fail_rate_otherwise": 0.2386,
+        "lift": 2.342
+      }
+    },
+    {
+      "id": "R5",
+      "description": "Deterministic RTL bug: 4-plane + 64-beat burst + scrambler violates the protocol at a fixed address",
+      "conditions": [
+        {
+          "field": "num_planes",
+          "op": "==",
+          "value": 4
+        },
+        {
+          "field": "burst_length",
+          "op": "==",
+          "value": 64
+        },
+        {
+          "field": "scrambler_enable",
+          "op": "==",
+          "value": 1
+        }
+      ],
+      "effect": "set",
+      "value": 0.98,
+      "error_tag": "PROTOCOL_VIOLATION",
+      "deterministic": true,
+      "observed": {
+        "rows_matched": 815,
+        "match_share": 0.0163,
+        "fail_rate_when_fired": 0.9865,
+        "fail_rate_otherwise": 0.228,
+        "lift": 4.326
+      }
+    },
+    {
+      "id": "R6",
+      "description": "High clock with deep prefetch starves the monitor and times out",
+      "conditions": [
+        {
+          "field": "clock_freq_mhz",
+          "op": ">=",
+          "value": 1000
+        },
+        {
+          "field": "prefetch_depth",
+          "op": ">",
+          "value": 8
+        }
+      ],
+      "effect": "add",
+      "value": 0.3,
+      "error_tag": "TIMEOUT",
+      "deterministic": false,
+      "observed": {
+        "rows_matched": 8014,
+        "match_share": 0.1603,
+        "fail_rate_when_fired": 0.4747,
+        "fail_rate_otherwise": 0.1957,
+        "lift": 2.426
+      }
+    },
+    {
+      "id": "R7",
+      "description": "Disabled cache with a deep queue loses write ordering and mismatches the scoreboard",
+      "conditions": [
+        {
+          "field": "cache_policy",
+          "op": "==",
+          "value": "Disabled"
+        },
+        {
+          "field": "queue_depth",
+          "op": ">=",
+          "value": 16
+        }
+      ],
+      "effect": "add",
+      "value": 0.3,
+      "error_tag": "DATA_MISMATCH",
+      "deterministic": false,
+      "observed": {
+        "rows_matched": 2800,
+        "match_share": 0.056,
+        "fail_rate_when_fired": 0.4925,
+        "fail_rate_otherwise": 0.2254,
+        "lift": 2.185
+      }
+    }
+  ],
+  "error_tag_distribution": {
+    "ASSERTION_FAIL": 1534,
+    "DATA_MISMATCH": 3101,
+    "ECC_UNCORRECTABLE": 995,
+    "FIFO_OVERFLOW": 2415,
+    "PROTOCOL_VIOLATION": 804,
+    "RETENTION_FAIL": 131,
+    "TIMEOUT": 3040
+  },
+  "files": [
+    {
+      "path": "data/uvm_logs\\uvm_runs_part01.log",
+      "runs": 5000
+    },
+    {
+      "path": "data/uvm_logs\\uvm_runs_part02.log",
+      "runs": 5000
+    },
+    {
+      "path": "data/uvm_logs\\uvm_runs_part03.log",
+      "runs": 5000
+    },
+    {
+      "path": "data/uvm_logs\\uvm_runs_part04.log",
+      "runs": 5000
+    },
+    {
+      "path": "data/uvm_logs\\uvm_runs_part05.log",
+      "runs": 5000
+    },
+    {
+      "path": "data/uvm_logs\\uvm_runs_part06.log",
+      "runs": 5000
+    },
+    {
+      "path": "data/uvm_logs\\uvm_runs_part07.log",
+      "runs": 5000
+    },
+    {
+      "path": "data/uvm_logs\\uvm_runs_part08.log",
+      "runs": 5000
+    },
+    {
+      "path": "data/uvm_logs\\uvm_runs_part09.log",
+      "runs": 5000
+    },
+    {
+      "path": "data/uvm_logs\\uvm_runs_part10.log",
+      "runs": 5000
+    }
+  ]
+}
