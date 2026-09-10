@@ -1,17 +1,26 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 export default function AICopilot({ jobId, result }) {
+  const [apiKey, setApiKey] = useState(() => localStorage.getItem('gemini_api_key') || '')
+  const [showKeyInput, setShowKeyInput] = useState(false)
   const [question, setQuestion] = useState('')
   const [messages, setMessages] = useState([
     {
       sender: 'assistant',
-      text: 'Hello! I am your Verification Intelligence Copilot. Ask me about failure risk drivers, recommended configurations, root cause analysis, or Pareto trade-offs in your dataset.',
+      text: '👋 **Welcome to the AI Verification Copilot!**\n\nI am powered by Google Gemini and have full context of all dashboard analysis results (ML risk metrics, SHAP feature importance, failure fingerprints, Pareto frontiers, and optimal config recommendations).\n\nAsk me any question in natural language about your test runs, root causes, or knob settings!',
     },
   ])
   const [loading, setLoading] = useState(false)
+  const [geminiConnected, setGeminiConnected] = useState(false)
+
+  useEffect(() => {
+    if (apiKey) {
+      localStorage.setItem('gemini_api_key', apiKey)
+    }
+  }, [apiKey])
 
   const handleSend = async (e) => {
-    e.preventDefault()
+    if (e) e.preventDefault()
     if (!question.trim() || loading) return
 
     const userText = question.trim()
@@ -23,20 +32,34 @@ export default function AICopilot({ jobId, result }) {
       const res = await fetch('http://127.0.0.1:8000/api/copilot/query', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ job_id: jobId, question: userText }),
+        body: JSON.stringify({
+          job_id: jobId,
+          question: userText,
+          api_key: apiKey || undefined,
+        }),
       })
       if (!res.ok) throw new Error('Copilot query failed')
       const data = await res.json()
+      
+      if (data.gemini_used) {
+        setGeminiConnected(true)
+      }
+      
       setMessages((prev) => [
         ...prev,
-        { sender: 'assistant', text: data.answer },
+        {
+          sender: 'assistant',
+          text: data.answer,
+          model: data.model,
+          geminiUsed: data.gemini_used
+        },
       ])
     } catch (err) {
       setMessages((prev) => [
         ...prev,
         {
           sender: 'assistant',
-          text: `⚠️ Query failed: ${err.message}. Please check if the backend is running.`,
+          text: `⚠️ **Query error**: ${err.message}. Ensure backend is running.`,
         },
       ])
     } finally {
@@ -44,102 +67,191 @@ export default function AICopilot({ jobId, result }) {
     }
   }
 
+  const handleChipClick = (q) => {
+    setQuestion(q)
+  }
+
   const suggestedQuestions = [
-    'What are the top configuration knobs driving test failures?',
-    'What is the recommended optimal configuration for low risk?',
-    'How many failure clusters were identified in this run?',
-    'Summarize the corpus performance and pass/fail metrics.',
+    'What are the primary configuration drivers causing test failures?',
+    'Explain the root causes behind the identified failure clusters.',
+    'What specific knob settings minimize risk while preserving max throughput?',
+    'Analyze the trade-offs on the Pareto throughput vs risk frontier.',
+    'Provide an executive summary report for engineering leads.',
   ]
 
   return (
-    <div style={{ padding: '24px', maxWidth: '900px', margin: '0 auto' }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
-        <div style={{
-          width: '40px', height: '40px', borderRadius: '8px',
-          background: 'linear-gradient(135deg, #6366f1, #a855f7)',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          color: '#fff', fontWeight: 'bold', fontSize: '20px'
-        }}>
-          🤖
+    <div style={{ padding: '24px', maxWidth: '960px', margin: '0 auto', fontFamily: 'system-ui, sans-serif' }}>
+      {/* Header bar with status and Gemini API key config */}
+      <div style={{
+        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+        background: '#0f172a', padding: '16px 20px', borderRadius: '12px',
+        border: '1px solid #1e293b', marginBottom: '20px', flexWrap: 'wrap', gap: '12px'
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+          <div style={{
+            width: '42px', height: '42px', borderRadius: '10px',
+            background: 'linear-gradient(135deg, #4f46e5, #9333ea)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            color: '#fff', fontSize: '22px', boxShadow: '0 4px 12px rgba(79, 70, 229, 0.4)'
+          }}>
+            ✨
+          </div>
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <h2 style={{ margin: 0, fontSize: '1.25rem', fontWeight: 600, color: '#f8fafc' }}>
+                AI Verification Copilot
+              </h2>
+              <span style={{
+                background: geminiConnected || apiKey ? 'rgba(16, 185, 129, 0.15)' : 'rgba(245, 158, 11, 0.15)',
+                color: geminiConnected || apiKey ? '#10b981' : '#f59e0b',
+                border: `1px solid ${geminiConnected || apiKey ? '#10b981' : '#f59e0b'}`,
+                padding: '2px 8px', borderRadius: '12px', fontSize: '0.75rem', fontWeight: 600
+              }}>
+                {geminiConnected || apiKey ? '⚡ Gemini Connected' : '🔑 API Key Required'}
+              </span>
+            </div>
+            <p style={{ margin: 0, color: '#94a3b8', fontSize: '0.85rem' }}>
+              Powered by Google Gemini — Access to full ML risk, SHAP, & failure cluster payload
+            </p>
+          </div>
         </div>
-        <div>
-          <h2 style={{ margin: 0, fontSize: '1.4rem', fontWeight: 600 }}>AI Verification Copilot</h2>
-          <p style={{ margin: 0, color: '#64748b', fontSize: '0.875rem' }}>
-            Interactive AI insights over parsed logs & configuration datasets
-          </p>
-        </div>
+
+        <button
+          onClick={() => setShowKeyInput(!showKeyInput)}
+          style={{
+            background: '#1e293b', border: '1px solid #334155', color: '#e2e8f0',
+            padding: '8px 14px', borderRadius: '8px', fontSize: '0.85rem',
+            cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px'
+          }}
+        >
+          ⚙️ {showKeyInput ? 'Hide API Key Settings' : 'Gemini API Key'}
+        </button>
       </div>
 
+      {/* Collapsible Key input box */}
+      {showKeyInput && (
+        <div style={{
+          background: '#0f172a', border: '1px solid #3b82f6', borderRadius: '10px',
+          padding: '16px', marginBottom: '20px'
+        }}>
+          <label style={{ display: 'block', fontSize: '0.85rem', color: '#cbd5e1', fontWeight: 500, marginBottom: '6px' }}>
+            Google Gemini API Key:
+          </label>
+          <div style={{ display: 'flex', gap: '10px' }}>
+            <input
+              type="password"
+              value={apiKey}
+              onChange={(e) => setApiKey(e.target.value)}
+              placeholder="AIzaSy..."
+              style={{
+                flex: 1, background: '#1e293b', border: '1px solid #334155',
+                color: '#fff', padding: '10px 14px', borderRadius: '6px', fontSize: '0.9rem'
+              }}
+            />
+            <button
+              onClick={() => {
+                localStorage.setItem('gemini_api_key', apiKey)
+                alert('Gemini API key saved to local storage!')
+              }}
+              style={{
+                background: '#2563eb', color: '#fff', border: 'none',
+                padding: '10px 18px', borderRadius: '6px', fontWeight: 600, cursor: 'pointer'
+              }}
+            >
+              Save Key
+            </button>
+          </div>
+          <p style={{ fontSize: '0.75rem', color: '#64748b', margin: '6px 0 0 0' }}>
+            Your key is stored locally in your browser and passed securely to the backend for Gemini API calls.
+          </p>
+        </div>
+      )}
+
+      {/* Chat Messages */}
       <div style={{
-        background: '#1e293b', borderRadius: '12px', padding: '20px',
-        minHeight: '380px', maxHeight: '500px', overflowY: 'auto',
+        background: '#0f172a', borderRadius: '12px', padding: '20px',
+        minHeight: '380px', maxHeight: '520px', overflowY: 'auto',
         display: 'flex', flexDirection: 'column', gap: '16px',
-        border: '1px solid #334155', marginBottom: '16px'
+        border: '1px solid #1e293b', marginBottom: '16px'
       }}>
         {messages.map((m, idx) => (
           <div key={idx} style={{
             alignSelf: m.sender === 'user' ? 'flex-end' : 'flex-start',
-            maxWidth: '80%',
-            background: m.sender === 'user' ? '#3b82f6' : '#0f172a',
-            color: '#f8fafc', padding: '12px 16px', borderRadius: '12px',
-            fontSize: '0.925rem', lineHeight: '1.5', whiteSpace: 'pre-wrap',
+            maxWidth: '85%',
+            background: m.sender === 'user' ? 'linear-gradient(135deg, #2563eb, #1d4ed8)' : '#1e293b',
+            color: '#f8fafc', padding: '14px 18px', borderRadius: '14px',
+            fontSize: '0.925rem', lineHeight: '1.6', whiteSpace: 'pre-wrap',
             border: m.sender === 'user' ? 'none' : '1px solid #334155',
-            boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+            boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)'
           }}>
             {m.text}
+            {m.model && (
+              <div style={{ marginTop: '8px', fontSize: '0.725rem', color: '#94a3b8', fontStyle: 'italic', borderTop: '1px solid #334155', paddingTop: '4px' }}>
+                Answer generated by {m.model} with full dashboard context
+              </div>
+            )}
           </div>
         ))}
         {loading && (
           <div style={{
-            alignSelf: 'flex-start', background: '#0f172a', color: '#94a3b8',
-            padding: '12px 16px', borderRadius: '12px', fontSize: '0.875rem',
+            alignSelf: 'flex-start', background: '#1e293b', color: '#94a3b8',
+            padding: '12px 18px', borderRadius: '14px', fontSize: '0.875rem',
             fontStyle: 'italic', border: '1px solid #334155'
           }}>
-            Thinking and analyzing verification telemetry...
+            ✨ Querying Google Gemini with complete dashboard telemetry context...
           </div>
         )}
       </div>
 
-      <div style={{ marginBottom: '16px', display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-        <span style={{ fontSize: '0.8rem', color: '#64748b', alignSelf: 'center' }}>Suggested:</span>
-        {suggestedQuestions.map((q, idx) => (
-          <button
-            key={idx}
-            onClick={() => setQuestion(q)}
-            style={{
-              background: '#0f172a', border: '1px solid #334155', color: '#cbd5e1',
-              padding: '6px 12px', borderRadius: '20px', fontSize: '0.775rem',
-              cursor: 'pointer', transition: 'all 0.2s'
-            }}
-          >
-            {q}
-          </button>
-        ))}
+      {/* Suggested Questions */}
+      <div style={{ marginBottom: '16px' }}>
+        <div style={{ fontSize: '0.8rem', color: '#64748b', fontWeight: 500, marginBottom: '8px' }}>
+          Suggested Natural Language Questions:
+        </div>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+          {suggestedQuestions.map((q, idx) => (
+            <button
+              key={idx}
+              onClick={() => handleChipClick(q)}
+              style={{
+                background: '#1e293b', border: '1px solid #334155', color: '#cbd5e1',
+                padding: '6px 12px', borderRadius: '16px', fontSize: '0.8rem',
+                cursor: 'pointer', transition: 'all 0.2s'
+              }}
+              onMouseOver={(e) => { e.currentTarget.style.borderColor = '#3b82f6'; e.currentTarget.style.color = '#fff'; }}
+              onMouseOut={(e) => { e.currentTarget.style.borderColor = '#334155'; e.currentTarget.style.color = '#cbd5e1'; }}
+            >
+              {q}
+            </button>
+          ))}
+        </div>
       </div>
 
+      {/* Input Form */}
       <form onSubmit={handleSend} style={{ display: 'flex', gap: '12px' }}>
         <input
           type="text"
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
-          placeholder="Ask a question about test failures, risks, or settings..."
+          placeholder="Ask Gemini anything about your verification run results, risk drivers, or knob choices..."
           style={{
             flex: 1, background: '#0f172a', border: '1px solid #334155',
             borderRadius: '8px', padding: '12px 16px', color: '#f8fafc',
-            fontSize: '0.925rem'
+            fontSize: '0.925rem', outline: 'none'
           }}
         />
         <button
           type="submit"
           disabled={loading || !question.trim()}
           style={{
-            background: 'linear-gradient(135deg, #6366f1, #3b82f6)', color: '#fff',
+            background: 'linear-gradient(135deg, #4f46e5, #2563eb)', color: '#fff',
             border: 'none', borderRadius: '8px', padding: '12px 24px',
-            fontWeight: 600, cursor: loading ? 'not-allowed' : 'pointer',
-            opacity: loading || !question.trim() ? 0.6 : 1
+            fontWeight: 600, cursor: loading || !question.trim() ? 'not-allowed' : 'pointer',
+            opacity: loading || !question.trim() ? 0.6 : 1,
+            boxShadow: '0 4px 12px rgba(79, 70, 229, 0.3)'
           }}
         >
-          Send
+          Send to Gemini
         </button>
       </form>
     </div>

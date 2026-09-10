@@ -17,6 +17,7 @@ import pandas as pd
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 
+from uvm_intel.copilot import query_gemini_copilot
 from uvm_intel.ingest_multi import parse_files_multi
 from uvm_intel.log_parser import parse_files
 from uvm_intel.pipeline import run_analysis
@@ -339,55 +340,21 @@ async def export_job(job_id: str):
 async def copilot_query(req: Dict[str, Any]):
     job_id = req.get("job_id")
     question = req.get("question", "").strip()
+    api_key = req.get("api_key") or req.get("gemini_api_key")
+    
     if not job_id:
         raise HTTPException(status_code=400, detail="Missing job_id parameter")
+    if not question:
+        raise HTTPException(status_code=400, detail="Missing question parameter")
     
     job = _require_done(job_id)
     analysis = job["result"]["analysis"]
-    summary = analysis.get("summary", {})
-    risk_model = analysis.get("risk_model", {})
-    recommendations = analysis.get("recommendations", {})
-    fingerprints = analysis.get("fingerprints", {})
     
-    q_lower = question.lower()
-    
-    # Synthesize intelligent answer based on analysis payload
-    n_runs = summary.get("n_runs", 0)
-    fail_rate = summary.get("fail_rate", 0) * 100
-    top_features = [f["feature"] for f in risk_model.get("shap_importance", [])[:3]]
-    rec_config = recommendations.get("recommendation", {}).get("config", {}) if isinstance(recommendations, dict) else {}
-    n_clusters = fingerprints.get("n_clusters", 0)
-    
-    response = []
-    response.append(f"**Analysis Insights for Job `{job_id}`** (Corpus: {n_runs:,} runs, Failure Rate: {fail_rate:.2f}%)")
-    
-    if "risk" in q_lower or "fail" in q_lower or "error" in q_lower:
-        response.append(f"• **Top Risk Drivers**: The most critical configuration parameters influencing failures are `{', '.join(top_features) if top_features else 'N/A'}`.")
-        if n_clusters > 0:
-            response.append(f"• **Failure Fingerprints**: Identified **{n_clusters}** distinct failure clusters across the test suite.")
-    
-    if "recommend" in q_lower or "optimal" in q_lower or "setting" in q_lower or "knob" in q_lower or "config" in q_lower:
-        if rec_config:
-            rec_str = ", ".join([f"`{k}={v}`" for k, v in list(rec_config.items())[:5]])
-            response.append(f"• **Recommended Optimal Config**: {rec_str}")
-        else:
-            response.append("• **Recommendations**: Default baseline configuration remains safe within risk bounds.")
-            
-    if "summary" in q_lower or "overview" in q_lower or not response:
-        response.append(f"• **Corpus Overview**: Tested {n_runs:,} runs across {summary.get('n_pass', 0):,} passes and {summary.get('n_fail', 0):,} failures.")
-        if top_features:
-            response.append(f"• **Key Driver**: `{top_features[0]}` contributes highest variance to failure risk.")
-            
-    answer_text = "\n\n".join(response)
-    
-    return {
-        "job_id": job_id,
-        "question": question,
-        "answer": answer_text,
-        "top_features": top_features,
-        "fail_rate": fail_rate,
-        "timestamp": datetime.now().isoformat(),
-    }
+    res = query_gemini_copilot(question, analysis, api_key=api_key)
+    res["job_id"] = job_id
+    res["question"] = question
+    res["timestamp"] = datetime.now().isoformat()
+    return res
 
 
 if __name__ == "__main__":
