@@ -361,7 +361,7 @@
     },
     "transactions.csv": {
       "rows": 50572,
-      "bytes": 11049293,
+      "bytes": 11482669,
       "columns": [
         "run_id",
         "txn_id",
@@ -407,7 +407,7 @@
     },
     "telemetry.csv": {
       "rows": 6000,
-      "bytes": 885711,
+      "bytes": 886063,
       "columns": [
         "run_id",
         "host",
@@ -434,7 +434,7 @@
     },
     "outcomes.csv": {
       "rows": 6000,
-      "bytes": 761963,
+      "bytes": 766625,
       "columns": [
         "run_id",
         "test_id",
@@ -459,7 +459,7 @@
     },
     "registers.csv": {
       "rows": 24000,
-      "bytes": 2126678,
+      "bytes": 2195661,
       "columns": [
         "run_id",
         "access_time_ns",
@@ -477,7 +477,7 @@
     },
     "uvm.log": {
       "rows": 6000,
-      "bytes": 11197788,
+      "bytes": 11258875,
       "columns": [
         "<uvm log grammar>"
       ]
@@ -515,7 +515,7 @@
     "outcomes.uvm_fatal_count == count of UVM_FATAL lines for that run in uvm.log",
     "outcomes.scoreboard_mismatches == rows in transactions.csv with checker_result == MISMATCH for that run",
     "outcomes.failure_type == NONE for every passing run",
-    "every start_time_ns in transactions.csv < execution_time_ms * 1000",
+    "timestamps are real nanoseconds: every start_time_ns in transactions.csv < execution_time_ms * 1e6",
     "run_id is the join key across every file that carries one"
   ],
   "raw_vs_derived": {

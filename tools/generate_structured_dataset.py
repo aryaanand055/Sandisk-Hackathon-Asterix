@@ -58,6 +58,16 @@ def _pick(rng, values, weights, n):
     return rng.choice(values, size=n, p=p)
 
 
+def _end_ns(exec_ms):
+    """Simulated end-of-run timestamp, in real nanoseconds.
+
+    Every timestamp written to uvm.log, transactions.csv and registers.csv is
+    derived from this, so 1 ms of execution_time_ms is exactly 1e6 ns and the
+    timestamps reconcile with sim_cycles at the configured clock.
+    """
+    return max(int(round(float(exec_ms) * 1e6)), 5000)
+
+
 # ═══════════════════════════════════════════════════════════════════════════
 # PROFILE A - nvme_axi : SSD controller behind an AXI4 host interface
 # ═══════════════════════════════════════════════════════════════════════════
@@ -444,7 +454,7 @@ def b_sample_config(n, rng):
     # Custom columns.
     c["vendor_ip_rev"] = _pick(rng, ["r1p0", "r1p2", "r2p0"], [0.30, 0.40, 0.30], n)
     c["lint_waivers"] = rng.integers(0, 12, n)
-    c["num_transactions"] = (np.asarray(c["fifo_depth"]) * 12).astype(int)
+    c["num_transactions"] = (np.asarray(c["fifo_depth"]) * 64).astype(int)
     c["clock_period_ns"] = np.round(1000.0 / np.asarray(c["clk_mhz"], float), 4)
     c["test_class"] = np.array([t.lower() + "_test" for t in c["test_name"]], dtype=object)
     c["sequence_name"] = np.array([t.lower() + "_seq" for t in c["test_name"]], dtype=object)
@@ -492,11 +502,19 @@ def b_sample_env(n, rng):
 
 
 def b_metrics(cols, is_fail, tag, rng, n, ceiling=800.0):
-    work = np.asarray(cols["fifo_depth"], float) * np.asarray(cols["psel_count"], float)
-    speed = np.asarray(cols["clk_mhz"], float) / 100.0
-    waits = 1.0 + np.asarray(cols["wait_state_cfg"], float) / 4.0
-    base = 40.0 * (work / 64.0) * waits / speed
-    exec_ms = base * rng.lognormal(0.0, 0.30, n)
+    """APB timing is cycle-driven: every transfer costs setup + access + waits.
+
+    Deriving milliseconds from cycles (rather than the other way round) keeps
+    execution_time_ms, sim_cycles and throughput_mbps mutually consistent.
+    """
+    ntx = np.asarray(cols["num_transactions"], float)
+    clk = np.asarray(cols["clk_mhz"], float)
+    waits = 2.0 + np.asarray(cols["wait_state_cfg"], float)
+    retry = 1.0 + np.asarray(cols["retry_limit"], float) * 0.10
+    jitter = rng.uniform(1.0, 1.6, n)
+    cycles_f = ntx * waits * retry * jitter + 2000.0   # + reset/config overhead
+    exec_ms = cycles_f / (clk * 1000.0)
+
     for t, (lo, hi) in {"PSLVERR_TIMEOUT": (2.4, 3.0), "PREADY_TIMEOUT": (2.0, 2.8),
                         "BUS_STARVATION": (1.4, 2.0), "FIFO_UNDERRUN": (0.6, 1.1),
                         "FRAMING_ERROR": (0.9, 1.3), "IRQ_LOST": (0.8, 1.2),
@@ -505,14 +523,13 @@ def b_metrics(cols, is_fail, tag, rng, n, ceiling=800.0):
         k = tag == t
         if k.sum():
             exec_ms[k] *= rng.uniform(lo, hi, int(k.sum()))
-    exec_ms = np.maximum(ceiling * np.tanh(exec_ms / ceiling), 0.5)
+    exec_ms = np.clip(exec_ms, 0.01, ceiling)
 
-    bytes_moved = (np.asarray(cols["num_transactions"], float)
-                   * np.asarray(cols["apb_data_width"], float) / 8.0)
+    bytes_moved = (ntx * np.asarray(cols["apb_data_width"], float) / 8.0)
     tp = bytes_moved / (exec_ms / 1000.0) / 1e6 * rng.uniform(0.9, 1.1, n)
     tp[is_fail] *= rng.uniform(0.2, 0.7, int(is_fail.sum()))
-    cycles = (exec_ms / 1000.0 * np.asarray(cols["clk_mhz"], float) * 1e6).astype(np.int64)
-    return np.round(exec_ms, 2), np.round(tp, 4), cycles
+    cycles = (exec_ms * clk * 1000.0).astype(np.int64)
+    return np.round(exec_ms, 4), np.round(tp, 2), cycles
 
 
 def b_error_message(tag, det, rng, cfg):
@@ -689,7 +706,7 @@ def build_transactions(tbl, max_txn=10):
 
     for i, run_id in enumerate(tbl["run_ids"]):
         n_tx = int(min(max_txn, max(4, _scalar(cfg["num_transactions"][i]) // 8)))
-        end_ns = max(int(tbl["exec_ms"][i] * 1000), 4000)
+        end_ns = _end_ns(tbl["exec_ms"][i])
         starts = np.sort(rng.integers(2000, end_ns, n_tx))
         fail_idx = int(rng.integers(0, n_tx)) if tbl["is_fail"][i] else -1
         tag = tbl["tag"][i]
@@ -719,7 +736,7 @@ def build_transactions(tbl, max_txn=10):
                 "sequence_name": seq,
                 "txn_type": "WRITE" if is_write else "READ",
                 "start_time_ns": start,
-                "end_time_ns": "" if timed_out else start + dur,
+                "end_time_ns": "" if timed_out else min(start + dur, end_ns),
                 "clock_cycle": int(start / max(_scalar(cfg["clock_period_ns"][i]), 0.1)),
                 "channel_id": int(rng.integers(0, max(2, _scalar(
                     cfg.get("num_channels", cfg.get("psel_count"))[i])))),
@@ -794,7 +811,7 @@ def build_registers(tbl, per_run=4):
              "FIFO_LEVEL", "TIMEOUT_CFG", "PERF_CNT0", "PERF_CNT1"]
     rows = []
     for i, run_id in enumerate(tbl["run_ids"]):
-        end_ns = max(int(tbl["exec_ms"][i] * 1000), 4000)
+        end_ns = _end_ns(tbl["exec_ms"][i])
         for k in range(per_run):
             name = names[int(rng.integers(0, len(names)))]
             base = names.index(name) * 4
@@ -925,7 +942,7 @@ def render_log(tbl, txn_df):
             "error_injection_rate": float(cfg["error_injection_rate"][i]),
         })
 
-        t_end = max(int(tbl["exec_ms"][i] * 1000), 5000)
+        t_end = _end_ns(tbl["exec_ms"][i])
         tag = tbl["tag"][i]
         fail = bool(tbl["is_fail"][i])
         n_txn = int(txn_count_by_run.get(run_id, 0))
@@ -953,7 +970,8 @@ def render_log(tbl, txn_df):
         first_error_ns = ""
 
         if rng.random() < 0.30:
-            out.append(f"UVM_WARNING @ {int(t_end * 0.4)} ns: uvm_test_top.env.agent.mon "
+            out.append(f"UVM_WARNING @ {max(int(t_end * 0.4), 2100)} ns: "
+                       f"uvm_test_top.env.agent.mon "
                        f"[PROTO_WARN] Backpressure sustained for "
                        f"{rng.integers(50, 900)} cycles")
             n_warn += 1
@@ -962,7 +980,7 @@ def render_log(tbl, txn_df):
             msg, src_file, src_line = p["error_message"](tag, bool(tbl["det"][i]), rng, {
                 k: _scalar(v[i]) for k, v in cfg.items()})
             comp = p["error_component"][tag]
-            t0 = max(t_end - 4000, 2500)
+            t0 = max(int(t_end * 0.88), 2500)
             n_lines = 1 if tbl["det"][i] else int(rng.integers(1, 4))
             for k in range(n_lines):
                 t = t0 + k * 137
@@ -988,16 +1006,16 @@ def render_log(tbl, txn_df):
                            f"Aborting on unrecoverable {tag}")
                 n_fatal += 1
         else:
-            out.append(f"UVM_INFO @ {max(t_end - 1200, 2500)} ns: uvm_test_top.env.sb "
+            out.append(f"UVM_INFO @ {max(int(t_end * 0.94), 2500)} ns: uvm_test_top.env.sb "
                        f"[SB_OK] All transactions matched")
             n_info += 1
 
         n_mismatch = int(mismatch_by_run.get(run_id, 0))
         matched = max(n_txn - n_mismatch, 0)
-        out.append(f"UVM_INFO @ {max(t_end - 900, 2600)} ns: uvm_test_top.env.sb "
+        out.append(f"UVM_INFO @ {max(int(t_end * 0.96), 2600)} ns: uvm_test_top.env.sb "
                    f"[SB_SUMMARY] compared={n_txn} matched={matched} "
                    f"mismatched={n_mismatch}")
-        out.append(f"UVM_INFO @ {max(t_end - 600, 2700)} ns: uvm_test_top [SIM_ENV] "
+        out.append(f"UVM_INFO @ {max(int(t_end * 0.98), 2700)} ns: uvm_test_top [SIM_ENV] "
                    f"temp_c={float(env['temperature_c'][i])} "
                    f"voltage_mv={float(env['voltage_mv'][i])} "
                    f"power_mode={_scalar(env['power_mode'][i])}")
@@ -1080,10 +1098,28 @@ def _rename(df, alias_map):
     return df.rename(columns=alias_map) if alias_map else df
 
 
+def _clean(out_dir):
+    """Remove artifacts this generator owns, so a re-run never leaves orphans.
+
+    Only the generator's own filenames are touched - anything else the user put
+    in the directory is left alone.
+    """
+    for name in ALL_FILES + ["MANIFEST.json", "ground_truth.json"]:
+        path = os.path.join(out_dir, name)
+        if os.path.isfile(path):
+            os.remove(path)
+    wdir = os.path.join(out_dir, "waveforms")
+    if os.path.isdir(wdir):
+        for name in os.listdir(wdir):
+            if name.endswith(".vcd"):
+                os.remove(os.path.join(wdir, name))
+
+
 def build_dataset(profile_name, n_runs, seed, out_dir, files, with_waveforms=False,
                   max_txn=10, label=""):
     p = PROFILES[profile_name]
     os.makedirs(out_dir, exist_ok=True)
+    _clean(out_dir)
     tbl = build_run_table(profile_name, n_runs, seed)
 
     txn_df = build_transactions(tbl, max_txn=max_txn)
@@ -1186,7 +1222,8 @@ def build_dataset(profile_name, n_runs, seed, out_dir, files, with_waveforms=Fal
             "outcomes.scoreboard_mismatches == rows in transactions.csv with "
             "checker_result == MISMATCH for that run",
             "outcomes.failure_type == NONE for every passing run",
-            "every start_time_ns in transactions.csv < execution_time_ms * 1000",
+            "timestamps are real nanoseconds: every start_time_ns in "
+            "transactions.csv < execution_time_ms * 1e6",
             "run_id is the join key across every file that carries one",
         ],
         "raw_vs_derived": {

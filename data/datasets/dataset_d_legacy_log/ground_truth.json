@@ -286,7 +286,7 @@
   "files": {
     "uvm.log": {
       "rows": 2000,
-      "bytes": 3711553,
+      "bytes": 3731493,
       "columns": [
         "<uvm log grammar>"
       ]
@@ -299,7 +299,7 @@
     "outcomes.uvm_fatal_count == count of UVM_FATAL lines for that run in uvm.log",
     "outcomes.scoreboard_mismatches == rows in transactions.csv with checker_result == MISMATCH for that run",
     "outcomes.failure_type == NONE for every passing run",
-    "every start_time_ns in transactions.csv < execution_time_ms * 1000",
+    "timestamps are real nanoseconds: every start_time_ns in transactions.csv < execution_time_ms * 1e6",
     "run_id is the join key across every file that carries one"
   ],
   "raw_vs_derived": {
