@@ -3,7 +3,7 @@ import axios from 'axios'
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
 } from 'recharts'
-import { card, th, td, mono, num, pct, fixed, WARN_BADGE, INFO_BADGE } from './ui'
+import { card, th, td, mono, num, pct, fixed, WARN_BADGE, INFO_BADGE, xLabel, yLabel } from './ui'
 
 export default function ConfigDiff({ data, jobId }) {
   const cd = data?.analysis?.config_diff
@@ -55,11 +55,12 @@ export default function ConfigDiff({ data, jobId }) {
           ({num(twin.total_pairs)} pairs). Numeric fields only count as changed when
           they move at least 0.5 SD, so noise like voltage doesn't dominate.
         </p>
-        <ResponsiveContainer width="100%" height={320}>
-          <BarChart data={chart} layout="vertical" margin={{ left: 50 }}>
+        <ResponsiveContainer width="100%" height={340}>
+          <BarChart data={chart} layout="vertical" margin={{ left: 30, bottom: 20 }}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis type="number" unit="%" />
-            <YAxis dataKey="field" type="category" width={160} tick={{ fontSize: 11 }} />
+            <XAxis type="number" unit="%" label={xLabel('Fail/pass twin pairs where this field differs (%)')} />
+            <YAxis dataKey="field" type="category" width={160} tick={{ fontSize: 11 }}
+                   label={yLabel('Configuration field')} />
             <Tooltip formatter={(v) => `${v}%`} />
             <Bar dataKey="rate" fill="#8b5cf6" radius={[0, 6, 6, 0]} />
           </BarChart>
