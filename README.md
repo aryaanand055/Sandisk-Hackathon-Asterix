@@ -1,280 +1,137 @@
-# Configuration Intelligence - Feature Interaction Discovery
+# UVM Configuration Intelligence
 
-A comprehensive system for discovering and analyzing hidden feature interactions in test run data through synthetic dataset generation, baseline model training, and interaction analysis.
+Team Asterix, Sandisk Hackathon.
 
-## 🎯 Project Overview
+A web dashboard that takes UVM simulation logs (or CSV exports of verification
+runs), and tells you which configuration settings make tests fail, which
+failures are deterministic RTL bugs rather than seed noise, and which
+configuration gives the most throughput while staying under a risk ceiling.
 
-This project implements an intelligent pipeline to:
-- **Generate synthetic test data** with configurable schemas and hidden interaction rules
-- **Train baseline models** to identify feature importances and relationships
-- **Discover feature interactions** that reveal risky configuration combinations
-- **Validate predictions** against ground truth rules
-
-Configuration Intelligence helps identify non-obvious dependencies and interactions between system configuration parameters that significantly impact outcomes like pass/fail rates, execution time, and error types.
-
-## 📋 Dataset Schema
-
-The project uses a flexible, configuration-driven data model with four categories:
-
-### Configuration Fields (System Settings)
-- `cache_size`: small, medium, large
-- `scheduler`: static, dynamic, adaptive
-- `feature_x`, `feature_y`: ON/OFF toggles
-- `memory_size`: 256, 512, 1024, 2048, 4096 MB
-
-### Randomization Fields (Run Variability)
-- `random_seed`: 0–99,999
-- `workload`: small, medium, large
-- `traffic_pattern`: low, medium, high
-- `timing`: early, mid, late
-- `input_size`: 100–10,000 units
-
-### Environment Fields (External Conditions)
-- `temperature`: 25°C–95°C (normally distributed)
-- `voltage`: 0.80–1.20V (normally distributed)
-
-### Outcome Fields (Results)
-- `pass_fail`: pass or fail
-- `execution_time`: 10–500 seconds (log-normal distribution)
-- `throughput`: derived from execution_time
-- `error_type`: none, timeout, overflow, corruption, assertion
-
-## 🔧 Core Components
-
-### 1. `data_model.py`
-Defines the schema using `FieldSpec` dataclass. Fields automatically support:
-- Categorical, boolean, and numeric types
-- Custom distributions (uniform, normal, log-normal)
-- Discrete sets and continuous ranges
-
-**Key functions:**
-- `get_fields_by_category()` — retrieve fields by role
-- `get_field_names_by_category()` — get field names only
-- `get_all_field_names()` — return schema in order
-
-### 2. `generate_dataset.py`
-Generates synthetic test-run data with injected interaction rules.
-
-**Features:**
-- Vectorized NumPy sampling for performance
-- Data-driven rule engine with three effect types:
-  - `failure_multiplier`: increases failure probability
-  - `exec_time_multiplier`: scales execution time
-  - `value_bias`: biases specific field values
-- Two rule phases: sampling (alters inputs) and outcome (alters results)
-
-**Usage:**
-```bash
-python generate_dataset.py --n-runs 1000 --seed 42 --output data.csv
-```
-
-**Output files:**
-- `synthetic_test_runs.csv` — main dataset
-- `ground_truth_rules.json` — injected rules
-
-### 3. `train_baseline.py`
-Trains a Random Forest classifier to identify feature importances.
-
-**Workflow:**
-1. Loads synthetic test runs
-2. Builds a classification model (pass vs. fail)
-3. Extracts feature importances
-4. Computes feature lineage (parent/child relationships)
-
-**Output:**
-- `model_results.json` — feature importances and lineage
-
-### 4. `interaction_analysis.py`
-Discovers pairwise and 3-way feature combinations associated with failures.
-
-**Algorithm:**
-1. Selects top-K most important features
-2. Enumerates pairwise and 3-way combinations
-3. Computes failure rate **lift** (observed vs. baseline)
-4. Filters low-support combinations (min 10 rows)
-5. Ranks by lift metric
-
-**Output:**
-- `discovered_interactions.json` — ranked risky combinations
-- Console report with top interactions
-
-### 5. `grade_against_ground_truth.py`
-Validates discovered interactions against ground truth rules.
-
-**Metrics:**
-- Precision: % of discovered interactions with corresponding ground truth rules
-- Recall: % of ground truth rules identified by the discovery process
-- Overlap: % of discovered interactions in top-N that match rules
-
-**Output:**
-- `grading_report.json` — precision, recall, F1 score
-
-### 6. `preprocess.py`
-Cleans and prepares raw data for analysis.
-
-**Operations:**
-- Missing value handling
-- Outlier detection and treatment
-- Feature normalization
-- Data validation
-
-### 7. `validate_dataset.py`
-Ensures dataset integrity and schema compliance.
-
-**Checks:**
-- Field presence and correct types
-- Value domain validation
-- Category distribution checks
-
-## 📊 Interaction Rules
-
-The ground truth contains 7 predefined interaction rules covering:
-
-1. **Dynamic scheduler + high traffic + small cache** → 3× failure multiplier (timeout bias)
-2. **Small cache + large workload** → 2× execution time multiplier
-3. **Feature X enabled + high temperature** → 2.5× failure multiplier (corruption bias)
-4. **Low random seed** → 70% probability of large workload selection
-5. **Low voltage + large memory** → 2× failure multiplier (corruption bias)
-6. **Feature Y + adaptive scheduler + large input** → 2× failure multiplier (overflow bias)
-7. **Late timing + elevated temperature** → 1.5× execution time multiplier
-
-## 🚀 Quick Start
-
-### Installation
-
-```bash
-pip install -r requirements.txt
-```
-
-**Dependencies:**
-- numpy >= 1.24
-- pandas >= 2.0
-- scikit-learn >= 1.3
-
-### Generate Data
-
-```bash
-python generate_dataset.py --n-runs 10000 --seed 42
-```
-
-### Train Model
-
-```bash
-python train_baseline.py --input synthetic_test_runs.csv
-```
-
-### Discover Interactions
-
-```bash
-python interaction_analysis.py --input synthetic_test_runs.csv --results model_results.json --top-k 20
-```
-
-### Validate Against Ground Truth
-
-```bash
-python grade_against_ground_truth.py --discovered discovered_interactions.json --ground-truth ground_truth_rules.json
-```
-
-## 📁 File Structure
-
-```
-.
-├── data_model.py                          # Schema definition
-├── generate_dataset.py                    # Dataset generation
-├── train_baseline.py                      # Model training
-├── interaction_analysis.py                # Interaction discovery
-├── grade_against_ground_truth.py          # Validation & grading
-├── preprocess.py                          # Data preprocessing
-├── validate_dataset.py                    # Dataset validation
-├── requirements.txt                       # Python dependencies
-│
-├── synthetic_test_runs.csv                # Generated dataset
-├── synthetic_test_runs_with_predictions.csv  # Predictions added
-├── ground_truth_rules.json                # Injected rules
-├── model_results.json                     # Feature importances
-├── discovered_interactions.json           # Top risky combinations
-├── feature_lineage.json                   # Feature relationships
-└── grading_report.json                    # Validation metrics
-```
-
-## 🔍 Key Concepts
-
-### Feature Importance
-Measures how much a feature contributes to model predictions. Derived from Random Forest via Gini importance or permutation importance.
-
-### Feature Lineage
-Tracks parent-child relationships between features, revealing which features are derived from or dependent on others.
-
-### Lift
-The ratio of observed failure rate within a subgroup to the overall baseline:
-```
-Lift = P(fail | combination) / P(fail | all data)
-```
-- Lift = 2.0 means 2× higher failure rate in this combination
-- Used to rank interaction severity
-
-### Support
-The number of rows in the dataset matching a specific feature combination. Low-support combinations are filtered out (min 10 rows).
-
-## 🎓 Use Cases
-
-- **Configuration Testing**: Identify dangerous setting combinations
-- **Reliability Engineering**: Discover failure-prone scenarios
-- **Performance Analysis**: Analyze execution time dependencies
-- **Environmental Testing**: Study temperature/voltage effects
-- **Predictive Maintenance**: Forecast failures based on config interactions
-
-## 📈 Output Examples
-
-### discovered_interactions.json
-```json
-[
-  {
-    "features": ["scheduler", "traffic_pattern", "cache_size"],
-    "values": ["dynamic", "high", "small"],
-    "failure_rate": 0.45,
-    "baseline_rate": 0.15,
-    "lift": 3.0,
-    "support": 142
-  }
-]
-```
-
-### grading_report.json
-```json
-{
-  "total_discovered": 15,
-  "total_ground_truth": 7,
-  "matched": 6,
-  "precision": 0.40,
-  "recall": 0.86,
-  "f1_score": 0.54
-}
-```
-
-## 🏗️ Architecture Highlights
-
-- **Vectorized Sampling**: All field sampling uses NumPy arrays for performance
-- **Schema-Driven**: Add new fields to `SCHEMA` in `data_model.py`—no changes to generation logic
-- **Data-Driven Rules**: Rules defined as JSON dictionaries, easily extensible
-- **Two-Phase Injection**: Sampling phase modifies inputs; outcome phase modifies results
-
-## 🤝 Contributing
-
-To extend this project:
-
-1. **Add a new field**: Update `SCHEMA` in `data_model.py`
-2. **Add a new rule**: Append to `RULES` in `generate_dataset.py` with conditions and effects
-3. **Modify analysis**: Edit `interaction_analysis.py` to change binning, top-K selection, or ranking
-
-## 📝 License
-
-This project is part of the Sandisk Hackathon initiative.
-
-## 👥 Authors
-
-Configuration Intelligence Team
+React front end, FastAPI back end, analysis on a worker thread with the UI
+polling for progress. Full technical detail, including the log format, the
+embedded failure rules and the API, is in [DASHBOARD.md](DASHBOARD.md).
 
 ---
 
-**Last Updated:** September 9, 2026
+## Quick start
+
+Requires Python 3.11 (what the timings in DASHBOARD.md were measured on) and Node 18+ for Vite 5.
+
+```bash
+# Python dependencies
+pip install -r requirements.txt
+pip install python-dotenv google-genai   # backend imports dotenv at start-up; genai is for the AI Copilot
+
+# 1. Generate the bundled log corpus (once: 50,000 runs, ~56 MB across 10 files)
+python -m uvm_intel.generate_logs --n-runs 50000 --parts 10
+
+# 2. Start the API on :8000
+python -m uvicorn backend.main:app --host 127.0.0.1 --port 8000
+
+# 3. In another terminal, start the UI on :5173 (proxies /api to :8000)
+cd frontend && npm install && npm run dev
+```
+
+Open <http://localhost:5173>, then either drop files on the upload zone or
+click **Use bundled sample** to analyse the generated corpus.
+
+The AI Copilot tab needs a Google Gemini API key, typed into the tab or set as
+`GEMINI_API_KEY` in your environment or a `.env` file. Without one it still
+answers with a rule-based summary.
+
+---
+
+## What you can upload
+
+| Input | Handled by |
+|---|---|
+| `.log` UVM simulation logs | [`uvm_intel/log_parser.py`](uvm_intel/log_parser.py) |
+| `.csv` run tables, single or split by category (config, outcomes, telemetry, …) joined on `run_id` | [`uvm_intel/csv_parser.py`](uvm_intel/csv_parser.py) |
+| `.fsdb` / `.vcd` / `.wlf` waveforms, as companions to a log or CSV | [`uvm_intel/waveform_stub.py`](uvm_intel/waveform_stub.py) |
+
+[`uvm_intel/ingest_multi.py`](uvm_intel/ingest_multi.py) routes each file to
+its parser and merges the results into one run table. Uploads are capped at
+512 MB per job.
+
+Ready-made inputs live under `data/`: `data/datasets/` (four designs in
+different formats), `data/test_samples/` and `data/nvme_logs/`.
+
+---
+
+## Analysis pipeline
+
+```
+uploaded files ──► ingest_multi ──► runs + errors frames
+                                          │
+      ┌───────────────┬───────────────────┼────────────────┬───────────────┐
+      ▼               ▼                   ▼                ▼               ▼
+ risk_model      fingerprints          pareto         config_diff     recommender
+LightGBM+SHAP   TF-IDF+DBSCAN         frontier       twin diffing     Optuna TPE
+```
+
+Orchestrated by [`uvm_intel/pipeline.py`](uvm_intel/pipeline.py). Each stage
+runs independently, so a failure in one is reported in the stage log and the
+rest of the report still renders.
+
+- **Risk model:** LightGBM trained on configuration knobs only (outcome
+  columns and seed excluded to avoid leakage), with SHAP for global and
+  per-value attribution.
+- **Failure fingerprints:** error messages masked to seed-invariant templates,
+  clustered with TF-IDF and DBSCAN, and scored for determinism. A cluster with
+  one distinct trace across many seeds is flagged as a deterministic RTL bug.
+- **Pareto:** throughput vs predicted risk frontier over grouped
+  configurations, with peak, knee and best-safe operating points.
+- **Recommender:** Optuna TPE maximising throughput subject to predicted risk
+  of 2% or less (tunable).
+- **Config diff:** pairs each failing run with its nearest passing twin and
+  ranks the settings that differ.
+
+---
+
+## Dashboard tabs
+
+| Tab | What it shows |
+|---|---|
+| **Executive Summary** | KPIs, pass/fail split, risk bands, SHAP drivers, failure modes, model metrics |
+| **AI Copilot** | Ask questions about the analysis in plain English (Google Gemini) |
+| **Failure Fingerprints** | Cluster map, determinism scores, masked template and raw trace per cluster |
+| **Tradeoff Matrix** | Interactive Pareto scatter and frontier table |
+| **Recommendations** | Optimiser results and search history |
+| **Config Diff** | Twin-divergence ranking and a two-run diff viewer |
+| **Run Explorer** | Paged, filterable table of every parsed run |
+| **All Details** | Parse stats, stage timings, failure rate by field, job metadata |
+
+---
+
+## Repository layout
+
+```
+backend/main.py          FastAPI app: upload, job polling, results, diff, export, copilot
+frontend/                React + Vite dashboard
+uvm_intel/               Parsers, generators and analysis stages
+  log_format.py            Shared log grammar used by generator and parser
+  generate_logs.py         Synthetic UVM log corpus with embedded failure rules
+  pipeline.py              Runs every analysis stage for a job
+  copilot.py               Gemini-backed AI Copilot
+tools/                   Generators and validators for the datasets under data/
+data/                    Sample inputs and uvm_ground_truth.json
+presentation/            Hackathon slide deck and its build script
+```
+
+The top-level scripts (`generate_dataset.py`, `train_baseline.py`,
+`interaction_analysis.py`, `grade_against_ground_truth.py` and the
+`synthetic_test_runs*.csv` / `*.json` outputs beside them) are the project's
+first prototype: a synthetic CSV pipeline with a Random Forest baseline and
+pairwise lift analysis. The dashboard does not use them.
+
+---
+
+## CLI without the dashboard
+
+```bash
+# Parse logs straight to CSV
+python -m uvm_intel.log_parser "data/uvm_logs/*.log"
+
+# Generate an NVMe-flavoured log set with waveform stubs
+python -m uvm_intel.generate_nvme_logs --n-runs 1000 --output-dir data/nvme_logs
+```
