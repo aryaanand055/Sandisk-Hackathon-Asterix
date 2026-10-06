@@ -2,7 +2,7 @@ import {
   PieChart, Pie, Cell, BarChart, Bar, LineChart, Line,
   XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
 } from 'recharts'
-import { card, th, td, pct, num } from './ui'
+import { card, th, td, pct, num, xLabel, yLabel } from './ui'
 
 export default function ExecutiveSummary({ data }) {
   const a = data?.analysis
@@ -64,11 +64,12 @@ export default function ExecutiveSummary({ data }) {
 
         <div style={card}>
           <h3 style={{ marginTop: 0 }}>Failure Modes</h3>
-          <ResponsiveContainer width="100%" height={260}>
-            <BarChart data={errorTags} layout="vertical" margin={{ left: 40 }}>
+          <ResponsiveContainer width="100%" height={280}>
+            <BarChart data={errorTags} layout="vertical" margin={{ left: 20, bottom: 20 }}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis type="number" />
-              <YAxis dataKey="name" type="category" width={150} tick={{ fontSize: 11 }} />
+              <XAxis type="number" allowDecimals={false} label={xLabel('Failing runs (count)')} />
+              <YAxis dataKey="name" type="category" width={150} tick={{ fontSize: 11 }}
+                     label={yLabel('Failure mode (error tag)')} />
               <Tooltip formatter={(v) => num(v)} />
               <Bar dataKey="count" fill="#3b82f6" radius={[0, 6, 6, 0]} />
             </BarChart>
@@ -78,10 +79,11 @@ export default function ExecutiveSummary({ data }) {
         <div style={card}>
           <h3 style={{ marginTop: 0 }}>Global SHAP Importance</h3>
           <ResponsiveContainer width="100%" height={280}>
-            <BarChart data={shap} layout="vertical" margin={{ left: 40 }}>
+            <BarChart data={shap} layout="vertical" margin={{ left: 20, bottom: 20 }}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis type="number" unit="%" />
-              <YAxis dataKey="feature" type="category" width={150} tick={{ fontSize: 11 }} />
+              <XAxis type="number" unit="%" label={xLabel('Share of model importance (%)')} />
+              <YAxis dataKey="feature" type="category" width={150} tick={{ fontSize: 11 }}
+                     label={yLabel('Configuration feature')} />
               <Tooltip formatter={(v) => `${v}%`} />
               <Bar dataKey="importance" fill="#8b5cf6" radius={[0, 6, 6, 0]} />
             </BarChart>
@@ -91,10 +93,11 @@ export default function ExecutiveSummary({ data }) {
         <div style={card}>
           <h3 style={{ marginTop: 0 }}>Predicted Risk Bands</h3>
           <ResponsiveContainer width="100%" height={280}>
-            <BarChart data={bands}>
+            <BarChart data={bands} margin={{ left: 10, bottom: 20 }}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" tick={{ fontSize: 10 }} />
-              <YAxis />
+              <XAxis dataKey="name" tick={{ fontSize: 10 }}
+                     label={xLabel('Predicted failure-risk band')} />
+              <YAxis allowDecimals={false} label={yLabel('Runs (count)')} />
               <Tooltip formatter={(v) => num(v)} />
               <Bar dataKey="count" fill="#f59e0b" radius={[6, 6, 0, 0]} />
             </BarChart>
@@ -105,14 +108,15 @@ export default function ExecutiveSummary({ data }) {
           <div style={card}>
             <h3 style={{ marginTop: 0 }}>ROC Curve</h3>
             <ResponsiveContainer width="100%" height={280}>
-              <LineChart data={roc}>
+              <LineChart data={roc} margin={{ left: 10, bottom: 20 }}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="fpr" type="number" domain={[0, 1]}
                        tickFormatter={(v) => v.toFixed(1)}
-                       label={{ value: 'False positive rate', position: 'bottom', offset: -4 }} />
-                <YAxis domain={[0, 1]} tickFormatter={(v) => v.toFixed(1)} />
+                       label={xLabel('False positive rate (passing runs flagged, 0–1)')} />
+                <YAxis domain={[0, 1]} tickFormatter={(v) => v.toFixed(1)}
+                       label={yLabel('True positive rate (failures caught, 0–1)')} />
                 <Tooltip formatter={(v) => Number(v).toFixed(3)} />
-                <Legend />
+                <Legend verticalAlign="top" />
                 <Line dataKey="tpr" stroke="#0ea5e9" dot={false} strokeWidth={2}
                       name={`ROC (AUC ${metrics.roc_auc?.toFixed(3) ?? '—'})`} />
               </LineChart>
