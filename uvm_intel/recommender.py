@@ -187,7 +187,11 @@ def recommend(
                 history.append({"trial": i, "value": round(float(val), 2)})
 
     feasible = [e for e in evaluated if e["feasible"]]
-    best = feasible[:top_n]
+    # Trials arrive in search order, so the first N feasible ones are an
+    # arbitrary sample rather than the best. Rank by throughput, which is what
+    # the caller is optimising for once the risk ceiling is already met.
+    best = sorted(feasible,
+                  key=lambda e: -e["predicted_throughput_mbps"])[:top_n]
     min_risk = min((e["predicted_risk"] for e in evaluated), default=None)
     fallback = []
     if not feasible:
