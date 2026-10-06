@@ -146,10 +146,9 @@ The ground truth contains 7 predefined interaction rules covering:
 pip install -r requirements.txt
 ```
 
-**Dependencies:**
-- numpy >= 1.24
-- pandas >= 2.0
-- scikit-learn >= 1.3
+This one file covers the dataset scripts, the `uvm_intel` pipeline, the
+FastAPI backend and the AI Copilot tab (`google-genai`, `python-dotenv`).
+Set `GEMINI_API_KEY` in your environment or a `.env` file to use the Copilot.
 
 ### Generate Data
 

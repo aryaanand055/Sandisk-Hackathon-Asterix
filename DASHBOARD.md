@@ -10,6 +10,12 @@ React + FastAPI. Analysis runs on a worker thread; the UI polls for progress.
 
 Three terminals (or run the first two in the background).
 
+**0. Install Python dependencies** (once):
+
+```bash
+pip install -r requirements.txt
+```
+
 **1. Generate the log corpus** (once — 50,000 runs, ~56 MB across 10 files):
 
 ```bash
