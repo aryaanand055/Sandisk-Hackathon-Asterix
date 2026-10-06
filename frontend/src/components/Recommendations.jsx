@@ -22,6 +22,13 @@ export default function Recommendations({ data }) {
     value: h.value ?? h.throughput ?? null,
   })).filter((h) => h.value != null)
 
+  // Trials whose risk blew past the ceiling carry a six-figure penalty in the
+  // objective. Left on the axis they flatten every useful value into one line,
+  // so the chart is scaled to the real objective and those trials fall off the
+  // bottom, which is how a rejected trial should read.
+  const penalised = history.filter((h) => h.value < 0).length
+  const topValue = Math.max(0, ...history.map((h) => h.value))
+
   // Union of keys across recommended configs, so the table adapts to whatever
   // knobs the search space actually contained.
   const configKeys = [...new Set(recs.flatMap((x) => Object.keys(x.config || {})))]
@@ -52,11 +59,19 @@ export default function Recommendations({ data }) {
       {history.length > 0 && (
         <div style={{ ...card, marginBottom: 20 }}>
           <h3 style={{ marginTop: 0 }}>Optimisation History</h3>
+          <p style={{ margin: '0 0 10px', fontSize: 13, color: '#6b7280' }}>
+            Objective per trial: predicted throughput, minus a heavy penalty when the
+            trial&apos;s risk exceeds the ceiling.
+            {penalised > 0 && ` ${penalised} of ${history.length} trials were penalised and
+             fall below the axis, so the feasible trials stay readable.`}
+          </p>
           <ResponsiveContainer width="100%" height={280}>
             <LineChart data={history} margin={{ left: 20, right: 20, bottom: 20 }}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="trial" label={xLabel('Optimiser trial number')} />
-              <YAxis label={yLabel('Objective (predicted Mbps)')} />
+              <YAxis domain={[0, topValue > 0 ? Math.ceil(topValue * 1.05) : 'auto']}
+                     allowDataOverflow
+                     label={yLabel('Objective (predicted Mbps)')} />
               <Tooltip formatter={(v) => fixed(v)} />
               <Line dataKey="value" stroke="#8b5cf6" dot={false} strokeWidth={2} name="Objective" />
             </LineChart>
