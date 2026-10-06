@@ -1,7 +1,7 @@
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
 } from 'recharts'
-import { card, th, td, mono, num, pct, fixed, PASS_BADGE, FAIL_BADGE } from './ui'
+import { card, th, td, mono, num, pct, fixed, PASS_BADGE, FAIL_BADGE, xLabel, yLabel } from './ui'
 
 export default function Recommendations({ data }) {
   const r = data?.analysis?.recommendations
@@ -52,11 +52,11 @@ export default function Recommendations({ data }) {
       {history.length > 0 && (
         <div style={{ ...card, marginBottom: 20 }}>
           <h3 style={{ marginTop: 0 }}>Optimisation History</h3>
-          <ResponsiveContainer width="100%" height={240}>
-            <LineChart data={history}>
+          <ResponsiveContainer width="100%" height={280}>
+            <LineChart data={history} margin={{ left: 20, right: 20, bottom: 20 }}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="trial" label={{ value: 'Trial', position: 'bottom', offset: -2 }} />
-              <YAxis />
+              <XAxis dataKey="trial" label={xLabel('Optimiser trial number')} />
+              <YAxis label={yLabel('Objective (predicted Mbps)')} />
               <Tooltip formatter={(v) => fixed(v)} />
               <Line dataKey="value" stroke="#8b5cf6" dot={false} strokeWidth={2} name="Objective" />
             </LineChart>

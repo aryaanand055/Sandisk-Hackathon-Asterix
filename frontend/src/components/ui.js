@@ -56,3 +56,16 @@ export const mono = {
   fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Consolas, monospace',
   fontSize: 12,
 }
+
+const AXIS_LABEL_STYLE = { fill: '#374151', fontSize: 12, fontWeight: 600 }
+
+/** Recharts `label` prop for an X axis title drawn under the ticks. */
+export const xLabel = (value) => ({
+  value, position: 'insideBottom', offset: -14, style: AXIS_LABEL_STYLE,
+})
+
+/** Recharts `label` prop for a Y axis title drawn rotated left of the ticks. */
+export const yLabel = (value) => ({
+  value, angle: -90, position: 'insideLeft',
+  style: { ...AXIS_LABEL_STYLE, textAnchor: 'middle' },
+})

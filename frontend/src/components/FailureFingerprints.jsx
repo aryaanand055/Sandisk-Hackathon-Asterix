@@ -3,7 +3,7 @@ import {
   ScatterChart, Scatter, Cell, XAxis, YAxis, ZAxis,
   CartesianGrid, Tooltip, ResponsiveContainer,
 } from 'recharts'
-import { card, th, td, mono, num, pct, WARN_BADGE, INFO_BADGE } from './ui'
+import { card, th, td, mono, num, pct, WARN_BADGE, INFO_BADGE, xLabel, yLabel } from './ui'
 
 const PALETTE = ['#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6',
                  '#ec4899', '#14b8a6', '#f97316', '#6366f1']
@@ -34,11 +34,18 @@ export default function FailureFingerprints({ data }) {
       {scatter.length > 0 && (
         <div style={{ ...card, marginBottom: 20 }}>
           <h3 style={{ marginTop: 0 }}>Cluster Map (SVD projection of error templates)</h3>
-          <ResponsiveContainer width="100%" height={340}>
-            <ScatterChart margin={{ top: 10, right: 20, bottom: 20, left: 10 }}>
+          <p style={{ margin: '0 0 10px', fontSize: 13, color: '#6b7280' }}>
+            One dot per distinct error template; dot size = number of failing runs, colour = cluster.
+            Axes are the top two SVD components of the TF-IDF text vectors (unitless): dots close
+            together have similar error text.
+          </p>
+          <ResponsiveContainer width="100%" height={360}>
+            <ScatterChart margin={{ top: 10, right: 20, bottom: 24, left: 20 }}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="x" type="number" name="SVD-1" tickFormatter={(v) => v.toFixed(2)} />
-              <YAxis dataKey="y" type="number" name="SVD-2" tickFormatter={(v) => v.toFixed(2)} />
+              <XAxis dataKey="x" type="number" name="SVD-1" tickFormatter={(v) => v.toFixed(2)}
+                     label={xLabel('Error-text similarity, component 1 (SVD-1, unitless)')} />
+              <YAxis dataKey="y" type="number" name="SVD-2" tickFormatter={(v) => v.toFixed(2)}
+                     label={yLabel('Error-text similarity, component 2 (SVD-2, unitless)')} />
               <ZAxis dataKey="count" range={[40, 400]} name="runs" />
               <Tooltip
                 cursor={{ strokeDasharray: '3 3' }}

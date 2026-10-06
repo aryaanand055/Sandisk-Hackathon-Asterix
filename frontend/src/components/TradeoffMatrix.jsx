@@ -2,7 +2,7 @@ import {
   ScatterChart, Scatter, XAxis, YAxis, CartesianGrid,
   Tooltip, Legend, ResponsiveContainer,
 } from 'recharts'
-import { card, th, td, mono, num, pct, fixed } from './ui'
+import { card, th, td, mono, num, pct, fixed, xLabel, yLabel } from './ui'
 
 export default function TradeoffMatrix({ data }) {
   const p = data?.analysis?.pareto
@@ -32,13 +32,13 @@ export default function TradeoffMatrix({ data }) {
       <div style={{ ...card, marginBottom: 20 }}>
         <h3 style={{ marginTop: 0 }}>Throughput vs Predicted Risk</h3>
         <ResponsiveContainer width="100%" height={380}>
-          <ScatterChart margin={{ top: 10, right: 20, bottom: 24, left: 10 }}>
+          <ScatterChart margin={{ top: 10, right: 20, bottom: 24, left: 20 }}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="throughput_mbps" type="number" name="Throughput"
-                   label={{ value: 'Throughput (Mbps)', position: 'bottom', offset: 4 }} />
+                   label={xLabel('Mean throughput (Mbps)')} />
             <YAxis dataKey="predicted_risk" type="number" name="Predicted risk"
-                   tickFormatter={(v) => v.toFixed(2)}
-                   label={{ value: 'Predicted risk', angle: -90, position: 'insideLeft' }} />
+                   tickFormatter={(v) => `${(v * 100).toFixed(0)}%`}
+                   label={yLabel('Predicted failure risk (%)')} />
             <Tooltip
               cursor={{ strokeDasharray: '3 3' }}
               content={({ payload }) => {
