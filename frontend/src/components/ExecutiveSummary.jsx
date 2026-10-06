@@ -22,9 +22,14 @@ export default function ExecutiveSummary({ data }) {
     .map(([name, count]) => ({ name, count }))
     .sort((x, y) => y.count - x.count)
 
+  // direction = correlation between a numeric setting's value and its SHAP
+  // value: > 0 means raising the setting raises risk. Categorical settings have
+  // no direction; they carry per-option average SHAP pushes instead.
   const shap = (risk.shap_importance || []).slice(0, 10).map((e) => ({
     feature: e.feature,
     importance: e.importance_pct,
+    direction: e.direction,
+    perValue: e.per_value_shap,
   }))
 
   const bands = Object.entries(meter.risk_bands || {})
@@ -78,14 +83,24 @@ export default function ExecutiveSummary({ data }) {
 
         <div style={card}>
           <h3 style={{ marginTop: 0 }}>Global SHAP Importance</h3>
+          <p style={{ margin: '0 0 10px', fontSize: 12, color: '#6b7280' }}>
+            Bar length = how much the setting matters. Colour = which way it pushes risk
+            as its value rises:{' '}
+            <span style={{ color: SHAP_UP, fontWeight: 600 }}>red raises risk</span>,{' '}
+            <span style={{ color: SHAP_DOWN, fontWeight: 600 }}>green lowers it</span>,{' '}
+            <span style={{ color: SHAP_NONE, fontWeight: 600 }}>grey</span> = text setting
+            or no clear direction. Hover a bar for the direction value.
+          </p>
           <ResponsiveContainer width="100%" height={280}>
             <BarChart data={shap} layout="vertical" margin={{ left: 20, bottom: 20 }}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis type="number" unit="%" label={xLabel('Share of model importance (%)')} />
               <YAxis dataKey="feature" type="category" width={150} tick={{ fontSize: 11 }}
                      label={yLabel('Configuration feature')} />
-              <Tooltip formatter={(v) => `${v}%`} />
-              <Bar dataKey="importance" fill="#8b5cf6" radius={[0, 6, 6, 0]} />
+              <Tooltip content={<ShapTooltip />} />
+              <Bar dataKey="importance" radius={[0, 6, 6, 0]}>
+                {shap.map((e) => <Cell key={e.feature} fill={shapColor(e.direction)} />)}
+              </Bar>
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -176,6 +191,44 @@ export default function ExecutiveSummary({ data }) {
           </tbody>
         </table>
       </div>
+    </div>
+  )
+}
+
+const SHAP_UP = '#dc2626'
+const SHAP_DOWN = '#16a34a'
+const SHAP_NONE = '#9ca3af'
+
+// |direction| below 0.2 is too weak a correlation to call a direction.
+function shapColor(direction) {
+  if (direction == null || Math.abs(direction) < 0.2) return SHAP_NONE
+  return direction > 0 ? SHAP_UP : SHAP_DOWN
+}
+
+function ShapTooltip({ active, payload }) {
+  if (!active || !payload?.length) return null
+  const e = payload[0].payload
+  const options = Object.entries(e.perValue || {}).sort((x, y) => y[1] - x[1])
+  return (
+    <div style={{ background: '#fff', border: '1px solid #d1d5db', padding: 10, borderRadius: 6, fontSize: 12, maxWidth: 300 }}>
+      <div style={{ fontWeight: 600, marginBottom: 4 }}>{e.feature}</div>
+      <div>Importance: {e.importance}%</div>
+      {e.direction != null ? (
+        <div style={{ color: shapColor(e.direction) }}>
+          Direction: {e.direction > 0 ? '+' : ''}{e.direction.toFixed(2)}{' '}
+          ({Math.abs(e.direction) < 0.2 ? 'no clear direction'
+            : e.direction > 0 ? 'higher value → higher risk' : 'higher value → lower risk'})
+        </div>
+      ) : options.length > 0 && (
+        <div style={{ marginTop: 4 }}>
+          <div style={{ color: '#6b7280' }}>Avg push on risk by option:</div>
+          {options.map(([k, v]) => (
+            <div key={k} style={{ color: v > 0 ? SHAP_UP : SHAP_DOWN }}>
+              {k}: {v > 0 ? '+' : ''}{v.toFixed(3)}
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   )
 }
