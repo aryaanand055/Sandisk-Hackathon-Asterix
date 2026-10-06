@@ -171,6 +171,7 @@ response says so and falls back to the lowest-risk configs found.
 | Tab | Contents |
 |---|---|
 | **Executive Summary** | KPI strip, pass/fail donut, risk-band histogram, global SHAP chart, failure-mode distribution, ROC curve, metrics, confusion matrix, timing by failure mode |
+| **AI Copilot** | Natural-language Q&A over the analysis via Google Gemini, with a rule-based fallback when no key is set |
 | **Failure Fingerprints** | Cluster map (SVD scatter), cluster table with determinism scores, drill-down with masked template + raw trace, hand-off to the diff viewer |
 | **Tradeoff Matrix** | Interactive Pareto scatter, peak / knee / best-safe operating points, full frontier table |
 | **Recommendations** | Optuna results, optimisation history, derived search space |
@@ -192,9 +193,31 @@ response says so and falls back to the lowest-risk configs found.
 | `GET` | `/api/jobs/{id}/runs` | Paged run table (filter/search/sort) |
 | `GET` | `/api/jobs/{id}/diff` | Field-by-field diff of two runs |
 | `GET` | `/api/jobs/{id}/export` | Download payload as JSON |
-| `DELETE` | `/api/jobs/{id}` | Drop a job |
+| `POST` | `/api/copilot/query` | Ask the AI Copilot a question about a finished job |
+| `POST` | `/api/jobs/{id}/copilot` | Alias of `/api/copilot/query` (see note below) |
 
 Tunable per job: `max_risk`, `n_trials`, `dbscan_eps`, `enable_recommender`.
+
+Jobs live in memory only; they disappear when the API process restarts.
+
+### Copilot
+
+Both copilot routes take the same JSON body and are handled by
+[`uvm_intel/copilot.py`](uvm_intel/copilot.py):
+
+```json
+{ "job_id": "a1b2c3d4e5f6", "question": "Which settings drive failures?", "api_key": "optional" }
+```
+
+`job_id` must be in the body on both routes; the `{id}` in the alias path is
+not read. The job has to be complete, otherwise the request gets the same
+404/202/500 as `/result`. `api_key` (or `gemini_api_key`) overrides the
+`GEMINI_API_KEY` environment variable.
+
+The response carries `answer` (Markdown), `gemini_used`, `model` when Gemini
+answered, `error` when the call failed, plus `job_id`, `question` and
+`timestamp`. With no key, or when every Gemini model fails, the answer falls
+back to a rule-based summary of the analysis instead of an error.
 
 ---
 
@@ -223,8 +246,21 @@ Upload cap is 512 MB.
 
 ---
 
-## Not built
+## AI Copilot
 
-The **RAG copilot** (ChromaDB + LangChain natural-language Q&A) from Phase 4 is
-not implemented — it was listed as a bonus and needs an LLM endpoint and key,
-which is a separate decision. Everything else in the plan is in place.
+The **AI Copilot** tab answers natural-language questions about a finished
+analysis. It condenses the result payload (summary, SHAP drivers, clusters,
+Pareto points, recommendation, field lift) into a prompt and sends it to
+Google Gemini. There is no vector store or retrieval step; the whole summary
+goes into every prompt.
+
+It needs a Gemini API key, either typed into the tab or set as
+`GEMINI_API_KEY` in the environment or a `.env` file, plus two packages that
+are not in `requirements.txt`:
+
+```bash
+pip install python-dotenv google-genai
+```
+
+`python-dotenv` is imported at backend start-up, so the API will not start
+without it even if the copilot is never used.
