@@ -9,6 +9,7 @@ import ConfigDiff from './components/ConfigDiff'
 import RunExplorer from './components/RunExplorer'
 import AllDetails from './components/AllDetails'
 import AICopilot from './components/AICopilot'
+import LogGenerator from './components/LogGenerator'
 import './App.css'
 
 export default function App() {
@@ -18,6 +19,7 @@ export default function App() {
   const [loading, setLoading] = useState(false)
   const [activeTab, setActiveTab] = useState('summary')
   const [error, setError] = useState(null)
+  const [page, setPage] = useState('analyse')
 
   const handleReset = () => {
     setJobId(null)
@@ -98,6 +100,19 @@ export default function App() {
     }
   }
 
+  const handleGenerated = async (corpusId) => {
+    handleReset()
+    setPage('analyse')
+    setLoading(true)
+    try {
+      const res = await axios.post(`/api/generate/${corpusId}/analyze`)
+      setJobId(res.data.job_id)
+    } catch (err) {
+      setError('Analysis failed: ' + (err.response?.data?.detail || err.message))
+      setLoading(false)
+    }
+  }
+
   return (
     <div className="app">
       <header className="app-header">
@@ -105,9 +120,26 @@ export default function App() {
         <p>Upload UVM simulation logs, get parsed and clustered analysis</p>
       </header>
 
-      {error && <div className="error-box">{error}</div>}
+      <div className="tab-buttons" style={{ padding: '0 24px', marginBottom: 16 }}>
+        {[
+          { id: 'analyse', label: 'Analyse logs' },
+          { id: 'generate', label: 'Generate logs' },
+        ].map(p => (
+          <button
+            key={p.id}
+            className={`tab-btn ${page === p.id ? 'active' : ''}`}
+            onClick={() => setPage(p.id)}
+          >
+            {p.label}
+          </button>
+        ))}
+      </div>
 
-      {jobId && (
+      {page === 'generate' && <LogGenerator onAnalyze={handleGenerated} />}
+
+      {page === 'analyse' && error && <div className="error-box">{error}</div>}
+
+      {page === 'analyse' && jobId && (
         <div style={{ textAlign: 'right', padding: '0 24px', marginBottom: '12px' }}>
           <button className="btn btn-secondary" onClick={handleReset} style={{ fontSize: '0.875rem' }}>
             ← Analyze New Files / Reset
@@ -115,7 +147,7 @@ export default function App() {
         </div>
       )}
 
-      {!jobId ? (
+      {page !== 'analyse' ? null : !jobId ? (
         <UploadZone onUpload={handleUpload} onSample={handleSample} />
       ) : (
         <>

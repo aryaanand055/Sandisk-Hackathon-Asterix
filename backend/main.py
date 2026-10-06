@@ -5,6 +5,7 @@ uvm_intel.pipeline. Analysis runs on a worker thread; the UI polls /api/jobs.
 """
 
 import glob
+import json
 import os
 import shutil
 import tempfile
@@ -17,10 +18,13 @@ import numpy as np
 import pandas as pd
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
+from pydantic import BaseModel, Field
 
 from dotenv import load_dotenv
 load_dotenv()
 
+from uvm_intel import generate_logs
 from uvm_intel.copilot import query_gemini_copilot
 from uvm_intel.ingest_multi import parse_files_multi
 from uvm_intel.log_parser import parse_files
@@ -38,6 +42,7 @@ app.add_middleware(
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SAMPLE_DIR = os.path.join(REPO_ROOT, "data", "uvm_logs")
+GENERATED_DIR = os.path.join(REPO_ROOT, "data", "generated")
 MAX_UPLOAD_BYTES = 512 * 1024 * 1024
 
 # Columns surfaced in the Run Explorer table, in display order.
@@ -266,6 +271,82 @@ async def analyze_sample(
             detail=("No bundled corpus. Generate one with: "
                     "python -m uvm_intel.generate_logs --n-runs 50000 --parts 10"),
         )
+    params = _params(max_risk, n_trials, dbscan_eps, enable_recommender)
+    names = [os.path.basename(p) for p in paths]
+    return {"job_id": _create_job(paths, names, params, None)}
+
+
+# ── Log generator ──────────────────────────────────────────────────────────
+
+class GenerateRequest(BaseModel):
+    n_runs: int = Field(20000, ge=500, le=200000)
+    seed: int = 42
+    parts: int = Field(4, ge=1, le=50)
+    extra_deterministic: bool = False
+    build_fields: bool = False
+    seeds_per_config: int = Field(1, ge=1, le=50)
+    base_fail_prob: float = Field(generate_logs.BASE_FAIL_PROB, ge=0.0, le=0.5)
+    rule_strength: float = Field(1.0, ge=0.0, le=3.0)
+
+
+def _corpus_dir(corpus_id: str) -> str:
+    path = os.path.join(GENERATED_DIR, corpus_id)
+    if not corpus_id.isalnum() or not os.path.isdir(path):
+        raise HTTPException(status_code=404, detail="Unknown corpus")
+    return path
+
+
+@app.get("/api/generator/defaults")
+async def generator_defaults():
+    """Default options plus every rule each switch would add, for the UI."""
+    return {
+        "options": GenerateRequest().model_dump(),
+        "rules": {
+            "base": generate_logs.RULES,
+            "extra_deterministic": generate_logs.EXTRA_DETERMINISTIC_RULES,
+            "build_fields": generate_logs.BUILD_RULES,
+        },
+    }
+
+
+@app.post("/api/generate")
+def generate_corpus(req: GenerateRequest):
+    """Write a synthetic corpus to data/generated/<id>/ and return its
+    ground truth. Runs synchronously: 200k runs takes well under a minute."""
+    corpus_id = uuid.uuid4().hex[:12]
+    out_dir = os.path.join(GENERATED_DIR, corpus_id)
+    gt = generate_logs.generate(
+        req.n_runs, req.seed, out_dir, req.parts,
+        extra_deterministic=req.extra_deterministic,
+        build_fields=req.build_fields,
+        seeds_per_config=req.seeds_per_config,
+        base_fail_prob=req.base_fail_prob,
+        rule_strength=req.rule_strength,
+    )
+    for f in gt["files"]:
+        f["path"] = os.path.basename(f["path"])
+    with open(os.path.join(out_dir, "ground_truth.json"), "w") as fh:
+        json.dump(gt, fh, indent=2)
+    return {"corpus_id": corpus_id, **gt}
+
+
+@app.get("/api/generate/{corpus_id}/download")
+def download_corpus(corpus_id: str):
+    path = _corpus_dir(corpus_id)
+    archive = shutil.make_archive(path, "zip", path)
+    return FileResponse(archive, filename=f"uvm_corpus_{corpus_id}.zip",
+                        media_type="application/zip")
+
+
+@app.post("/api/generate/{corpus_id}/analyze")
+async def analyze_corpus(
+    corpus_id: str,
+    max_risk: float = 0.02,
+    n_trials: int = 150,
+    dbscan_eps: float = 0.35,
+    enable_recommender: bool = True,
+):
+    paths = sorted(glob.glob(os.path.join(_corpus_dir(corpus_id), "*.log")))
     params = _params(max_risk, n_trials, dbscan_eps, enable_recommender)
     names = [os.path.basename(p) for p in paths]
     return {"job_id": _create_job(paths, names, params, None)}

@@ -72,6 +72,8 @@ ERROR_TAGS = [
     "PROTOCOL_VIOLATION",
     "ASSERTION_FAIL",
     "RETENTION_FAIL",
+    "CMD_DECODE_ERROR",
+    "BAD_BLOCK_MAP",
 ]
 
 # Components that raise each tag - kept realistic per error class.
@@ -83,6 +85,8 @@ ERROR_COMPONENT = {
     "PROTOCOL_VIOLATION": "uvm_test_top.env.agent.protocol_chk",
     "ASSERTION_FAIL":     "uvm_test_top.dut_wrapper",
     "RETENTION_FAIL":     "uvm_test_top.env.nand_model",
+    "CMD_DECODE_ERROR":   "uvm_test_top.env.agent.protocol_chk",
+    "BAD_BLOCK_MAP":      "uvm_test_top.env.nand_model",
 }
 
 

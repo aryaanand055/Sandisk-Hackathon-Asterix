@@ -12,6 +12,17 @@ Sampling is vectorised with numpy; only the final text rendering loops.
 Usage
 -----
     python -m uvm_intel.generate_logs --n-runs 50000 --parts 10
+
+Every option defaults to the original corpus, so the command above still
+reproduces the bundled sample byte for byte. The optional switches make the
+data easier to learn from:
+
+    --extra-deterministic   two more RTL-style bugs that always fail
+    --build-fields          firmware / RTL / testbench versions, known before
+                            the run starts, with rules tied to them
+    --seeds-per-config K    run each sampled configuration K times
+    --base-fail-prob P      floor failure rate of a clean config (noise)
+    --rule-strength S       multiply every additive rule's effect
 """
 
 import argparse
@@ -147,6 +158,86 @@ RULES: List[Dict[str, Any]] = [
     },
 ]
 
+# Byte-identical trace each deterministic rule prints, keyed by rule id.
+DETERMINISTIC_TRACES = {
+    "R5": ("Illegal burst termination on plane 3: beat=64 addr=0x0000c3f0 "
+           "expected_ack=1 observed_ack=0"),
+    "R8": ("Unknown opcode 0x7f in LDPC single-plane decode path: "
+           "slot=63 addr=0x0001fe00"),
+    "R9": ("Bad-block table walk hit reserved entry 0xffff during GC on "
+           "channel 7 addr=0x00a0b000"),
+}
+
+# --extra-deterministic: more RTL-style bugs. A config that matches always
+# fails the same way, so these are the easiest signal a model can learn.
+EXTRA_DETERMINISTIC_RULES: List[Dict[str, Any]] = [
+    {
+        "id": "R8",
+        "description": ("Deterministic RTL bug: LDPC on a single plane with "
+                        "queue depth 64 decodes an illegal opcode"),
+        "conditions": [
+            {"field": "ecc_mode", "op": "==", "value": "LDPC"},
+            {"field": "num_planes", "op": "==", "value": 1},
+            {"field": "queue_depth", "op": "==", "value": 64},
+        ],
+        "effect": "set", "value": 0.97,
+        "error_tag": "CMD_DECODE_ERROR", "deterministic": True,
+    },
+    {
+        "id": "R9",
+        "description": ("Deterministic RTL bug: Garbage_Collect across 8 "
+                        "channels walks a corrupt bad-block table"),
+        "conditions": [
+            {"field": "test_name", "op": "==", "value": "Garbage_Collect"},
+            {"field": "num_channels", "op": "==", "value": 8},
+        ],
+        "effect": "set", "value": 0.96,
+        "error_tag": "BAD_BLOCK_MAP", "deterministic": True,
+    },
+]
+
+# --build-fields: versions fixed before the run starts. Fair model inputs
+# (no leakage), and each carries a regression the model can find.
+BUILD_SPACE: Dict[str, Any] = {
+    "firmware_version":  (["fw_3.1.0", "fw_3.2.0", "fw_3.2.1", "fw_4.0.0-rc1"],
+                          [0.25, 0.30, 0.30, 0.15]),
+    "rtl_build":         (["rtl_2024.08", "rtl_2024.10", "rtl_2024.12"],
+                          [0.30, 0.40, 0.30]),
+    "testbench_version": (["tb_1.4", "tb_1.5"], [0.40, 0.60]),
+}
+
+BUILD_RULES: List[Dict[str, Any]] = [
+    {
+        "id": "R10",
+        "description": "Release-candidate firmware 4.0.0-rc1 hangs the command queue",
+        "conditions": [
+            {"field": "firmware_version", "op": "==", "value": "fw_4.0.0-rc1"},
+        ],
+        "effect": "add", "value": 0.40,
+        "error_tag": "TIMEOUT", "deterministic": False,
+    },
+    {
+        "id": "R11",
+        "description": "RTL build 2024.12 regressed the BCH decoder",
+        "conditions": [
+            {"field": "rtl_build", "op": "==", "value": "rtl_2024.12"},
+            {"field": "ecc_mode", "op": "==", "value": "BCH"},
+        ],
+        "effect": "add", "value": 0.35,
+        "error_tag": "ECC_UNCORRECTABLE", "deterministic": False,
+    },
+    {
+        "id": "R12",
+        "description": "Testbench 1.4 has a stale power-cycle assertion",
+        "conditions": [
+            {"field": "testbench_version", "op": "==", "value": "tb_1.4"},
+            {"field": "test_name", "op": "==", "value": "Power_Cycle"},
+        ],
+        "effect": "add", "value": 0.45,
+        "error_tag": "ASSERTION_FAIL", "deterministic": False,
+    },
+]
+
 # Failures no rule claimed - the "random seed noise" population.
 NOISE_TAGS = ["DATA_MISMATCH", "ASSERTION_FAIL"]
 NOISE_WEIGHTS = [0.6, 0.4]
@@ -162,8 +253,34 @@ _OPS = {
 # Sampling
 # ═══════════════════════════════════════════════════════════════════════════
 
-def sample_configs(n: int, rng: np.random.Generator) -> Dict[str, np.ndarray]:
-    """Draw the full configuration matrix, vectorised."""
+def active_rules(extra_deterministic: bool = False,
+                 build_fields: bool = False) -> List[Dict[str, Any]]:
+    """The rule set a corpus is generated with."""
+    rules = list(RULES)
+    if extra_deterministic:
+        rules += EXTRA_DETERMINISTIC_RULES
+    if build_fields:
+        rules += BUILD_RULES
+    return rules
+
+
+def sample_configs(n: int, rng: np.random.Generator,
+                   build_fields: bool = False,
+                   seeds_per_config: int = 1) -> Dict[str, np.ndarray]:
+    """Draw the full configuration matrix, vectorised.
+
+    With seeds_per_config K, n/K configurations are drawn and each is run K
+    times with a fresh seed, so the same settings appear with several
+    outcomes and the model can estimate a failure rate instead of a coin flip.
+    """
+    if seeds_per_config > 1:
+        n_cfg = -(-n // seeds_per_config)
+        base = sample_configs(n_cfg, rng, build_fields)
+        cols = {k: np.repeat(v, seeds_per_config)[:n]
+                for k, v in base.items() if k != "seed"}
+        cols["seed"] = rng.integers(0, 2**31 - 1, size=n)
+        return cols
+
     cols: Dict[str, np.ndarray] = {}
     for name, (values, weights) in CONFIG_SPACE.items():
         p = np.asarray(weights, float) / np.sum(weights) if weights else None
@@ -176,6 +293,12 @@ def sample_configs(n: int, rng: np.random.Generator) -> Dict[str, np.ndarray]:
         np.clip(rng.normal(62, 15, n), 25, 95), 1)
     cols["error_injection_rate"] = np.round(rng.uniform(0.0, 0.05, n), 4)
     cols["seed"] = rng.integers(0, 2**31 - 1, size=n)
+
+    # Drawn after everything else so the default corpus is unchanged.
+    if build_fields:
+        for name, (values, weights) in BUILD_SPACE.items():
+            p = np.asarray(weights, float) / np.sum(weights)
+            cols[name] = rng.choice(values, size=n, p=p)
     return cols
 
 
@@ -186,22 +309,30 @@ def build_mask(cols: Dict[str, np.ndarray], conditions: List[Dict]) -> np.ndarra
     return mask
 
 
-def apply_rules(cols: Dict[str, np.ndarray], n: int, rng: np.random.Generator):
-    """Resolve failure probability, verdict and error tag for every run."""
-    prob = np.full(n, BASE_FAIL_PROB)
+def apply_rules(cols: Dict[str, np.ndarray], n: int, rng: np.random.Generator,
+                rules: List[Dict[str, Any]] = None,
+                base_fail_prob: float = BASE_FAIL_PROB,
+                rule_strength: float = 1.0):
+    """Resolve failure probability, verdict and error tag for every run.
+
+    The returned `deterministic` array holds the fixed trace of the
+    deterministic rule that claimed a run, or "" when none did.
+    """
+    rules = RULES if rules is None else rules
+    prob = np.full(n, base_fail_prob)
     tag = np.full(n, "", dtype=object)
     tag_priority = np.zeros(n)
-    deterministic = np.zeros(n, dtype=bool)
+    deterministic = np.full(n, "", dtype=object)
     fired: Dict[str, np.ndarray] = {}
 
     # Additive rules first, then "set" rules override.
-    for rule in RULES:
+    for rule in rules:
         m = build_mask(cols, rule["conditions"])
         fired[rule["id"]] = m
         if rule["effect"] == "add":
-            prob[m] += rule["value"]
+            prob[m] += rule["value"] * rule_strength
 
-    for rule in RULES:
+    for rule in rules:
         if rule["effect"] == "set":
             prob[fired[rule["id"]]] = rule["value"]
 
@@ -209,14 +340,14 @@ def apply_rules(cols: Dict[str, np.ndarray], n: int, rng: np.random.Generator):
     is_fail = rng.random(n) < prob
 
     # Attribute an error tag: highest-value rule that fired on a failing row.
-    for rule in RULES:
+    for rule in rules:
         if not rule["error_tag"]:
             continue
         m = fired[rule["id"]] & is_fail & (rule["value"] > tag_priority)
         tag[m] = rule["error_tag"]
         tag_priority[m] = rule["value"]
-        if rule["deterministic"]:
-            deterministic[m] = True
+        deterministic[m] = (DETERMINISTIC_TRACES[rule["id"]]
+                            if rule["deterministic"] else "")
 
     unclaimed = is_fail & (tag == "")
     k = int(unclaimed.sum())
@@ -272,12 +403,8 @@ def _error_lines(tag, det, t_ns, rng, cfg) -> List[str]:
     if det:
         # Deterministic RTL bug - byte-identical every time it fires.
         return [
-            f"UVM_ERROR @ {t_ns} ns: {comp} [PROTOCOL_VIOLATION] "
-            f"Illegal burst termination on plane 3: beat=64 addr=0x0000c3f0 "
-            f"expected_ack=1 observed_ack=0",
-            f"UVM_ERROR @ {t_ns + 20} ns: {comp} [PROTOCOL_VIOLATION] "
-            f"Illegal burst termination on plane 3: beat=64 addr=0x0000c3f0 "
-            f"expected_ack=1 observed_ack=0",
+            f"UVM_ERROR @ {t_ns} ns: {comp} [{tag}] {det}",
+            f"UVM_ERROR @ {t_ns + 20} ns: {comp} [{tag}] {det}",
         ]
 
     addr = int(rng.integers(0, 2**28))
@@ -345,14 +472,14 @@ def render_run(i, cols, is_fail, tag, det, exec_ms, tp, cycles, rng) -> str:
         elines = _error_lines(tag[i], det[i], max(t_end - 4000, 2000), rng, cfg)
         out.extend(elines)
         n_err = len(elines)
-        if tag[i] in ("TIMEOUT", "PROTOCOL_VIOLATION"):
+        if det[i] or tag[i] in ("TIMEOUT", "PROTOCOL_VIOLATION"):
             out.append(f"UVM_FATAL @ {t_end} ns: uvm_test_top [TEST_ABORT] "
                        f"Aborting on unrecoverable {tag[i]}")
     else:
         out.append(f"UVM_INFO @ {max(t_end - 1000, 2000)} ns: "
                    f"uvm_test_top.env.sb [SB_OK] All transactions matched")
 
-    n_fatal = 1 if (is_fail[i] and tag[i] in ("TIMEOUT", "PROTOCOL_VIOLATION")) else 0
+    n_fatal = 1 if (is_fail[i] and (det[i] or tag[i] in ("TIMEOUT", "PROTOCOL_VIOLATION"))) else 0
     out += [
         METRICS_OPEN,
         json.dumps({
@@ -378,10 +505,24 @@ def render_run(i, cols, is_fail, tag, det, exec_ms, tp, cycles, rng) -> str:
 # Main
 # ═══════════════════════════════════════════════════════════════════════════
 
-def generate(n_runs: int, seed: int, out_dir: str, parts: int) -> Dict[str, Any]:
+def _oracle_auc(prob: np.ndarray, is_fail: np.ndarray) -> Any:
+    """ROC-AUC of the generator's own failure probabilities: the best any
+    model could score on this corpus, since the rest is pure chance."""
+    if is_fail.all() or not is_fail.any():
+        return None
+    from sklearn.metrics import roc_auc_score
+    return round(float(roc_auc_score(is_fail, prob)), 4)
+
+
+def generate(n_runs: int, seed: int, out_dir: str, parts: int,
+             extra_deterministic: bool = False, build_fields: bool = False,
+             seeds_per_config: int = 1, base_fail_prob: float = BASE_FAIL_PROB,
+             rule_strength: float = 1.0) -> Dict[str, Any]:
     rng = np.random.default_rng(seed)
-    cols = sample_configs(n_runs, rng)
-    prob, is_fail, tag, det, fired = apply_rules(cols, n_runs, rng)
+    rules = active_rules(extra_deterministic, build_fields)
+    cols = sample_configs(n_runs, rng, build_fields, seeds_per_config)
+    prob, is_fail, tag, det, fired = apply_rules(
+        cols, n_runs, rng, rules, base_fail_prob, rule_strength)
     exec_ms, tp, cycles = compute_metrics(cols, is_fail, tag, rng, n_runs)
 
     os.makedirs(out_dir, exist_ok=True)
@@ -400,7 +541,7 @@ def generate(n_runs: int, seed: int, out_dir: str, parts: int) -> Dict[str, Any]
 
     # Ground truth for grading the downstream pipeline.
     gt_rules = []
-    for r in RULES:
+    for r in rules:
         m = fired[r["id"]]
         n_m = int(m.sum())
         gt_rules.append({
@@ -419,9 +560,17 @@ def generate(n_runs: int, seed: int, out_dir: str, parts: int) -> Dict[str, Any]
     return {
         "metadata": {
             "n_runs": n_runs, "seed": seed, "parts": len(written),
-            "base_fail_prob": BASE_FAIL_PROB,
+            "base_fail_prob": base_fail_prob,
             "observed_fail_rate": round(float(is_fail.mean()), 4),
             "exec_ceiling_ms": EXEC_CEILING_MS,
+            "options": {
+                "extra_deterministic": extra_deterministic,
+                "build_fields": build_fields,
+                "seeds_per_config": seeds_per_config,
+                "rule_strength": rule_strength,
+            },
+            "distinct_configs": -(-n_runs // max(seeds_per_config, 1)),
+            "oracle_roc_auc": _oracle_auc(prob, is_fail),
         },
         "rules": gt_rules,
         "error_tag_distribution": {str(t): int(c) for t, c in zip(tags, counts)},
@@ -436,10 +585,23 @@ def main() -> None:
     ap.add_argument("--parts", type=int, default=10)
     ap.add_argument("--out-dir", default="data/uvm_logs")
     ap.add_argument("--ground-truth", default="data/uvm_ground_truth.json")
+    ap.add_argument("--extra-deterministic", action="store_true",
+                    help="add two always-failing RTL bugs (R8, R9)")
+    ap.add_argument("--build-fields", action="store_true",
+                    help="add firmware/RTL/testbench versions and their rules")
+    ap.add_argument("--seeds-per-config", type=int, default=1,
+                    help="run each configuration this many times")
+    ap.add_argument("--base-fail-prob", type=float, default=BASE_FAIL_PROB,
+                    help="failure rate of a config no rule touches")
+    ap.add_argument("--rule-strength", type=float, default=1.0,
+                    help="multiplier on every additive rule")
     args = ap.parse_args()
 
     print(f"Generating {args.n_runs:,} UVM runs -> {args.out_dir} ...")
-    gt = generate(args.n_runs, args.seed, args.out_dir, args.parts)
+    gt = generate(args.n_runs, args.seed, args.out_dir, args.parts,
+                  args.extra_deterministic, args.build_fields,
+                  args.seeds_per_config, args.base_fail_prob,
+                  args.rule_strength)
 
     os.makedirs(os.path.dirname(args.ground_truth) or ".", exist_ok=True)
     with open(args.ground_truth, "w") as fh:
@@ -447,6 +609,7 @@ def main() -> None:
 
     md = gt["metadata"]
     print(f"  overall fail rate: {md['observed_fail_rate']:.3f}")
+    print(f"  best possible ROC-AUC: {md['oracle_roc_auc']}")
     print(f"  error tags: {gt['error_tag_distribution']}")
     for r in gt["rules"]:
         o = r["observed"]
