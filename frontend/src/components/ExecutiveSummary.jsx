@@ -1,6 +1,6 @@
 import {
   PieChart, Pie, Cell, BarChart, Bar, LineChart, Line,
-  XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
+  XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ReferenceDot,
 } from 'recharts'
 import { card, th, td, pct, num, xLabel, yLabel } from './ui'
 
@@ -42,6 +42,7 @@ export default function ExecutiveSummary({ data }) {
       }))
 
   const cm = risk.confusion_matrix || {}
+  const ops = risk.roc_operating_points || {}
 
   return (
     <div>
@@ -122,20 +123,50 @@ export default function ExecutiveSummary({ data }) {
         {roc.length > 0 && (
           <div style={card}>
             <h3 style={{ marginTop: 0 }}>ROC Curve</h3>
+            <p style={{ margin: '0 0 10px', fontSize: 12, color: '#6b7280' }}>
+              Each point is one risk cut-off: runs scoring above it are flagged as likely
+              to fail. Hover the line to see the cut-off behind any point.
+            </p>
             <ResponsiveContainer width="100%" height={280}>
               <LineChart data={roc} margin={{ left: 10, bottom: 20 }}>
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="fpr" type="number" domain={[0, 1]}
+                <XAxis dataKey="fpr" type="number" domain={[0, 1]} ticks={UNIT_TICKS}
                        tickFormatter={(v) => v.toFixed(1)}
                        label={xLabel('False positive rate (passing runs flagged, 0–1)')} />
-                <YAxis domain={[0, 1]} tickFormatter={(v) => v.toFixed(1)}
+                <YAxis domain={[0, 1]} ticks={UNIT_TICKS} tickFormatter={(v) => v.toFixed(1)}
                        label={yLabel('True positive rate (failures caught, 0–1)')} />
-                <Tooltip formatter={(v) => Number(v).toFixed(3)} />
+                <Tooltip content={<RocTooltip />} />
                 <Legend verticalAlign="top" />
                 <Line dataKey="tpr" stroke="#0ea5e9" dot={false} strokeWidth={2}
                       name={`ROC (AUC ${metrics.roc_auc?.toFixed(3) ?? '—'})`} />
+                {ops.default && (
+                  <ReferenceDot x={ops.default.fpr} y={ops.default.tpr} r={6}
+                                fill={ROC_DEFAULT} stroke="#fff" strokeWidth={2} />
+                )}
+                {ops.best_balance && (
+                  <ReferenceDot x={ops.best_balance.fpr} y={ops.best_balance.tpr} r={6}
+                                fill={ROC_BEST} stroke="#fff" strokeWidth={2} />
+                )}
               </LineChart>
             </ResponsiveContainer>
+            {(ops.best_balance || ops.default) && (
+              <div style={{ display: 'grid', gap: 6, marginTop: 10, fontSize: 12 }}>
+                {[['best_balance', 'Best balance', ROC_BEST], ['default', 'Current cut-off', ROC_DEFAULT]]
+                  .filter(([k]) => ops[k])
+                  .map(([k, label, color]) => (
+                    <div key={k} style={{ display: 'flex', gap: 8, alignItems: 'baseline' }}>
+                      <span style={{ width: 10, height: 10, borderRadius: 5, background: color,
+                                     flex: '0 0 auto', transform: 'translateY(1px)' }} />
+                      <span>
+                        <strong>{label}: cut-off {pct(ops[k].threshold, 0)}</strong>
+                        {' '}catches {pct(ops[k].tpr, 0)} of failures
+                        ({num(ops[k].true_positive)}), flags {pct(ops[k].fpr, 0)} of
+                        passing runs ({num(ops[k].false_positive)} false alarms)
+                      </span>
+                    </div>
+                  ))}
+              </div>
+            )}
           </div>
         )}
 
@@ -191,6 +222,24 @@ export default function ExecutiveSummary({ data }) {
           </tbody>
         </table>
       </div>
+    </div>
+  )
+}
+
+const UNIT_TICKS = [0, 0.2, 0.4, 0.6, 0.8, 1]
+const ROC_BEST = '#16a34a'
+const ROC_DEFAULT = '#f59e0b'
+
+function RocTooltip({ active, payload }) {
+  if (!active || !payload?.length) return null
+  const p = payload[0].payload
+  return (
+    <div style={{ background: '#fff', border: '1px solid #d1d5db', padding: 10, borderRadius: 6, fontSize: 12 }}>
+      {p.threshold != null && (
+        <div style={{ fontWeight: 600, marginBottom: 4 }}>Cut-off {pct(p.threshold, 0)}</div>
+      )}
+      <div>Failures caught: {pct(p.tpr, 0)}</div>
+      <div>Passing runs flagged: {pct(p.fpr, 0)}</div>
     </div>
   )
 }

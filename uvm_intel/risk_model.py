@@ -111,7 +111,7 @@ def train_risk_model(
 
     pred_te = (proba_te >= 0.5).astype(int)
     cm = confusion_matrix(y_te, pred_te)
-    fpr, tpr, _ = roc_curve(y_te, proba_te)
+    fpr, tpr, thr = roc_curve(y_te, proba_te)
 
     metrics = {
         "accuracy": round(float(accuracy_score(y_te, pred_te)), 4),
@@ -123,8 +123,36 @@ def train_risk_model(
     }
 
     step = max(1, len(fpr) // 100)
-    roc_points = [{"fpr": round(float(a), 4), "tpr": round(float(b), 4)}
-                  for a, b in zip(fpr[::step], tpr[::step])]
+    # sklearn's first threshold is +inf (flag nothing); clamp it so it serialises.
+    thr = np.minimum(thr, 1.0)
+    roc_points = [{"fpr": round(float(a), 4), "tpr": round(float(b), 4),
+                   "threshold": round(float(t), 4)}
+                  for a, b, t in zip(fpr[::step], tpr[::step], thr[::step])]
+
+    # Two cut-offs worth marking on the curve: the one that maximises
+    # caught-minus-false-alarm rate (Youden's J), found on the full curve
+    # rather than the downsampled one, and the 0.5 cut-off the metrics use.
+    j = int(np.argmax(tpr - fpr))
+    y_arr = np.asarray(y_te)
+    n_pos = int((y_arr == 1).sum())
+    n_neg = int((y_arr == 0).sum())
+
+    def _operating_point(cut: float) -> Dict[str, Any]:
+        flagged = proba_te >= cut
+        tp = int((flagged & (y_arr == 1)).sum())
+        fp = int((flagged & (y_arr == 0)).sum())
+        return {
+            "threshold": round(float(cut), 4),
+            "fpr": round(fp / n_neg, 4) if n_neg else 0.0,
+            "tpr": round(tp / n_pos, 4) if n_pos else 0.0,
+            "true_positive": tp, "false_positive": fp,
+            "false_negative": n_pos - tp, "true_negative": n_neg - fp,
+        }
+
+    roc_operating_points = {
+        "best_balance": _operating_point(float(thr[j])),
+        "default": _operating_point(0.5),
+    }
 
     shap_summary, shap_points = _explain(model, X_tr, X, features,
                                          shap_sample, seed)
@@ -140,6 +168,7 @@ def train_risk_model(
             "false_negative": int(cm[1, 0]), "true_positive": int(cm[1, 1]),
         },
         "roc_curve": roc_points,
+        "roc_operating_points": roc_operating_points,
         "shap_importance": shap_summary,
         "shap_points": shap_points,
         "_model": model,
