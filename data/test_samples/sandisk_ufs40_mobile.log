@@ -1,0 +1,3703 @@
+================================================================
+UVM SIMULATION LOG :: RUN-000001
+================================================================
+[CONFIG]
+{"run_id": "RUN-000001", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "UniPro_Link_PowerDown", "mphy_gear": "GEAR5", "num_lanes": 1, "hs_series": "Rate_B", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test UniPro_Link_PowerDown...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR5
+UVM_ERROR @ 63612 ns: uvm_test_top.env.ufs_agent.mon [PA_INIT_TIMEOUT] PACount handshake timeout during link powerdown exit sequence
+UVM_FATAL @ 63652 ns: uvm_test_top [TEST_ABORT] UFS link reset required
+[METRICS]
+{"execution_time_ms": 58.38, "throughput_mbps": 306.77, "sim_cycles": 23352000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   15
+UVM_WARNING :   0
+UVM_ERROR   :   1
+UVM_FATAL   :   1
+** TEST FAILED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000002
+================================================================
+[CONFIG]
+{"run_id": "RUN-000002", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "RPMB_Auth_Write", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test RPMB_Auth_Write...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+UVM_ERROR @ 28859 ns: uvm_test_top.env.security_checker [RPMB_MAC_MISMATCH] RPMB authenticated data frame rejected: SHA-256 MAC signature mismatch
+UVM_FATAL @ 28899 ns: uvm_test_top [TEST_ABORT] UFS link reset required
+[METRICS]
+{"execution_time_ms": 50.58, "throughput_mbps": 679.76, "sim_cycles": 20232000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   14
+UVM_WARNING :   0
+UVM_ERROR   :   1
+UVM_FATAL   :   1
+** TEST FAILED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000003
+================================================================
+[CONFIG]
+{"run_id": "RUN-000003", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "HS_Series_Switch", "mphy_gear": "GEAR4", "num_lanes": 1, "hs_series": "Rate_B", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test HS_Series_Switch...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 169.57, "throughput_mbps": 1850.76, "sim_cycles": 67828000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   19
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000004
+================================================================
+[CONFIG]
+{"run_id": "RUN-000004", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "UniPro_Link_PowerDown", "mphy_gear": "GEAR5", "num_lanes": 1, "hs_series": "Rate_B", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test UniPro_Link_PowerDown...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 139.39, "throughput_mbps": 3316.43, "sim_cycles": 55755999}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   13
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000005
+================================================================
+[CONFIG]
+{"run_id": "RUN-000005", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 92.16, "throughput_mbps": 3072.28, "sim_cycles": 36864000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   21
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000006
+================================================================
+[CONFIG]
+{"run_id": "RUN-000006", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Command_Queue_Stress", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Command_Queue_Stress...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+UVM_ERROR @ 50660 ns: uvm_test_top.env.ufs_agent.mon [PA_INIT_TIMEOUT] PACount handshake timeout during link powerdown exit sequence
+UVM_FATAL @ 50700 ns: uvm_test_top [TEST_ABORT] UFS link reset required
+[METRICS]
+{"execution_time_ms": 71.95, "throughput_mbps": 695.25, "sim_cycles": 28780000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   21
+UVM_WARNING :   0
+UVM_ERROR   :   1
+UVM_FATAL   :   1
+** TEST FAILED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000007
+================================================================
+[CONFIG]
+{"run_id": "RUN-000007", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "RPMB_Auth_Write", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test RPMB_Auth_Write...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+UVM_ERROR @ 8262 ns: uvm_test_top.env.mphy_mon [MPHY_PLL_UNLOCK] MIPI M-PHY Gear5 Rate_B clock recovery lost lock on lane 1
+UVM_FATAL @ 8302 ns: uvm_test_top [TEST_ABORT] UFS link reset required
+[METRICS]
+{"execution_time_ms": 36.1, "throughput_mbps": 793.11, "sim_cycles": 14440000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   13
+UVM_WARNING :   0
+UVM_ERROR   :   1
+UVM_FATAL   :   1
+** TEST FAILED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000008
+================================================================
+[CONFIG]
+{"run_id": "RUN-000008", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR5", "num_lanes": 1, "hs_series": "Rate_B", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR5
+UVM_ERROR @ 42078 ns: uvm_test_top.env.unipro_link_chk [HS_BURST_CRC_ERROR] UniPro PACP data frame CRC-16 check failed during high-speed burst
+UVM_FATAL @ 42118 ns: uvm_test_top [TEST_ABORT] UFS link reset required
+[METRICS]
+{"execution_time_ms": 33.1, "throughput_mbps": 365.63, "sim_cycles": 13240000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   21
+UVM_WARNING :   0
+UVM_ERROR   :   1
+UVM_FATAL   :   1
+** TEST FAILED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000009
+================================================================
+[CONFIG]
+{"run_id": "RUN-000009", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "RPMB_Auth_Write", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 32, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test RPMB_Auth_Write...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 128.21, "throughput_mbps": 3225.82, "sim_cycles": 51284000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   12
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000010
+================================================================
+[CONFIG]
+{"run_id": "RUN-000010", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "RPMB_Auth_Write", "mphy_gear": "GEAR5", "num_lanes": 1, "hs_series": "Rate_A", "cmd_queue_depth": 32, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test RPMB_Auth_Write...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 166.12, "throughput_mbps": 2646.27, "sim_cycles": 66448000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   14
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000011
+================================================================
+[CONFIG]
+{"run_id": "RUN-000011", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "RPMB_Auth_Write", "mphy_gear": "GEAR4", "num_lanes": 1, "hs_series": "Rate_B", "cmd_queue_depth": 16, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test RPMB_Auth_Write...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 89.98, "throughput_mbps": 3862.16, "sim_cycles": 35992000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   15
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000012
+================================================================
+[CONFIG]
+{"run_id": "RUN-000012", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "RPMB_Auth_Write", "mphy_gear": "GEAR5", "num_lanes": 1, "hs_series": "Rate_B", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test RPMB_Auth_Write...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR5
+UVM_ERROR @ 26362 ns: uvm_test_top.env.security_checker [RPMB_MAC_MISMATCH] RPMB authenticated data frame rejected: SHA-256 MAC signature mismatch
+UVM_FATAL @ 26402 ns: uvm_test_top [TEST_ABORT] UFS link reset required
+[METRICS]
+{"execution_time_ms": 54.46, "throughput_mbps": 754.46, "sim_cycles": 21784000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   14
+UVM_WARNING :   0
+UVM_ERROR   :   1
+UVM_FATAL   :   1
+** TEST FAILED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000013
+================================================================
+[CONFIG]
+{"run_id": "RUN-000013", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "UniPro_Link_PowerDown", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test UniPro_Link_PowerDown...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+UVM_ERROR @ 49334 ns: uvm_test_top.env.mphy_mon [MPHY_PLL_UNLOCK] MIPI M-PHY Gear5 Rate_B clock recovery lost lock on lane 1
+UVM_FATAL @ 49374 ns: uvm_test_top [TEST_ABORT] UFS link reset required
+[METRICS]
+{"execution_time_ms": 50.91, "throughput_mbps": 339.58, "sim_cycles": 20364000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   19
+UVM_WARNING :   0
+UVM_ERROR   :   1
+UVM_FATAL   :   1
+** TEST FAILED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000014
+================================================================
+[CONFIG]
+{"run_id": "RUN-000014", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "RPMB_Auth_Write", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test RPMB_Auth_Write...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 98.87, "throughput_mbps": 2591.64, "sim_cycles": 39548000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   15
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000015
+================================================================
+[CONFIG]
+{"run_id": "RUN-000015", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "RPMB_Auth_Write", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test RPMB_Auth_Write...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+UVM_ERROR @ 52207 ns: uvm_test_top.env.security_checker [RPMB_MAC_MISMATCH] RPMB authenticated data frame rejected: SHA-256 MAC signature mismatch
+UVM_FATAL @ 52247 ns: uvm_test_top [TEST_ABORT] UFS link reset required
+[METRICS]
+{"execution_time_ms": 31.82, "throughput_mbps": 442.25, "sim_cycles": 12728000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   13
+UVM_WARNING :   0
+UVM_ERROR   :   1
+UVM_FATAL   :   1
+** TEST FAILED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000016
+================================================================
+[CONFIG]
+{"run_id": "RUN-000016", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "RPMB_Auth_Write", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test RPMB_Auth_Write...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 134.68, "throughput_mbps": 1851.81, "sim_cycles": 53872000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   21
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000017
+================================================================
+[CONFIG]
+{"run_id": "RUN-000017", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "RPMB_Auth_Write", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 32, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test RPMB_Auth_Write...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 128.57, "throughput_mbps": 1966.33, "sim_cycles": 51428000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   19
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000018
+================================================================
+[CONFIG]
+{"run_id": "RUN-000018", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Command_Queue_Stress", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 16, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Command_Queue_Stress...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 201.57, "throughput_mbps": 3396.22, "sim_cycles": 80628000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   20
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000019
+================================================================
+[CONFIG]
+{"run_id": "RUN-000019", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 32, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+UVM_ERROR @ 27942 ns: uvm_test_top.env.mphy_mon [MPHY_PLL_UNLOCK] MIPI M-PHY Gear5 Rate_B clock recovery lost lock on lane 1
+UVM_FATAL @ 27982 ns: uvm_test_top [TEST_ABORT] UFS link reset required
+[METRICS]
+{"execution_time_ms": 50.94, "throughput_mbps": 414.71, "sim_cycles": 20376000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   17
+UVM_WARNING :   0
+UVM_ERROR   :   1
+UVM_FATAL   :   1
+** TEST FAILED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000020
+================================================================
+[CONFIG]
+{"run_id": "RUN-000020", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "RPMB_Auth_Write", "mphy_gear": "GEAR5", "num_lanes": 1, "hs_series": "Rate_B", "cmd_queue_depth": 16, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test RPMB_Auth_Write...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 130.4, "throughput_mbps": 2333.15, "sim_cycles": 52160000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   19
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000021
+================================================================
+[CONFIG]
+{"run_id": "RUN-000021", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "RPMB_Auth_Write", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 16, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test RPMB_Auth_Write...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 131.13, "throughput_mbps": 3864.6, "sim_cycles": 52452000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   17
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000022
+================================================================
+[CONFIG]
+{"run_id": "RUN-000022", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 86.86, "throughput_mbps": 4137.51, "sim_cycles": 34744000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   16
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000023
+================================================================
+[CONFIG]
+{"run_id": "RUN-000023", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Command_Queue_Stress", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Command_Queue_Stress...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 141.8, "throughput_mbps": 2305.61, "sim_cycles": 56720000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   15
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000024
+================================================================
+[CONFIG]
+{"run_id": "RUN-000024", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "HS_Series_Switch", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 32, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test HS_Series_Switch...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+UVM_ERROR @ 45444 ns: uvm_test_top.env.ufs_agent.mon [PA_INIT_TIMEOUT] PACount handshake timeout during link powerdown exit sequence
+UVM_FATAL @ 45484 ns: uvm_test_top [TEST_ABORT] UFS link reset required
+[METRICS]
+{"execution_time_ms": 76.04, "throughput_mbps": 251.07, "sim_cycles": 30416000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   16
+UVM_WARNING :   0
+UVM_ERROR   :   1
+UVM_FATAL   :   1
+** TEST FAILED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000025
+================================================================
+[CONFIG]
+{"run_id": "RUN-000025", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "RPMB_Auth_Write", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test RPMB_Auth_Write...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+UVM_ERROR @ 57961 ns: uvm_test_top.env.security_checker [RPMB_MAC_MISMATCH] RPMB authenticated data frame rejected: SHA-256 MAC signature mismatch
+UVM_FATAL @ 58001 ns: uvm_test_top [TEST_ABORT] UFS link reset required
+[METRICS]
+{"execution_time_ms": 32.01, "throughput_mbps": 266.74, "sim_cycles": 12804000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   18
+UVM_WARNING :   0
+UVM_ERROR   :   1
+UVM_FATAL   :   1
+** TEST FAILED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000026
+================================================================
+[CONFIG]
+{"run_id": "RUN-000026", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Command_Queue_Stress", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Command_Queue_Stress...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 155.46, "throughput_mbps": 1841.12, "sim_cycles": 62184000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   17
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000027
+================================================================
+[CONFIG]
+{"run_id": "RUN-000027", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Command_Queue_Stress", "mphy_gear": "GEAR4", "num_lanes": 1, "hs_series": "Rate_B", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Command_Queue_Stress...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 121.13, "throughput_mbps": 3102.73, "sim_cycles": 48452000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   18
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000028
+================================================================
+[CONFIG]
+{"run_id": "RUN-000028", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+UVM_ERROR @ 65357 ns: uvm_test_top.env.unipro_link_chk [HS_BURST_CRC_ERROR] UniPro PACP data frame CRC-16 check failed during high-speed burst
+UVM_FATAL @ 65397 ns: uvm_test_top [TEST_ABORT] UFS link reset required
+[METRICS]
+{"execution_time_ms": 34.7, "throughput_mbps": 791.3, "sim_cycles": 13880000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   20
+UVM_WARNING :   0
+UVM_ERROR   :   1
+UVM_FATAL   :   1
+** TEST FAILED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000029
+================================================================
+[CONFIG]
+{"run_id": "RUN-000029", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "HS_Series_Switch", "mphy_gear": "GEAR5", "num_lanes": 1, "hs_series": "Rate_A", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test HS_Series_Switch...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 195.37, "throughput_mbps": 3488.79, "sim_cycles": 78148000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   19
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000030
+================================================================
+[CONFIG]
+{"run_id": "RUN-000030", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "UniPro_Link_PowerDown", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test UniPro_Link_PowerDown...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 152.49, "throughput_mbps": 3914.59, "sim_cycles": 60996000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   17
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000031
+================================================================
+[CONFIG]
+{"run_id": "RUN-000031", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 32, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 189.42, "throughput_mbps": 2408.62, "sim_cycles": 75768000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   14
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000032
+================================================================
+[CONFIG]
+{"run_id": "RUN-000032", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Command_Queue_Stress", "mphy_gear": "GEAR5", "num_lanes": 1, "hs_series": "Rate_B", "cmd_queue_depth": 32, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Command_Queue_Stress...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 114.68, "throughput_mbps": 4087.96, "sim_cycles": 45872000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   19
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000033
+================================================================
+[CONFIG]
+{"run_id": "RUN-000033", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 90.26, "throughput_mbps": 2498.56, "sim_cycles": 36104000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   12
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000034
+================================================================
+[CONFIG]
+{"run_id": "RUN-000034", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 202.31, "throughput_mbps": 3502.95, "sim_cycles": 80924000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   14
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000035
+================================================================
+[CONFIG]
+{"run_id": "RUN-000035", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "RPMB_Auth_Write", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 32, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test RPMB_Auth_Write...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 129.5, "throughput_mbps": 3209.86, "sim_cycles": 51800000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   13
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000036
+================================================================
+[CONFIG]
+{"run_id": "RUN-000036", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "RPMB_Auth_Write", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 32, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test RPMB_Auth_Write...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 84.42, "throughput_mbps": 2809.27, "sim_cycles": 33768000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   13
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000037
+================================================================
+[CONFIG]
+{"run_id": "RUN-000037", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "RPMB_Auth_Write", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test RPMB_Auth_Write...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 97.95, "throughput_mbps": 3983.18, "sim_cycles": 39180000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   20
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000038
+================================================================
+[CONFIG]
+{"run_id": "RUN-000038", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "UniPro_Link_PowerDown", "mphy_gear": "GEAR5", "num_lanes": 1, "hs_series": "Rate_A", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test UniPro_Link_PowerDown...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 92.95, "throughput_mbps": 1927.33, "sim_cycles": 37180000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   12
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000039
+================================================================
+[CONFIG]
+{"run_id": "RUN-000039", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Command_Queue_Stress", "mphy_gear": "GEAR5", "num_lanes": 1, "hs_series": "Rate_A", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Command_Queue_Stress...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 162.96, "throughput_mbps": 3131.28, "sim_cycles": 65184000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   20
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000040
+================================================================
+[CONFIG]
+{"run_id": "RUN-000040", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Command_Queue_Stress", "mphy_gear": "GEAR4", "num_lanes": 1, "hs_series": "Rate_A", "cmd_queue_depth": 32, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Command_Queue_Stress...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 218.62, "throughput_mbps": 3504.17, "sim_cycles": 87448000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   17
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000041
+================================================================
+[CONFIG]
+{"run_id": "RUN-000041", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "RPMB_Auth_Write", "mphy_gear": "GEAR4", "num_lanes": 1, "hs_series": "Rate_A", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test RPMB_Auth_Write...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR4
+UVM_ERROR @ 64932 ns: uvm_test_top.env.security_checker [RPMB_MAC_MISMATCH] RPMB authenticated data frame rejected: SHA-256 MAC signature mismatch
+UVM_FATAL @ 64972 ns: uvm_test_top [TEST_ABORT] UFS link reset required
+[METRICS]
+{"execution_time_ms": 45.71, "throughput_mbps": 557.09, "sim_cycles": 18284000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   14
+UVM_WARNING :   0
+UVM_ERROR   :   1
+UVM_FATAL   :   1
+** TEST FAILED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000042
+================================================================
+[CONFIG]
+{"run_id": "RUN-000042", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Command_Queue_Stress", "mphy_gear": "GEAR4", "num_lanes": 1, "hs_series": "Rate_B", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Command_Queue_Stress...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 213.42, "throughput_mbps": 4164.64, "sim_cycles": 85368000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   20
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000043
+================================================================
+[CONFIG]
+{"run_id": "RUN-000043", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "HS_Series_Switch", "mphy_gear": "GEAR5", "num_lanes": 1, "hs_series": "Rate_B", "cmd_queue_depth": 32, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test HS_Series_Switch...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 85.94, "throughput_mbps": 2649.98, "sim_cycles": 34376000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   14
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000044
+================================================================
+[CONFIG]
+{"run_id": "RUN-000044", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "HS_Series_Switch", "mphy_gear": "GEAR5", "num_lanes": 1, "hs_series": "Rate_B", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test HS_Series_Switch...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 197.13, "throughput_mbps": 3768.71, "sim_cycles": 78852000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   12
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000045
+================================================================
+[CONFIG]
+{"run_id": "RUN-000045", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 180.4, "throughput_mbps": 4121.65, "sim_cycles": 72160000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   15
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000046
+================================================================
+[CONFIG]
+{"run_id": "RUN-000046", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "HS_Series_Switch", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test HS_Series_Switch...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 104.64, "throughput_mbps": 4109.67, "sim_cycles": 41856000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   20
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000047
+================================================================
+[CONFIG]
+{"run_id": "RUN-000047", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "HS_Series_Switch", "mphy_gear": "GEAR4", "num_lanes": 1, "hs_series": "Rate_A", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test HS_Series_Switch...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 104.54, "throughput_mbps": 2765.84, "sim_cycles": 41816000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   21
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000048
+================================================================
+[CONFIG]
+{"run_id": "RUN-000048", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Command_Queue_Stress", "mphy_gear": "GEAR5", "num_lanes": 1, "hs_series": "Rate_B", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Command_Queue_Stress...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 139.68, "throughput_mbps": 2138.1, "sim_cycles": 55872000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   12
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000049
+================================================================
+[CONFIG]
+{"run_id": "RUN-000049", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR4", "num_lanes": 1, "hs_series": "Rate_A", "cmd_queue_depth": 16, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 218.4, "throughput_mbps": 4176.75, "sim_cycles": 87360000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   18
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000050
+================================================================
+[CONFIG]
+{"run_id": "RUN-000050", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 108.97, "throughput_mbps": 1939.77, "sim_cycles": 43588000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   14
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000051
+================================================================
+[CONFIG]
+{"run_id": "RUN-000051", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "HS_Series_Switch", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 16, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test HS_Series_Switch...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 106.14, "throughput_mbps": 3361.79, "sim_cycles": 42456000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   15
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000052
+================================================================
+[CONFIG]
+{"run_id": "RUN-000052", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "UniPro_Link_PowerDown", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 16, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test UniPro_Link_PowerDown...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 147.45, "throughput_mbps": 2481.48, "sim_cycles": 58979999}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   16
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000053
+================================================================
+[CONFIG]
+{"run_id": "RUN-000053", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "UniPro_Link_PowerDown", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 32, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test UniPro_Link_PowerDown...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 94.36, "throughput_mbps": 2626.41, "sim_cycles": 37744000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   17
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000054
+================================================================
+[CONFIG]
+{"run_id": "RUN-000054", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 16, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 117.16, "throughput_mbps": 2223.38, "sim_cycles": 46864000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   14
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000055
+================================================================
+[CONFIG]
+{"run_id": "RUN-000055", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "UniPro_Link_PowerDown", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 32, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test UniPro_Link_PowerDown...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 138.31, "throughput_mbps": 3126.93, "sim_cycles": 55324000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   15
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000056
+================================================================
+[CONFIG]
+{"run_id": "RUN-000056", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR4", "num_lanes": 1, "hs_series": "Rate_B", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 127.79, "throughput_mbps": 2254.89, "sim_cycles": 51116000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   13
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000057
+================================================================
+[CONFIG]
+{"run_id": "RUN-000057", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "UniPro_Link_PowerDown", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test UniPro_Link_PowerDown...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 149.48, "throughput_mbps": 2869.91, "sim_cycles": 59791999}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   12
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000058
+================================================================
+[CONFIG]
+{"run_id": "RUN-000058", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Command_Queue_Stress", "mphy_gear": "GEAR4", "num_lanes": 1, "hs_series": "Rate_A", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Command_Queue_Stress...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 87.17, "throughput_mbps": 3420.24, "sim_cycles": 34868000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   21
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000059
+================================================================
+[CONFIG]
+{"run_id": "RUN-000059", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Command_Queue_Stress", "mphy_gear": "GEAR5", "num_lanes": 1, "hs_series": "Rate_A", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Command_Queue_Stress...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 121.88, "throughput_mbps": 1904.88, "sim_cycles": 48752000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   18
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000060
+================================================================
+[CONFIG]
+{"run_id": "RUN-000060", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "RPMB_Auth_Write", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test RPMB_Auth_Write...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 198.5, "throughput_mbps": 1857.67, "sim_cycles": 79400000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   20
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000061
+================================================================
+[CONFIG]
+{"run_id": "RUN-000061", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Command_Queue_Stress", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 16, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Command_Queue_Stress...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 178.12, "throughput_mbps": 3570.29, "sim_cycles": 71248000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   16
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000062
+================================================================
+[CONFIG]
+{"run_id": "RUN-000062", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Command_Queue_Stress", "mphy_gear": "GEAR5", "num_lanes": 1, "hs_series": "Rate_B", "cmd_queue_depth": 16, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Command_Queue_Stress...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 80.11, "throughput_mbps": 2448.93, "sim_cycles": 32044000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   19
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000063
+================================================================
+[CONFIG]
+{"run_id": "RUN-000063", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Command_Queue_Stress", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Command_Queue_Stress...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 196.48, "throughput_mbps": 2253.65, "sim_cycles": 78592000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   14
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000064
+================================================================
+[CONFIG]
+{"run_id": "RUN-000064", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "UniPro_Link_PowerDown", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test UniPro_Link_PowerDown...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 144.7, "throughput_mbps": 2275.73, "sim_cycles": 57879999}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   21
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000065
+================================================================
+[CONFIG]
+{"run_id": "RUN-000065", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "UniPro_Link_PowerDown", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test UniPro_Link_PowerDown...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 182.48, "throughput_mbps": 3592.81, "sim_cycles": 72992000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   17
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000066
+================================================================
+[CONFIG]
+{"run_id": "RUN-000066", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "UniPro_Link_PowerDown", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test UniPro_Link_PowerDown...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+UVM_ERROR @ 12587 ns: uvm_test_top.env.mphy_mon [MPHY_PLL_UNLOCK] MIPI M-PHY Gear5 Rate_B clock recovery lost lock on lane 1
+UVM_FATAL @ 12627 ns: uvm_test_top [TEST_ABORT] UFS link reset required
+[METRICS]
+{"execution_time_ms": 44.53, "throughput_mbps": 401.93, "sim_cycles": 17812000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   16
+UVM_WARNING :   0
+UVM_ERROR   :   1
+UVM_FATAL   :   1
+** TEST FAILED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000067
+================================================================
+[CONFIG]
+{"run_id": "RUN-000067", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Command_Queue_Stress", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Command_Queue_Stress...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 177.42, "throughput_mbps": 1861.75, "sim_cycles": 70968000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   14
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000068
+================================================================
+[CONFIG]
+{"run_id": "RUN-000068", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR4", "num_lanes": 1, "hs_series": "Rate_A", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 189.05, "throughput_mbps": 2922.17, "sim_cycles": 75620000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   12
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000069
+================================================================
+[CONFIG]
+{"run_id": "RUN-000069", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 192.99, "throughput_mbps": 2297.38, "sim_cycles": 77196000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   15
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000070
+================================================================
+[CONFIG]
+{"run_id": "RUN-000070", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "UniPro_Link_PowerDown", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test UniPro_Link_PowerDown...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 80.64, "throughput_mbps": 2418.63, "sim_cycles": 32256000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   12
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000071
+================================================================
+[CONFIG]
+{"run_id": "RUN-000071", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "UniPro_Link_PowerDown", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test UniPro_Link_PowerDown...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 182.64, "throughput_mbps": 3128.77, "sim_cycles": 73056000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   12
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000072
+================================================================
+[CONFIG]
+{"run_id": "RUN-000072", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Command_Queue_Stress", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Command_Queue_Stress...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 125.7, "throughput_mbps": 1876.83, "sim_cycles": 50280000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   15
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000073
+================================================================
+[CONFIG]
+{"run_id": "RUN-000073", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+UVM_ERROR @ 16753 ns: uvm_test_top.env.unipro_link_chk [HS_BURST_CRC_ERROR] UniPro PACP data frame CRC-16 check failed during high-speed burst
+UVM_FATAL @ 16793 ns: uvm_test_top [TEST_ABORT] UFS link reset required
+[METRICS]
+{"execution_time_ms": 45.08, "throughput_mbps": 373.09, "sim_cycles": 18032000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   20
+UVM_WARNING :   0
+UVM_ERROR   :   1
+UVM_FATAL   :   1
+** TEST FAILED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000074
+================================================================
+[CONFIG]
+{"run_id": "RUN-000074", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "UniPro_Link_PowerDown", "mphy_gear": "GEAR4", "num_lanes": 1, "hs_series": "Rate_B", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test UniPro_Link_PowerDown...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 120.92, "throughput_mbps": 2164.89, "sim_cycles": 48368000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   15
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000075
+================================================================
+[CONFIG]
+{"run_id": "RUN-000075", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "RPMB_Auth_Write", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 16, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test RPMB_Auth_Write...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 173.6, "throughput_mbps": 2587.08, "sim_cycles": 69440000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   16
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000076
+================================================================
+[CONFIG]
+{"run_id": "RUN-000076", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "UniPro_Link_PowerDown", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test UniPro_Link_PowerDown...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 96.79, "throughput_mbps": 3425.87, "sim_cycles": 38716000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   21
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000077
+================================================================
+[CONFIG]
+{"run_id": "RUN-000077", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 134.97, "throughput_mbps": 4183.48, "sim_cycles": 53988000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   13
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000078
+================================================================
+[CONFIG]
+{"run_id": "RUN-000078", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "RPMB_Auth_Write", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 16, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test RPMB_Auth_Write...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 130.05, "throughput_mbps": 2781.41, "sim_cycles": 52020000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   13
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000079
+================================================================
+[CONFIG]
+{"run_id": "RUN-000079", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "UniPro_Link_PowerDown", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 16, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test UniPro_Link_PowerDown...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+UVM_ERROR @ 22905 ns: uvm_test_top.env.mphy_mon [MPHY_PLL_UNLOCK] MIPI M-PHY Gear5 Rate_B clock recovery lost lock on lane 1
+UVM_FATAL @ 22945 ns: uvm_test_top [TEST_ABORT] UFS link reset required
+[METRICS]
+{"execution_time_ms": 32.49, "throughput_mbps": 284.77, "sim_cycles": 12996000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   18
+UVM_WARNING :   0
+UVM_ERROR   :   1
+UVM_FATAL   :   1
+** TEST FAILED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000080
+================================================================
+[CONFIG]
+{"run_id": "RUN-000080", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "UniPro_Link_PowerDown", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test UniPro_Link_PowerDown...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 193.58, "throughput_mbps": 3797.39, "sim_cycles": 77432000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   16
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000081
+================================================================
+[CONFIG]
+{"run_id": "RUN-000081", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "HS_Series_Switch", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test HS_Series_Switch...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 186.8, "throughput_mbps": 2333.21, "sim_cycles": 74720000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   15
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000082
+================================================================
+[CONFIG]
+{"run_id": "RUN-000082", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "HS_Series_Switch", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 32, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test HS_Series_Switch...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+UVM_ERROR @ 41894 ns: uvm_test_top.env.mphy_mon [MPHY_PLL_UNLOCK] MIPI M-PHY Gear5 Rate_B clock recovery lost lock on lane 1
+UVM_FATAL @ 41934 ns: uvm_test_top [TEST_ABORT] UFS link reset required
+[METRICS]
+{"execution_time_ms": 43.83, "throughput_mbps": 500.91, "sim_cycles": 17532000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   21
+UVM_WARNING :   0
+UVM_ERROR   :   1
+UVM_FATAL   :   1
+** TEST FAILED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000083
+================================================================
+[CONFIG]
+{"run_id": "RUN-000083", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "UniPro_Link_PowerDown", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test UniPro_Link_PowerDown...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 112.54, "throughput_mbps": 3527.6, "sim_cycles": 45016000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   14
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000084
+================================================================
+[CONFIG]
+{"run_id": "RUN-000084", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Command_Queue_Stress", "mphy_gear": "GEAR5", "num_lanes": 1, "hs_series": "Rate_B", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Command_Queue_Stress...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 99.31, "throughput_mbps": 3453.89, "sim_cycles": 39724000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   14
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000085
+================================================================
+[CONFIG]
+{"run_id": "RUN-000085", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "HS_Series_Switch", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test HS_Series_Switch...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 193.92, "throughput_mbps": 2749.79, "sim_cycles": 77568000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   18
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000086
+================================================================
+[CONFIG]
+{"run_id": "RUN-000086", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "RPMB_Auth_Write", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test RPMB_Auth_Write...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+UVM_ERROR @ 42187 ns: uvm_test_top.env.security_checker [RPMB_MAC_MISMATCH] RPMB authenticated data frame rejected: SHA-256 MAC signature mismatch
+UVM_FATAL @ 42227 ns: uvm_test_top [TEST_ABORT] UFS link reset required
+[METRICS]
+{"execution_time_ms": 85.1, "throughput_mbps": 779.14, "sim_cycles": 34040000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   18
+UVM_WARNING :   0
+UVM_ERROR   :   1
+UVM_FATAL   :   1
+** TEST FAILED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000087
+================================================================
+[CONFIG]
+{"run_id": "RUN-000087", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "UniPro_Link_PowerDown", "mphy_gear": "GEAR4", "num_lanes": 1, "hs_series": "Rate_B", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test UniPro_Link_PowerDown...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 116.81, "throughput_mbps": 2360.2, "sim_cycles": 46724000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   17
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000088
+================================================================
+[CONFIG]
+{"run_id": "RUN-000088", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Command_Queue_Stress", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Command_Queue_Stress...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 178.4, "throughput_mbps": 2602.84, "sim_cycles": 71360000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   13
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000089
+================================================================
+[CONFIG]
+{"run_id": "RUN-000089", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "RPMB_Auth_Write", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test RPMB_Auth_Write...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+UVM_ERROR @ 15961 ns: uvm_test_top.env.mphy_mon [MPHY_PLL_UNLOCK] MIPI M-PHY Gear5 Rate_B clock recovery lost lock on lane 1
+UVM_FATAL @ 16001 ns: uvm_test_top [TEST_ABORT] UFS link reset required
+[METRICS]
+{"execution_time_ms": 87.45, "throughput_mbps": 498.95, "sim_cycles": 34980000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   19
+UVM_WARNING :   0
+UVM_ERROR   :   1
+UVM_FATAL   :   1
+** TEST FAILED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000090
+================================================================
+[CONFIG]
+{"run_id": "RUN-000090", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "HS_Series_Switch", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 16, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test HS_Series_Switch...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 104.39, "throughput_mbps": 3105.38, "sim_cycles": 41756000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   16
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000091
+================================================================
+[CONFIG]
+{"run_id": "RUN-000091", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "UniPro_Link_PowerDown", "mphy_gear": "GEAR4", "num_lanes": 1, "hs_series": "Rate_B", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test UniPro_Link_PowerDown...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 186.72, "throughput_mbps": 2074.28, "sim_cycles": 74688000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   15
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000092
+================================================================
+[CONFIG]
+{"run_id": "RUN-000092", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "RPMB_Auth_Write", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 32, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test RPMB_Auth_Write...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+UVM_ERROR @ 66751 ns: uvm_test_top.env.mphy_mon [MPHY_PLL_UNLOCK] MIPI M-PHY Gear5 Rate_B clock recovery lost lock on lane 1
+UVM_FATAL @ 66791 ns: uvm_test_top [TEST_ABORT] UFS link reset required
+[METRICS]
+{"execution_time_ms": 40.42, "throughput_mbps": 411.52, "sim_cycles": 16168000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   21
+UVM_WARNING :   0
+UVM_ERROR   :   1
+UVM_FATAL   :   1
+** TEST FAILED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000093
+================================================================
+[CONFIG]
+{"run_id": "RUN-000093", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Command_Queue_Stress", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Command_Queue_Stress...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 100.16, "throughput_mbps": 4005.35, "sim_cycles": 40064000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   14
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000094
+================================================================
+[CONFIG]
+{"run_id": "RUN-000094", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR4", "num_lanes": 1, "hs_series": "Rate_B", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 112.67, "throughput_mbps": 4024.32, "sim_cycles": 45068000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   18
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000095
+================================================================
+[CONFIG]
+{"run_id": "RUN-000095", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "HS_Series_Switch", "mphy_gear": "GEAR4", "num_lanes": 1, "hs_series": "Rate_A", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test HS_Series_Switch...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 184.19, "throughput_mbps": 1990.76, "sim_cycles": 73676000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   14
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000096
+================================================================
+[CONFIG]
+{"run_id": "RUN-000096", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR5", "num_lanes": 1, "hs_series": "Rate_B", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 162.26, "throughput_mbps": 3315.71, "sim_cycles": 64904000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   17
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000097
+================================================================
+[CONFIG]
+{"run_id": "RUN-000097", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "HS_Series_Switch", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 16, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test HS_Series_Switch...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 91.21, "throughput_mbps": 4026.84, "sim_cycles": 36484000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   17
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000098
+================================================================
+[CONFIG]
+{"run_id": "RUN-000098", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 155.76, "throughput_mbps": 4024.98, "sim_cycles": 62304000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   17
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000099
+================================================================
+[CONFIG]
+{"run_id": "RUN-000099", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "RPMB_Auth_Write", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test RPMB_Auth_Write...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+UVM_ERROR @ 20614 ns: uvm_test_top.env.mphy_mon [MPHY_PLL_UNLOCK] MIPI M-PHY Gear5 Rate_B clock recovery lost lock on lane 1
+UVM_FATAL @ 20654 ns: uvm_test_top [TEST_ABORT] UFS link reset required
+[METRICS]
+{"execution_time_ms": 73.94, "throughput_mbps": 780.96, "sim_cycles": 29576000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   16
+UVM_WARNING :   0
+UVM_ERROR   :   1
+UVM_FATAL   :   1
+** TEST FAILED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000100
+================================================================
+[CONFIG]
+{"run_id": "RUN-000100", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "RPMB_Auth_Write", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test RPMB_Auth_Write...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 197.59, "throughput_mbps": 2766.39, "sim_cycles": 79036000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   19
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000101
+================================================================
+[CONFIG]
+{"run_id": "RUN-000101", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "UniPro_Link_PowerDown", "mphy_gear": "GEAR4", "num_lanes": 1, "hs_series": "Rate_B", "cmd_queue_depth": 32, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test UniPro_Link_PowerDown...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 121.06, "throughput_mbps": 2658.58, "sim_cycles": 48424000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   15
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000102
+================================================================
+[CONFIG]
+{"run_id": "RUN-000102", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Command_Queue_Stress", "mphy_gear": "GEAR4", "num_lanes": 1, "hs_series": "Rate_B", "cmd_queue_depth": 32, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Command_Queue_Stress...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 101.26, "throughput_mbps": 2217.96, "sim_cycles": 40504000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   18
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000103
+================================================================
+[CONFIG]
+{"run_id": "RUN-000103", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "RPMB_Auth_Write", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test RPMB_Auth_Write...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+UVM_ERROR @ 51320 ns: uvm_test_top.env.security_checker [RPMB_MAC_MISMATCH] RPMB authenticated data frame rejected: SHA-256 MAC signature mismatch
+UVM_FATAL @ 51360 ns: uvm_test_top [TEST_ABORT] UFS link reset required
+[METRICS]
+{"execution_time_ms": 33.82, "throughput_mbps": 616.0, "sim_cycles": 13528000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   13
+UVM_WARNING :   0
+UVM_ERROR   :   1
+UVM_FATAL   :   1
+** TEST FAILED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000104
+================================================================
+[CONFIG]
+{"run_id": "RUN-000104", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR5", "num_lanes": 1, "hs_series": "Rate_A", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 205.13, "throughput_mbps": 3087.08, "sim_cycles": 82052000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   20
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000105
+================================================================
+[CONFIG]
+{"run_id": "RUN-000105", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 32, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 218.23, "throughput_mbps": 3436.36, "sim_cycles": 87292000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   15
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000106
+================================================================
+[CONFIG]
+{"run_id": "RUN-000106", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "HS_Series_Switch", "mphy_gear": "GEAR4", "num_lanes": 1, "hs_series": "Rate_A", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test HS_Series_Switch...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 188.69, "throughput_mbps": 3786.94, "sim_cycles": 75476000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   21
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000107
+================================================================
+[CONFIG]
+{"run_id": "RUN-000107", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "UniPro_Link_PowerDown", "mphy_gear": "GEAR5", "num_lanes": 1, "hs_series": "Rate_A", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test UniPro_Link_PowerDown...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 121.97, "throughput_mbps": 2654.35, "sim_cycles": 48788000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   13
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000108
+================================================================
+[CONFIG]
+{"run_id": "RUN-000108", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR4", "num_lanes": 1, "hs_series": "Rate_A", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 140.72, "throughput_mbps": 3222.46, "sim_cycles": 56288000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   12
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000109
+================================================================
+[CONFIG]
+{"run_id": "RUN-000109", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+UVM_ERROR @ 45676 ns: uvm_test_top.env.mphy_mon [MPHY_PLL_UNLOCK] MIPI M-PHY Gear5 Rate_B clock recovery lost lock on lane 1
+UVM_FATAL @ 45716 ns: uvm_test_top [TEST_ABORT] UFS link reset required
+[METRICS]
+{"execution_time_ms": 79.48, "throughput_mbps": 325.55, "sim_cycles": 31792000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   17
+UVM_WARNING :   0
+UVM_ERROR   :   1
+UVM_FATAL   :   1
+** TEST FAILED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000110
+================================================================
+[CONFIG]
+{"run_id": "RUN-000110", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Command_Queue_Stress", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 16, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Command_Queue_Stress...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+UVM_ERROR @ 65344 ns: uvm_test_top.env.mphy_mon [MPHY_PLL_UNLOCK] MIPI M-PHY Gear5 Rate_B clock recovery lost lock on lane 1
+UVM_FATAL @ 65384 ns: uvm_test_top [TEST_ABORT] UFS link reset required
+[METRICS]
+{"execution_time_ms": 41.55, "throughput_mbps": 523.2, "sim_cycles": 16620000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   20
+UVM_WARNING :   0
+UVM_ERROR   :   1
+UVM_FATAL   :   1
+** TEST FAILED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000111
+================================================================
+[CONFIG]
+{"run_id": "RUN-000111", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+UVM_ERROR @ 59991 ns: uvm_test_top.env.mphy_mon [MPHY_PLL_UNLOCK] MIPI M-PHY Gear5 Rate_B clock recovery lost lock on lane 1
+UVM_FATAL @ 60031 ns: uvm_test_top [TEST_ABORT] UFS link reset required
+[METRICS]
+{"execution_time_ms": 71.15, "throughput_mbps": 511.3, "sim_cycles": 28460000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   15
+UVM_WARNING :   0
+UVM_ERROR   :   1
+UVM_FATAL   :   1
+** TEST FAILED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000112
+================================================================
+[CONFIG]
+{"run_id": "RUN-000112", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "RPMB_Auth_Write", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test RPMB_Auth_Write...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+UVM_ERROR @ 57478 ns: uvm_test_top.env.security_checker [RPMB_MAC_MISMATCH] RPMB authenticated data frame rejected: SHA-256 MAC signature mismatch
+UVM_FATAL @ 57518 ns: uvm_test_top [TEST_ABORT] UFS link reset required
+[METRICS]
+{"execution_time_ms": 65.35, "throughput_mbps": 417.95, "sim_cycles": 26139999}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   13
+UVM_WARNING :   0
+UVM_ERROR   :   1
+UVM_FATAL   :   1
+** TEST FAILED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000113
+================================================================
+[CONFIG]
+{"run_id": "RUN-000113", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Command_Queue_Stress", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Command_Queue_Stress...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+UVM_ERROR @ 46730 ns: uvm_test_top.env.mphy_mon [MPHY_PLL_UNLOCK] MIPI M-PHY Gear5 Rate_B clock recovery lost lock on lane 1
+UVM_FATAL @ 46770 ns: uvm_test_top [TEST_ABORT] UFS link reset required
+[METRICS]
+{"execution_time_ms": 31.19, "throughput_mbps": 446.31, "sim_cycles": 12476000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   17
+UVM_WARNING :   0
+UVM_ERROR   :   1
+UVM_FATAL   :   1
+** TEST FAILED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000114
+================================================================
+[CONFIG]
+{"run_id": "RUN-000114", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "RPMB_Auth_Write", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test RPMB_Auth_Write...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 165.39, "throughput_mbps": 1856.5, "sim_cycles": 66156000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   16
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000115
+================================================================
+[CONFIG]
+{"run_id": "RUN-000115", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "RPMB_Auth_Write", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 32, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test RPMB_Auth_Write...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 154.42, "throughput_mbps": 2882.66, "sim_cycles": 61767999}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   18
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000116
+================================================================
+[CONFIG]
+{"run_id": "RUN-000116", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "HS_Series_Switch", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 32, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test HS_Series_Switch...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+UVM_ERROR @ 56595 ns: uvm_test_top.env.mphy_mon [MPHY_PLL_UNLOCK] MIPI M-PHY Gear5 Rate_B clock recovery lost lock on lane 1
+UVM_FATAL @ 56635 ns: uvm_test_top [TEST_ABORT] UFS link reset required
+[METRICS]
+{"execution_time_ms": 35.28, "throughput_mbps": 372.11, "sim_cycles": 14112000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   13
+UVM_WARNING :   0
+UVM_ERROR   :   1
+UVM_FATAL   :   1
+** TEST FAILED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000117
+================================================================
+[CONFIG]
+{"run_id": "RUN-000117", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 174.8, "throughput_mbps": 2373.39, "sim_cycles": 69920000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   15
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000118
+================================================================
+[CONFIG]
+{"run_id": "RUN-000118", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 32, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 171.31, "throughput_mbps": 3593.21, "sim_cycles": 68524000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   15
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000119
+================================================================
+[CONFIG]
+{"run_id": "RUN-000119", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 16, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 134.35, "throughput_mbps": 3301.91, "sim_cycles": 53740000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   19
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000120
+================================================================
+[CONFIG]
+{"run_id": "RUN-000120", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "UniPro_Link_PowerDown", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test UniPro_Link_PowerDown...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 203.79, "throughput_mbps": 4003.65, "sim_cycles": 81516000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   17
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000121
+================================================================
+[CONFIG]
+{"run_id": "RUN-000121", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "UniPro_Link_PowerDown", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test UniPro_Link_PowerDown...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 185.64, "throughput_mbps": 2161.01, "sim_cycles": 74256000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   18
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000122
+================================================================
+[CONFIG]
+{"run_id": "RUN-000122", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "RPMB_Auth_Write", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test RPMB_Auth_Write...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+UVM_ERROR @ 19547 ns: uvm_test_top.env.security_checker [RPMB_MAC_MISMATCH] RPMB authenticated data frame rejected: SHA-256 MAC signature mismatch
+UVM_FATAL @ 19587 ns: uvm_test_top [TEST_ABORT] UFS link reset required
+[METRICS]
+{"execution_time_ms": 70.31, "throughput_mbps": 491.25, "sim_cycles": 28124000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   16
+UVM_WARNING :   0
+UVM_ERROR   :   1
+UVM_FATAL   :   1
+** TEST FAILED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000123
+================================================================
+[CONFIG]
+{"run_id": "RUN-000123", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR4", "num_lanes": 1, "hs_series": "Rate_B", "cmd_queue_depth": 16, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 86.2, "throughput_mbps": 2659.89, "sim_cycles": 34480000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   16
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000124
+================================================================
+[CONFIG]
+{"run_id": "RUN-000124", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR5", "num_lanes": 1, "hs_series": "Rate_A", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR5
+UVM_ERROR @ 58233 ns: uvm_test_top.env.unipro_link_chk [HS_BURST_CRC_ERROR] UniPro PACP data frame CRC-16 check failed during high-speed burst
+UVM_FATAL @ 58273 ns: uvm_test_top [TEST_ABORT] UFS link reset required
+[METRICS]
+{"execution_time_ms": 80.65, "throughput_mbps": 649.82, "sim_cycles": 32260000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   13
+UVM_WARNING :   0
+UVM_ERROR   :   1
+UVM_FATAL   :   1
+** TEST FAILED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000125
+================================================================
+[CONFIG]
+{"run_id": "RUN-000125", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "HS_Series_Switch", "mphy_gear": "GEAR4", "num_lanes": 1, "hs_series": "Rate_A", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test HS_Series_Switch...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 141.32, "throughput_mbps": 2978.38, "sim_cycles": 56528000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   20
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000126
+================================================================
+[CONFIG]
+{"run_id": "RUN-000126", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 177.44, "throughput_mbps": 3948.64, "sim_cycles": 70976000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   20
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000127
+================================================================
+[CONFIG]
+{"run_id": "RUN-000127", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 155.34, "throughput_mbps": 2592.61, "sim_cycles": 62136000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   17
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000128
+================================================================
+[CONFIG]
+{"run_id": "RUN-000128", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+UVM_ERROR @ 38181 ns: uvm_test_top.env.mphy_mon [MPHY_PLL_UNLOCK] MIPI M-PHY Gear5 Rate_B clock recovery lost lock on lane 1
+UVM_FATAL @ 38221 ns: uvm_test_top [TEST_ABORT] UFS link reset required
+[METRICS]
+{"execution_time_ms": 46.3, "throughput_mbps": 588.51, "sim_cycles": 18520000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   21
+UVM_WARNING :   0
+UVM_ERROR   :   1
+UVM_FATAL   :   1
+** TEST FAILED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000129
+================================================================
+[CONFIG]
+{"run_id": "RUN-000129", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 16, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 85.81, "throughput_mbps": 2098.86, "sim_cycles": 34324000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   12
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000130
+================================================================
+[CONFIG]
+{"run_id": "RUN-000130", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "RPMB_Auth_Write", "mphy_gear": "GEAR5", "num_lanes": 1, "hs_series": "Rate_B", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test RPMB_Auth_Write...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR5
+UVM_ERROR @ 14264 ns: uvm_test_top.env.security_checker [RPMB_MAC_MISMATCH] RPMB authenticated data frame rejected: SHA-256 MAC signature mismatch
+UVM_FATAL @ 14304 ns: uvm_test_top [TEST_ABORT] UFS link reset required
+[METRICS]
+{"execution_time_ms": 72.79, "throughput_mbps": 636.47, "sim_cycles": 29116000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   20
+UVM_WARNING :   0
+UVM_ERROR   :   1
+UVM_FATAL   :   1
+** TEST FAILED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000131
+================================================================
+[CONFIG]
+{"run_id": "RUN-000131", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "HS_Series_Switch", "mphy_gear": "GEAR4", "num_lanes": 1, "hs_series": "Rate_A", "cmd_queue_depth": 32, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test HS_Series_Switch...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 101.79, "throughput_mbps": 3656.01, "sim_cycles": 40716000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   16
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000132
+================================================================
+[CONFIG]
+{"run_id": "RUN-000132", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "HS_Series_Switch", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test HS_Series_Switch...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 190.57, "throughput_mbps": 2472.54, "sim_cycles": 76228000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   12
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000133
+================================================================
+[CONFIG]
+{"run_id": "RUN-000133", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "UniPro_Link_PowerDown", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test UniPro_Link_PowerDown...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+UVM_ERROR @ 64212 ns: uvm_test_top.env.mphy_mon [MPHY_PLL_UNLOCK] MIPI M-PHY Gear5 Rate_B clock recovery lost lock on lane 1
+UVM_FATAL @ 64252 ns: uvm_test_top [TEST_ABORT] UFS link reset required
+[METRICS]
+{"execution_time_ms": 36.51, "throughput_mbps": 560.83, "sim_cycles": 14604000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   18
+UVM_WARNING :   0
+UVM_ERROR   :   1
+UVM_FATAL   :   1
+** TEST FAILED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000134
+================================================================
+[CONFIG]
+{"run_id": "RUN-000134", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "HS_Series_Switch", "mphy_gear": "GEAR4", "num_lanes": 1, "hs_series": "Rate_A", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test HS_Series_Switch...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 199.0, "throughput_mbps": 2703.92, "sim_cycles": 79600000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   12
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000135
+================================================================
+[CONFIG]
+{"run_id": "RUN-000135", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "RPMB_Auth_Write", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test RPMB_Auth_Write...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+UVM_ERROR @ 64419 ns: uvm_test_top.env.mphy_mon [MPHY_PLL_UNLOCK] MIPI M-PHY Gear5 Rate_B clock recovery lost lock on lane 1
+UVM_FATAL @ 64459 ns: uvm_test_top [TEST_ABORT] UFS link reset required
+[METRICS]
+{"execution_time_ms": 49.67, "throughput_mbps": 339.23, "sim_cycles": 19868000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   13
+UVM_WARNING :   0
+UVM_ERROR   :   1
+UVM_FATAL   :   1
+** TEST FAILED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000136
+================================================================
+[CONFIG]
+{"run_id": "RUN-000136", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "HS_Series_Switch", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test HS_Series_Switch...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 163.57, "throughput_mbps": 2784.95, "sim_cycles": 65428000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   17
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000137
+================================================================
+[CONFIG]
+{"run_id": "RUN-000137", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "RPMB_Auth_Write", "mphy_gear": "GEAR4", "num_lanes": 1, "hs_series": "Rate_B", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test RPMB_Auth_Write...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR4
+UVM_ERROR @ 20176 ns: uvm_test_top.env.security_checker [RPMB_MAC_MISMATCH] RPMB authenticated data frame rejected: SHA-256 MAC signature mismatch
+UVM_FATAL @ 20216 ns: uvm_test_top [TEST_ABORT] UFS link reset required
+[METRICS]
+{"execution_time_ms": 81.21, "throughput_mbps": 382.47, "sim_cycles": 32483999}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   17
+UVM_WARNING :   0
+UVM_ERROR   :   1
+UVM_FATAL   :   1
+** TEST FAILED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000138
+================================================================
+[CONFIG]
+{"run_id": "RUN-000138", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "UniPro_Link_PowerDown", "mphy_gear": "GEAR5", "num_lanes": 1, "hs_series": "Rate_B", "cmd_queue_depth": 32, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test UniPro_Link_PowerDown...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 190.78, "throughput_mbps": 2130.56, "sim_cycles": 76312000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   12
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000139
+================================================================
+[CONFIG]
+{"run_id": "RUN-000139", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "RPMB_Auth_Write", "mphy_gear": "GEAR5", "num_lanes": 1, "hs_series": "Rate_A", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test RPMB_Auth_Write...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR5
+UVM_ERROR @ 27726 ns: uvm_test_top.env.security_checker [RPMB_MAC_MISMATCH] RPMB authenticated data frame rejected: SHA-256 MAC signature mismatch
+UVM_FATAL @ 27766 ns: uvm_test_top [TEST_ABORT] UFS link reset required
+[METRICS]
+{"execution_time_ms": 71.82, "throughput_mbps": 649.83, "sim_cycles": 28727999}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   12
+UVM_WARNING :   0
+UVM_ERROR   :   1
+UVM_FATAL   :   1
+** TEST FAILED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000140
+================================================================
+[CONFIG]
+{"run_id": "RUN-000140", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Command_Queue_Stress", "mphy_gear": "GEAR5", "num_lanes": 1, "hs_series": "Rate_A", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Command_Queue_Stress...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 194.59, "throughput_mbps": 3251.28, "sim_cycles": 77836000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   12
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000141
+================================================================
+[CONFIG]
+{"run_id": "RUN-000141", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Command_Queue_Stress", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Command_Queue_Stress...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 177.72, "throughput_mbps": 3451.82, "sim_cycles": 71088000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   17
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000142
+================================================================
+[CONFIG]
+{"run_id": "RUN-000142", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "RPMB_Auth_Write", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test RPMB_Auth_Write...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 84.54, "throughput_mbps": 4077.74, "sim_cycles": 33816000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   19
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000143
+================================================================
+[CONFIG]
+{"run_id": "RUN-000143", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 16, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 123.91, "throughput_mbps": 3866.56, "sim_cycles": 49564000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   19
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000144
+================================================================
+[CONFIG]
+{"run_id": "RUN-000144", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "UniPro_Link_PowerDown", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 32, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test UniPro_Link_PowerDown...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 168.5, "throughput_mbps": 2008.86, "sim_cycles": 67400000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   12
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000145
+================================================================
+[CONFIG]
+{"run_id": "RUN-000145", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 80.17, "throughput_mbps": 3209.8, "sim_cycles": 32068000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   15
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000146
+================================================================
+[CONFIG]
+{"run_id": "RUN-000146", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Command_Queue_Stress", "mphy_gear": "GEAR5", "num_lanes": 1, "hs_series": "Rate_B", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Command_Queue_Stress...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 106.06, "throughput_mbps": 2601.9, "sim_cycles": 42424000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   21
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000147
+================================================================
+[CONFIG]
+{"run_id": "RUN-000147", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 116.75, "throughput_mbps": 3508.43, "sim_cycles": 46700000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   14
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000148
+================================================================
+[CONFIG]
+{"run_id": "RUN-000148", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 32, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 90.64, "throughput_mbps": 2384.4, "sim_cycles": 36256000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   17
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000149
+================================================================
+[CONFIG]
+{"run_id": "RUN-000149", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 93.36, "throughput_mbps": 2724.48, "sim_cycles": 37344000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   18
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000150
+================================================================
+[CONFIG]
+{"run_id": "RUN-000150", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 116.21, "throughput_mbps": 2226.43, "sim_cycles": 46484000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   19
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000151
+================================================================
+[CONFIG]
+{"run_id": "RUN-000151", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR5", "num_lanes": 1, "hs_series": "Rate_B", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 171.28, "throughput_mbps": 3290.44, "sim_cycles": 68512000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   18
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000152
+================================================================
+[CONFIG]
+{"run_id": "RUN-000152", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 32, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+UVM_ERROR @ 49467 ns: uvm_test_top.env.ufs_agent.mon [PA_INIT_TIMEOUT] PACount handshake timeout during link powerdown exit sequence
+UVM_FATAL @ 49507 ns: uvm_test_top [TEST_ABORT] UFS link reset required
+[METRICS]
+{"execution_time_ms": 34.61, "throughput_mbps": 701.65, "sim_cycles": 13844000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   13
+UVM_WARNING :   0
+UVM_ERROR   :   1
+UVM_FATAL   :   1
+** TEST FAILED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000153
+================================================================
+[CONFIG]
+{"run_id": "RUN-000153", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "RPMB_Auth_Write", "mphy_gear": "GEAR5", "num_lanes": 1, "hs_series": "Rate_A", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test RPMB_Auth_Write...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR5
+UVM_ERROR @ 50931 ns: uvm_test_top.env.security_checker [RPMB_MAC_MISMATCH] RPMB authenticated data frame rejected: SHA-256 MAC signature mismatch
+UVM_FATAL @ 50971 ns: uvm_test_top [TEST_ABORT] UFS link reset required
+[METRICS]
+{"execution_time_ms": 59.35, "throughput_mbps": 570.81, "sim_cycles": 23740000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   18
+UVM_WARNING :   0
+UVM_ERROR   :   1
+UVM_FATAL   :   1
+** TEST FAILED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000154
+================================================================
+[CONFIG]
+{"run_id": "RUN-000154", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 122.33, "throughput_mbps": 2834.71, "sim_cycles": 48932000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   21
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000155
+================================================================
+[CONFIG]
+{"run_id": "RUN-000155", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Command_Queue_Stress", "mphy_gear": "GEAR5", "num_lanes": 1, "hs_series": "Rate_B", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Command_Queue_Stress...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 135.55, "throughput_mbps": 3077.56, "sim_cycles": 54220000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   18
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000156
+================================================================
+[CONFIG]
+{"run_id": "RUN-000156", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Command_Queue_Stress", "mphy_gear": "GEAR5", "num_lanes": 1, "hs_series": "Rate_A", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Command_Queue_Stress...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 139.3, "throughput_mbps": 3709.39, "sim_cycles": 55720000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   16
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000157
+================================================================
+[CONFIG]
+{"run_id": "RUN-000157", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "HS_Series_Switch", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test HS_Series_Switch...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 192.44, "throughput_mbps": 3632.35, "sim_cycles": 76976000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   20
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000158
+================================================================
+[CONFIG]
+{"run_id": "RUN-000158", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR4", "num_lanes": 1, "hs_series": "Rate_B", "cmd_queue_depth": 16, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 164.53, "throughput_mbps": 3269.12, "sim_cycles": 65812000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   12
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000159
+================================================================
+[CONFIG]
+{"run_id": "RUN-000159", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+UVM_ERROR @ 42946 ns: uvm_test_top.env.unipro_link_chk [HS_BURST_CRC_ERROR] UniPro PACP data frame CRC-16 check failed during high-speed burst
+UVM_FATAL @ 42986 ns: uvm_test_top [TEST_ABORT] UFS link reset required
+[METRICS]
+{"execution_time_ms": 41.9, "throughput_mbps": 348.2, "sim_cycles": 16760000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   12
+UVM_WARNING :   0
+UVM_ERROR   :   1
+UVM_FATAL   :   1
+** TEST FAILED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000160
+================================================================
+[CONFIG]
+{"run_id": "RUN-000160", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR5", "num_lanes": 1, "hs_series": "Rate_B", "cmd_queue_depth": 16, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 210.18, "throughput_mbps": 3279.02, "sim_cycles": 84072000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   16
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000161
+================================================================
+[CONFIG]
+{"run_id": "RUN-000161", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "UniPro_Link_PowerDown", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test UniPro_Link_PowerDown...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 171.78, "throughput_mbps": 2388.11, "sim_cycles": 68712000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   17
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000162
+================================================================
+[CONFIG]
+{"run_id": "RUN-000162", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+UVM_ERROR @ 63518 ns: uvm_test_top.env.mphy_mon [MPHY_PLL_UNLOCK] MIPI M-PHY Gear5 Rate_B clock recovery lost lock on lane 1
+UVM_FATAL @ 63558 ns: uvm_test_top [TEST_ABORT] UFS link reset required
+[METRICS]
+{"execution_time_ms": 53.31, "throughput_mbps": 320.54, "sim_cycles": 21324000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   12
+UVM_WARNING :   0
+UVM_ERROR   :   1
+UVM_FATAL   :   1
+** TEST FAILED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000163
+================================================================
+[CONFIG]
+{"run_id": "RUN-000163", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Command_Queue_Stress", "mphy_gear": "GEAR4", "num_lanes": 1, "hs_series": "Rate_A", "cmd_queue_depth": 32, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Command_Queue_Stress...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 90.64, "throughput_mbps": 3827.62, "sim_cycles": 36256000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   14
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000164
+================================================================
+[CONFIG]
+{"run_id": "RUN-000164", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 16, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+UVM_ERROR @ 26921 ns: uvm_test_top.env.mphy_mon [MPHY_PLL_UNLOCK] MIPI M-PHY Gear5 Rate_B clock recovery lost lock on lane 1
+UVM_FATAL @ 26961 ns: uvm_test_top [TEST_ABORT] UFS link reset required
+[METRICS]
+{"execution_time_ms": 74.6, "throughput_mbps": 769.28, "sim_cycles": 29839999}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   16
+UVM_WARNING :   0
+UVM_ERROR   :   1
+UVM_FATAL   :   1
+** TEST FAILED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000165
+================================================================
+[CONFIG]
+{"run_id": "RUN-000165", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "RPMB_Auth_Write", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 16, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test RPMB_Auth_Write...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 144.41, "throughput_mbps": 1827.22, "sim_cycles": 57764000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   14
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000166
+================================================================
+[CONFIG]
+{"run_id": "RUN-000166", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "HS_Series_Switch", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test HS_Series_Switch...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 208.49, "throughput_mbps": 1835.1, "sim_cycles": 83396000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   21
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000167
+================================================================
+[CONFIG]
+{"run_id": "RUN-000167", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "UniPro_Link_PowerDown", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test UniPro_Link_PowerDown...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 182.42, "throughput_mbps": 2529.59, "sim_cycles": 72968000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   19
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000168
+================================================================
+[CONFIG]
+{"run_id": "RUN-000168", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Command_Queue_Stress", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Command_Queue_Stress...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+UVM_ERROR @ 50564 ns: uvm_test_top.env.ufs_agent.mon [PA_INIT_TIMEOUT] PACount handshake timeout during link powerdown exit sequence
+UVM_FATAL @ 50604 ns: uvm_test_top [TEST_ABORT] UFS link reset required
+[METRICS]
+{"execution_time_ms": 32.12, "throughput_mbps": 308.65, "sim_cycles": 12847999}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   20
+UVM_WARNING :   0
+UVM_ERROR   :   1
+UVM_FATAL   :   1
+** TEST FAILED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000169
+================================================================
+[CONFIG]
+{"run_id": "RUN-000169", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 32, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+UVM_ERROR @ 63126 ns: uvm_test_top.env.unipro_link_chk [HS_BURST_CRC_ERROR] UniPro PACP data frame CRC-16 check failed during high-speed burst
+UVM_FATAL @ 63166 ns: uvm_test_top [TEST_ABORT] UFS link reset required
+[METRICS]
+{"execution_time_ms": 61.91, "throughput_mbps": 627.45, "sim_cycles": 24764000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   12
+UVM_WARNING :   0
+UVM_ERROR   :   1
+UVM_FATAL   :   1
+** TEST FAILED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000170
+================================================================
+[CONFIG]
+{"run_id": "RUN-000170", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Command_Queue_Stress", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 32, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Command_Queue_Stress...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 208.08, "throughput_mbps": 3075.06, "sim_cycles": 83232000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   16
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000171
+================================================================
+[CONFIG]
+{"run_id": "RUN-000171", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 198.02, "throughput_mbps": 3874.29, "sim_cycles": 79208000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   15
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000172
+================================================================
+[CONFIG]
+{"run_id": "RUN-000172", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+UVM_ERROR @ 38644 ns: uvm_test_top.env.mphy_mon [MPHY_PLL_UNLOCK] MIPI M-PHY Gear5 Rate_B clock recovery lost lock on lane 1
+UVM_FATAL @ 38684 ns: uvm_test_top [TEST_ABORT] UFS link reset required
+[METRICS]
+{"execution_time_ms": 33.95, "throughput_mbps": 626.52, "sim_cycles": 13580000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   18
+UVM_WARNING :   0
+UVM_ERROR   :   1
+UVM_FATAL   :   1
+** TEST FAILED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000173
+================================================================
+[CONFIG]
+{"run_id": "RUN-000173", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "UniPro_Link_PowerDown", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test UniPro_Link_PowerDown...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 80.85, "throughput_mbps": 1942.95, "sim_cycles": 32339999}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   14
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000174
+================================================================
+[CONFIG]
+{"run_id": "RUN-000174", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR5", "num_lanes": 1, "hs_series": "Rate_B", "cmd_queue_depth": 16, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 171.07, "throughput_mbps": 4071.18, "sim_cycles": 68428000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   15
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000175
+================================================================
+[CONFIG]
+{"run_id": "RUN-000175", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 16, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 215.01, "throughput_mbps": 2461.84, "sim_cycles": 86004000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   14
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000176
+================================================================
+[CONFIG]
+{"run_id": "RUN-000176", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+UVM_ERROR @ 9399 ns: uvm_test_top.env.unipro_link_chk [HS_BURST_CRC_ERROR] UniPro PACP data frame CRC-16 check failed during high-speed burst
+UVM_FATAL @ 9439 ns: uvm_test_top [TEST_ABORT] UFS link reset required
+[METRICS]
+{"execution_time_ms": 81.7, "throughput_mbps": 433.07, "sim_cycles": 32680000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   13
+UVM_WARNING :   0
+UVM_ERROR   :   1
+UVM_FATAL   :   1
+** TEST FAILED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000177
+================================================================
+[CONFIG]
+{"run_id": "RUN-000177", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "UniPro_Link_PowerDown", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test UniPro_Link_PowerDown...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 111.2, "throughput_mbps": 3917.14, "sim_cycles": 44480000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   21
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000178
+================================================================
+[CONFIG]
+{"run_id": "RUN-000178", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR5", "num_lanes": 1, "hs_series": "Rate_B", "cmd_queue_depth": 32, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 141.57, "throughput_mbps": 3551.48, "sim_cycles": 56628000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   14
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000179
+================================================================
+[CONFIG]
+{"run_id": "RUN-000179", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 204.67, "throughput_mbps": 3300.51, "sim_cycles": 81868000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   14
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000180
+================================================================
+[CONFIG]
+{"run_id": "RUN-000180", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Command_Queue_Stress", "mphy_gear": "GEAR4", "num_lanes": 1, "hs_series": "Rate_A", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Command_Queue_Stress...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 197.9, "throughput_mbps": 3262.05, "sim_cycles": 79160000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   21
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000181
+================================================================
+[CONFIG]
+{"run_id": "RUN-000181", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR5", "num_lanes": 1, "hs_series": "Rate_B", "cmd_queue_depth": 32, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR5
+UVM_ERROR @ 23995 ns: uvm_test_top.env.unipro_link_chk [HS_BURST_CRC_ERROR] UniPro PACP data frame CRC-16 check failed during high-speed burst
+UVM_FATAL @ 24035 ns: uvm_test_top [TEST_ABORT] UFS link reset required
+[METRICS]
+{"execution_time_ms": 87.15, "throughput_mbps": 357.99, "sim_cycles": 34860000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   19
+UVM_WARNING :   0
+UVM_ERROR   :   1
+UVM_FATAL   :   1
+** TEST FAILED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000182
+================================================================
+[CONFIG]
+{"run_id": "RUN-000182", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+UVM_ERROR @ 48404 ns: uvm_test_top.env.mphy_mon [MPHY_PLL_UNLOCK] MIPI M-PHY Gear5 Rate_B clock recovery lost lock on lane 1
+UVM_FATAL @ 48444 ns: uvm_test_top [TEST_ABORT] UFS link reset required
+[METRICS]
+{"execution_time_ms": 67.51, "throughput_mbps": 348.78, "sim_cycles": 27004000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   20
+UVM_WARNING :   0
+UVM_ERROR   :   1
+UVM_FATAL   :   1
+** TEST FAILED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000183
+================================================================
+[CONFIG]
+{"run_id": "RUN-000183", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 32, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+UVM_ERROR @ 14293 ns: uvm_test_top.env.mphy_mon [MPHY_PLL_UNLOCK] MIPI M-PHY Gear5 Rate_B clock recovery lost lock on lane 1
+UVM_FATAL @ 14333 ns: uvm_test_top [TEST_ABORT] UFS link reset required
+[METRICS]
+{"execution_time_ms": 32.2, "throughput_mbps": 740.94, "sim_cycles": 12880000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   12
+UVM_WARNING :   0
+UVM_ERROR   :   1
+UVM_FATAL   :   1
+** TEST FAILED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000184
+================================================================
+[CONFIG]
+{"run_id": "RUN-000184", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Command_Queue_Stress", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Command_Queue_Stress...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+UVM_ERROR @ 56796 ns: uvm_test_top.env.mphy_mon [MPHY_PLL_UNLOCK] MIPI M-PHY Gear5 Rate_B clock recovery lost lock on lane 1
+UVM_FATAL @ 56836 ns: uvm_test_top [TEST_ABORT] UFS link reset required
+[METRICS]
+{"execution_time_ms": 71.02, "throughput_mbps": 464.92, "sim_cycles": 28408000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   21
+UVM_WARNING :   0
+UVM_ERROR   :   1
+UVM_FATAL   :   1
+** TEST FAILED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000185
+================================================================
+[CONFIG]
+{"run_id": "RUN-000185", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "RPMB_Auth_Write", "mphy_gear": "GEAR5", "num_lanes": 1, "hs_series": "Rate_B", "cmd_queue_depth": 16, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test RPMB_Auth_Write...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 137.65, "throughput_mbps": 2756.73, "sim_cycles": 55060000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   16
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000186
+================================================================
+[CONFIG]
+{"run_id": "RUN-000186", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "UniPro_Link_PowerDown", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 32, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test UniPro_Link_PowerDown...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 136.07, "throughput_mbps": 3939.59, "sim_cycles": 54428000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   21
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000187
+================================================================
+[CONFIG]
+{"run_id": "RUN-000187", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "UniPro_Link_PowerDown", "mphy_gear": "GEAR4", "num_lanes": 1, "hs_series": "Rate_A", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test UniPro_Link_PowerDown...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 180.91, "throughput_mbps": 3823.42, "sim_cycles": 72364000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   19
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000188
+================================================================
+[CONFIG]
+{"run_id": "RUN-000188", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Command_Queue_Stress", "mphy_gear": "GEAR5", "num_lanes": 1, "hs_series": "Rate_B", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Command_Queue_Stress...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 206.99, "throughput_mbps": 3187.64, "sim_cycles": 82796000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   12
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000189
+================================================================
+[CONFIG]
+{"run_id": "RUN-000189", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "UniPro_Link_PowerDown", "mphy_gear": "GEAR5", "num_lanes": 1, "hs_series": "Rate_A", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test UniPro_Link_PowerDown...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 178.56, "throughput_mbps": 3440.89, "sim_cycles": 71424000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   12
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000190
+================================================================
+[CONFIG]
+{"run_id": "RUN-000190", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "UniPro_Link_PowerDown", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test UniPro_Link_PowerDown...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 206.79, "throughput_mbps": 2812.47, "sim_cycles": 82716000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   20
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000191
+================================================================
+[CONFIG]
+{"run_id": "RUN-000191", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR5", "num_lanes": 1, "hs_series": "Rate_B", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 111.18, "throughput_mbps": 2933.39, "sim_cycles": 44472000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   18
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000192
+================================================================
+[CONFIG]
+{"run_id": "RUN-000192", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "RPMB_Auth_Write", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test RPMB_Auth_Write...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+UVM_ERROR @ 28955 ns: uvm_test_top.env.mphy_mon [MPHY_PLL_UNLOCK] MIPI M-PHY Gear5 Rate_B clock recovery lost lock on lane 1
+UVM_FATAL @ 28995 ns: uvm_test_top [TEST_ABORT] UFS link reset required
+[METRICS]
+{"execution_time_ms": 88.95, "throughput_mbps": 747.09, "sim_cycles": 35580000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   19
+UVM_WARNING :   0
+UVM_ERROR   :   1
+UVM_FATAL   :   1
+** TEST FAILED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000193
+================================================================
+[CONFIG]
+{"run_id": "RUN-000193", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 179.33, "throughput_mbps": 3740.18, "sim_cycles": 71732000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   16
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000194
+================================================================
+[CONFIG]
+{"run_id": "RUN-000194", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Command_Queue_Stress", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Command_Queue_Stress...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 188.41, "throughput_mbps": 3742.34, "sim_cycles": 75364000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   21
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000195
+================================================================
+[CONFIG]
+{"run_id": "RUN-000195", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "RPMB_Auth_Write", "mphy_gear": "GEAR4", "num_lanes": 1, "hs_series": "Rate_B", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test RPMB_Auth_Write...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 99.6, "throughput_mbps": 4114.3, "sim_cycles": 39840000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   21
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000196
+================================================================
+[CONFIG]
+{"run_id": "RUN-000196", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "RPMB_Auth_Write", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 16, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test RPMB_Auth_Write...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+[METRICS]
+{"execution_time_ms": 153.5, "throughput_mbps": 1887.13, "sim_cycles": 61400000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   15
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000197
+================================================================
+[CONFIG]
+{"run_id": "RUN-000197", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "UniPro_Link_PowerDown", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 16, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test UniPro_Link_PowerDown...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 152.57, "throughput_mbps": 3243.85, "sim_cycles": 61028000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   16
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000198
+================================================================
+[CONFIG]
+{"run_id": "RUN-000198", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Ufs_Gear5_Burst_RW", "mphy_gear": "GEAR5", "num_lanes": 2, "hs_series": "Rate_B", "cmd_queue_depth": 16, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Ufs_Gear5_Burst_RW...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR5
+UVM_ERROR @ 9943 ns: uvm_test_top.env.mphy_mon [MPHY_PLL_UNLOCK] MIPI M-PHY Gear5 Rate_B clock recovery lost lock on lane 1
+UVM_FATAL @ 9983 ns: uvm_test_top [TEST_ABORT] UFS link reset required
+[METRICS]
+{"execution_time_ms": 45.22, "throughput_mbps": 486.31, "sim_cycles": 18088000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   16
+UVM_WARNING :   0
+UVM_ERROR   :   1
+UVM_FATAL   :   1
+** TEST FAILED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000199
+================================================================
+[CONFIG]
+{"run_id": "RUN-000199", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "RPMB_Auth_Write", "mphy_gear": "GEAR4", "num_lanes": 1, "hs_series": "Rate_B", "cmd_queue_depth": 32, "rpmb_enabled": 0, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test RPMB_Auth_Write...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 1 lane(s) in GEAR4
+UVM_ERROR @ 19711 ns: uvm_test_top.env.security_checker [RPMB_MAC_MISMATCH] RPMB authenticated data frame rejected: SHA-256 MAC signature mismatch
+UVM_FATAL @ 19751 ns: uvm_test_top [TEST_ABORT] UFS link reset required
+[METRICS]
+{"execution_time_ms": 41.57, "throughput_mbps": 308.15, "sim_cycles": 16628000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   17
+UVM_WARNING :   0
+UVM_ERROR   :   1
+UVM_FATAL   :   1
+** TEST FAILED **
+
+================================================================
+UVM SIMULATION LOG :: RUN-000200
+================================================================
+[CONFIG]
+{"run_id": "RUN-000200", "design": "SanDisk_UFS40_Mobile_Storage_Controller", "test_name": "Command_Queue_Stress", "mphy_gear": "GEAR4", "num_lanes": 2, "hs_series": "Rate_A", "cmd_queue_depth": 32, "rpmb_enabled": 1, "unipro_version": "v2.0"}
+[/CONFIG]
+UVM_INFO @ 0 ns: reporter [RNTST] Running test Command_Queue_Stress...
+UVM_INFO @ 400 ns: uvm_test_top.env.ufs_agent [UFS_READY] UniPro v2.0 established link on 2 lane(s) in GEAR4
+[METRICS]
+{"execution_time_ms": 164.55, "throughput_mbps": 2394.43, "sim_cycles": 65820000}
+[/METRICS]
+--- UVM Report Summary ---
+UVM_INFO    :   13
+UVM_WARNING :   0
+UVM_ERROR   :   0
+UVM_FATAL   :   0
+** TEST PASSED **

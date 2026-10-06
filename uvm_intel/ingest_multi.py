@@ -135,13 +135,21 @@ def _ensure_required_columns(df: pd.DataFrame) -> pd.DataFrame:
         df["test_name"] = "unknown_test"
 
     if "primary_error_tag" not in df.columns:
-        df["primary_error_tag"] = df["pass_fail"].map(
-            lambda v: "NONE" if v == "pass" else "UNKNOWN_ERROR"
-        )
+        for alias in ("failure_class", "failure_type", "error_tag", "error_type", "tag", "err_type", "err_class"):
+            if alias in df.columns:
+                df["primary_error_tag"] = df[alias].fillna("NONE").map(
+                    lambda v: "NONE" if str(v).upper() in ("NONE", "OK", "NAN", "", "NULL") else str(v)
+                )
+                break
+        else:
+            df["primary_error_tag"] = df["pass_fail"].map(
+                lambda v: "NONE" if v == "pass" else "UNKNOWN_ERROR"
+            )
 
     if "trace_fingerprint" not in df.columns:
-        df["trace_fingerprint"] = df["pass_fail"].map(
-            lambda v: "CLEAN" if v == "pass" else "UNKNOWN"
+        df["trace_fingerprint"] = df.apply(
+            lambda r: "CLEAN" if r["pass_fail"] == "pass" else str(r.get("primary_error_tag", "UNKNOWN")),
+            axis=1
         )
 
     if "error_trace" not in df.columns:

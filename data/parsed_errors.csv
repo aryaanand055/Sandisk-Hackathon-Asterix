@@ -1,0 +1,107 @@
+run_id,severity,time_ns,component,tag,message,fingerprint
+RUN-NVME-000007,ERROR,275353,uvm_test_top.env.nvme_sub_queue,NVME_COMMAND_TIMEOUT,NVMe Submission Queue 4096 starved host memory buffer (HMB=0) at address 0x013cfaf3,NVMe Submission Queue <N> starved host memory buffer (HMB=<N>) at address <ADDR>
+RUN-NVME-000007,FATAL,275403,uvm_test_top,TEST_ABORT,Test sequence terminated,Test sequence terminated
+RUN-NVME-000019,ERROR,434216,uvm_test_top.env.nvme_agent,NVME_INTERNAL_ERROR,Controller state machine deadlock at cycle 0x01f74a60,Controller state machine deadlock at cycle <ADDR>
+RUN-NVME-000019,FATAL,434266,uvm_test_top,TEST_ABORT,Test sequence terminated,Test sequence terminated
+RUN-NVME-000034,ERROR,119511,uvm_test_top.env.nvme_sub_queue,NVME_COMMAND_TIMEOUT,NVMe Submission Queue 4096 starved host memory buffer (HMB=0) at address 0x022e7319,NVMe Submission Queue <N> starved host memory buffer (HMB=<N>) at address <ADDR>
+RUN-NVME-000034,FATAL,119561,uvm_test_top,TEST_ABORT,Test sequence terminated,Test sequence terminated
+RUN-NVME-000043,ERROR,145238,uvm_test_top.env.ftl_engine,NAND_RETENTION_CORRUPTION,NAND die junction temperature 102.7C caused block erase retention failure,NAND die junction temperature 102.7C caused block erase retention failure
+RUN-NVME-000043,FATAL,145288,uvm_test_top,TEST_ABORT,Test sequence terminated,Test sequence terminated
+RUN-NVME-000067,ERROR,82141,uvm_test_top.env.ftl_engine,NAND_RETENTION_CORRUPTION,NAND die junction temperature 95.8C caused block erase retention failure,NAND die junction temperature 95.8C caused block erase retention failure
+RUN-NVME-000067,FATAL,82191,uvm_test_top,TEST_ABORT,Test sequence terminated,Test sequence terminated
+RUN-NVME-000086,ERROR,34523,uvm_test_top.env.nvme_agent,NVME_INTERNAL_ERROR,Controller state machine deadlock at cycle 0x04681ba8,Controller state machine deadlock at cycle <ADDR>
+RUN-NVME-000086,FATAL,34573,uvm_test_top,TEST_ABORT,Test sequence terminated,Test sequence terminated
+RUN-NVME-000096,ERROR,246334,uvm_test_top.env.ftl_engine,NAND_RETENTION_CORRUPTION,NAND die junction temperature 104.8C caused block erase retention failure,NAND die junction temperature 104.8C caused block erase retention failure
+RUN-NVME-000096,FATAL,246384,uvm_test_top,TEST_ABORT,Test sequence terminated,Test sequence terminated
+RUN-NVME-000115,ERROR,101136,uvm_test_top.env.nvme_agent,NVME_INTERNAL_ERROR,Controller state machine deadlock at cycle 0x01115d3f,Controller state machine deadlock at cycle <ADDR>
+RUN-NVME-000115,FATAL,101186,uvm_test_top,TEST_ABORT,Test sequence terminated,Test sequence terminated
+RUN-NVME-000134,ERROR,371126,uvm_test_top.env.ftl_engine,NAND_RETENTION_CORRUPTION,NAND die junction temperature 95.9C caused block erase retention failure,NAND die junction temperature 95.9C caused block erase retention failure
+RUN-NVME-000134,FATAL,371176,uvm_test_top,TEST_ABORT,Test sequence terminated,Test sequence terminated
+RUN-NVME-000145,ERROR,305726,uvm_test_top.env.pcie_phy,PCIE_AER_PROTOCOL_ERROR,PCIe Advanced Error Reporting: Link retrain framing error during power transition,PCIe Advanced Error Reporting: Link retrain framing error during power transition
+RUN-NVME-000145,FATAL,305776,uvm_test_top,TEST_ABORT,Test sequence terminated,Test sequence terminated
+RUN-NVME-000174,ERROR,334345,uvm_test_top.env.nvme_sub_queue,NVME_COMMAND_TIMEOUT,NVMe Submission Queue 4096 starved host memory buffer (HMB=0) at address 0x04da1637,NVMe Submission Queue <N> starved host memory buffer (HMB=<N>) at address <ADDR>
+RUN-NVME-000174,FATAL,334395,uvm_test_top,TEST_ABORT,Test sequence terminated,Test sequence terminated
+RUN-NVME-000233,ERROR,163901,uvm_test_top.env.nvme_sub_queue,NVME_COMMAND_TIMEOUT,NVMe Submission Queue 4096 starved host memory buffer (HMB=0) at address 0x01d1dbfc,NVMe Submission Queue <N> starved host memory buffer (HMB=<N>) at address <ADDR>
+RUN-NVME-000233,FATAL,163951,uvm_test_top,TEST_ABORT,Test sequence terminated,Test sequence terminated
+RUN-NVME-000240,ERROR,424625,uvm_test_top.env.ftl_engine,NAND_RETENTION_CORRUPTION,NAND die junction temperature 101.3C caused block erase retention failure,NAND die junction temperature 101.3C caused block erase retention failure
+RUN-NVME-000240,FATAL,424675,uvm_test_top,TEST_ABORT,Test sequence terminated,Test sequence terminated
+RUN-NVME-000270,ERROR,442060,uvm_test_top.env.ftl_engine,NAND_RETENTION_CORRUPTION,NAND die junction temperature 101.0C caused block erase retention failure,NAND die junction temperature 101.0C caused block erase retention failure
+RUN-NVME-000270,FATAL,442110,uvm_test_top,TEST_ABORT,Test sequence terminated,Test sequence terminated
+RUN-NVME-000306,ERROR,27966,uvm_test_top.env.ftl_engine,NAND_RETENTION_CORRUPTION,NAND die junction temperature 100.4C caused block erase retention failure,NAND die junction temperature 100.4C caused block erase retention failure
+RUN-NVME-000306,FATAL,28016,uvm_test_top,TEST_ABORT,Test sequence terminated,Test sequence terminated
+RUN-NVME-000317,ERROR,464875,uvm_test_top.env.pcie_phy,PCIE_AER_PROTOCOL_ERROR,PCIe Advanced Error Reporting: Link retrain framing error during power transition,PCIe Advanced Error Reporting: Link retrain framing error during power transition
+RUN-NVME-000317,FATAL,464925,uvm_test_top,TEST_ABORT,Test sequence terminated,Test sequence terminated
+RUN-NVME-000358,ERROR,139145,uvm_test_top.env.nvme_sub_queue,NVME_COMMAND_TIMEOUT,NVMe Submission Queue 4096 starved host memory buffer (HMB=0) at address 0x0329f5f1,NVMe Submission Queue <N> starved host memory buffer (HMB=<N>) at address <ADDR>
+RUN-NVME-000358,FATAL,139195,uvm_test_top,TEST_ABORT,Test sequence terminated,Test sequence terminated
+RUN-NVME-000429,ERROR,189454,uvm_test_top.env.ftl_engine,NAND_RETENTION_CORRUPTION,NAND die junction temperature 104.7C caused block erase retention failure,NAND die junction temperature 104.7C caused block erase retention failure
+RUN-NVME-000429,FATAL,189504,uvm_test_top,TEST_ABORT,Test sequence terminated,Test sequence terminated
+RUN-NVME-000430,ERROR,188370,uvm_test_top.env.pcie_phy,PCIE_AER_PROTOCOL_ERROR,PCIe Advanced Error Reporting: Link retrain framing error during power transition,PCIe Advanced Error Reporting: Link retrain framing error during power transition
+RUN-NVME-000430,FATAL,188420,uvm_test_top,TEST_ABORT,Test sequence terminated,Test sequence terminated
+RUN-NVME-000471,ERROR,85664,uvm_test_top.env.ftl_engine,NAND_RETENTION_CORRUPTION,NAND die junction temperature 98.5C caused block erase retention failure,NAND die junction temperature 98.5C caused block erase retention failure
+RUN-NVME-000471,FATAL,85714,uvm_test_top,TEST_ABORT,Test sequence terminated,Test sequence terminated
+RUN-NVME-000476,ERROR,304148,uvm_test_top.env.nvme_agent,NVME_INTERNAL_ERROR,Controller state machine deadlock at cycle 0x04428a80,Controller state machine deadlock at cycle <ADDR>
+RUN-NVME-000476,FATAL,304198,uvm_test_top,TEST_ABORT,Test sequence terminated,Test sequence terminated
+RUN-NVME-000482,ERROR,10813,uvm_test_top.env.nvme_agent,NVME_INTERNAL_ERROR,Controller state machine deadlock at cycle 0x03599b84,Controller state machine deadlock at cycle <ADDR>
+RUN-NVME-000482,FATAL,10863,uvm_test_top,TEST_ABORT,Test sequence terminated,Test sequence terminated
+RUN-NVME-000486,ERROR,256493,uvm_test_top.env.ftl_engine,NAND_RETENTION_CORRUPTION,NAND die junction temperature 102.1C caused block erase retention failure,NAND die junction temperature 102.1C caused block erase retention failure
+RUN-NVME-000486,FATAL,256543,uvm_test_top,TEST_ABORT,Test sequence terminated,Test sequence terminated
+RUN-NVME-000495,ERROR,494917,uvm_test_top.env.ftl_engine,NAND_RETENTION_CORRUPTION,NAND die junction temperature 101.5C caused block erase retention failure,NAND die junction temperature 101.5C caused block erase retention failure
+RUN-NVME-000495,FATAL,494967,uvm_test_top,TEST_ABORT,Test sequence terminated,Test sequence terminated
+RUN-NVME-000516,ERROR,460093,uvm_test_top.env.ftl_engine,NAND_RETENTION_CORRUPTION,NAND die junction temperature 101.8C caused block erase retention failure,NAND die junction temperature 101.8C caused block erase retention failure
+RUN-NVME-000516,FATAL,460143,uvm_test_top,TEST_ABORT,Test sequence terminated,Test sequence terminated
+RUN-NVME-000533,ERROR,126399,uvm_test_top.env.nvme_agent,NVME_INTERNAL_ERROR,Controller state machine deadlock at cycle 0x0169cef4,Controller state machine deadlock at cycle <ADDR>
+RUN-NVME-000533,FATAL,126449,uvm_test_top,TEST_ABORT,Test sequence terminated,Test sequence terminated
+RUN-NVME-000538,ERROR,71022,uvm_test_top.env.ftl_engine,NAND_RETENTION_CORRUPTION,NAND die junction temperature 103.8C caused block erase retention failure,NAND die junction temperature 103.8C caused block erase retention failure
+RUN-NVME-000538,FATAL,71072,uvm_test_top,TEST_ABORT,Test sequence terminated,Test sequence terminated
+RUN-NVME-000548,ERROR,247968,uvm_test_top.env.ftl_engine,NAND_RETENTION_CORRUPTION,NAND die junction temperature 95.6C caused block erase retention failure,NAND die junction temperature 95.6C caused block erase retention failure
+RUN-NVME-000548,FATAL,248018,uvm_test_top,TEST_ABORT,Test sequence terminated,Test sequence terminated
+RUN-NVME-000555,ERROR,71914,uvm_test_top.env.ftl_engine,NAND_RETENTION_CORRUPTION,NAND die junction temperature 97.9C caused block erase retention failure,NAND die junction temperature 97.9C caused block erase retention failure
+RUN-NVME-000555,FATAL,71964,uvm_test_top,TEST_ABORT,Test sequence terminated,Test sequence terminated
+RUN-NVME-000578,ERROR,337467,uvm_test_top.env.pcie_phy,PCIE_AER_PROTOCOL_ERROR,PCIe Advanced Error Reporting: Link retrain framing error during power transition,PCIe Advanced Error Reporting: Link retrain framing error during power transition
+RUN-NVME-000578,FATAL,337517,uvm_test_top,TEST_ABORT,Test sequence terminated,Test sequence terminated
+RUN-NVME-000589,ERROR,126709,uvm_test_top.env.pcie_phy,PCIE_AER_PROTOCOL_ERROR,PCIe Advanced Error Reporting: Link retrain framing error during power transition,PCIe Advanced Error Reporting: Link retrain framing error during power transition
+RUN-NVME-000589,FATAL,126759,uvm_test_top,TEST_ABORT,Test sequence terminated,Test sequence terminated
+RUN-NVME-000594,ERROR,38097,uvm_test_top.env.nvme_agent,NVME_INTERNAL_ERROR,Controller state machine deadlock at cycle 0x04d3840f,Controller state machine deadlock at cycle <ADDR>
+RUN-NVME-000594,FATAL,38147,uvm_test_top,TEST_ABORT,Test sequence terminated,Test sequence terminated
+RUN-NVME-000600,ERROR,394290,uvm_test_top.env.ftl_engine,NAND_RETENTION_CORRUPTION,NAND die junction temperature 99.1C caused block erase retention failure,NAND die junction temperature 99.1C caused block erase retention failure
+RUN-NVME-000600,FATAL,394340,uvm_test_top,TEST_ABORT,Test sequence terminated,Test sequence terminated
+RUN-NVME-000613,ERROR,27086,uvm_test_top.env.pcie_phy,PCIE_AER_PROTOCOL_ERROR,PCIe Advanced Error Reporting: Link retrain framing error during power transition,PCIe Advanced Error Reporting: Link retrain framing error during power transition
+RUN-NVME-000613,FATAL,27136,uvm_test_top,TEST_ABORT,Test sequence terminated,Test sequence terminated
+RUN-NVME-000639,ERROR,381189,uvm_test_top.env.ftl_engine,NAND_RETENTION_CORRUPTION,NAND die junction temperature 103.8C caused block erase retention failure,NAND die junction temperature 103.8C caused block erase retention failure
+RUN-NVME-000639,FATAL,381239,uvm_test_top,TEST_ABORT,Test sequence terminated,Test sequence terminated
+RUN-NVME-000642,ERROR,56599,uvm_test_top.env.ftl_engine,NAND_RETENTION_CORRUPTION,NAND die junction temperature 100.7C caused block erase retention failure,NAND die junction temperature 100.7C caused block erase retention failure
+RUN-NVME-000642,FATAL,56649,uvm_test_top,TEST_ABORT,Test sequence terminated,Test sequence terminated
+RUN-NVME-000703,ERROR,371840,uvm_test_top.env.nvme_agent,NVME_INTERNAL_ERROR,Controller state machine deadlock at cycle 0x02755214,Controller state machine deadlock at cycle <ADDR>
+RUN-NVME-000703,FATAL,371890,uvm_test_top,TEST_ABORT,Test sequence terminated,Test sequence terminated
+RUN-NVME-000716,ERROR,248900,uvm_test_top.env.pcie_phy,PCIE_AER_PROTOCOL_ERROR,PCIe Advanced Error Reporting: Link retrain framing error during power transition,PCIe Advanced Error Reporting: Link retrain framing error during power transition
+RUN-NVME-000716,FATAL,248950,uvm_test_top,TEST_ABORT,Test sequence terminated,Test sequence terminated
+RUN-NVME-000725,ERROR,270126,uvm_test_top.env.ftl_engine,NAND_RETENTION_CORRUPTION,NAND die junction temperature 97.9C caused block erase retention failure,NAND die junction temperature 97.9C caused block erase retention failure
+RUN-NVME-000725,FATAL,270176,uvm_test_top,TEST_ABORT,Test sequence terminated,Test sequence terminated
+RUN-NVME-000740,ERROR,70515,uvm_test_top.env.nvme_sub_queue,NVME_COMMAND_TIMEOUT,NVMe Submission Queue 4096 starved host memory buffer (HMB=0) at address 0x022b5bca,NVMe Submission Queue <N> starved host memory buffer (HMB=<N>) at address <ADDR>
+RUN-NVME-000740,FATAL,70565,uvm_test_top,TEST_ABORT,Test sequence terminated,Test sequence terminated
+RUN-NVME-000742,ERROR,48139,uvm_test_top.env.ftl_engine,NAND_RETENTION_CORRUPTION,NAND die junction temperature 102.2C caused block erase retention failure,NAND die junction temperature 102.2C caused block erase retention failure
+RUN-NVME-000742,FATAL,48189,uvm_test_top,TEST_ABORT,Test sequence terminated,Test sequence terminated
+RUN-NVME-000751,ERROR,396278,uvm_test_top.env.pcie_phy,PCIE_AER_PROTOCOL_ERROR,PCIe Advanced Error Reporting: Link retrain framing error during power transition,PCIe Advanced Error Reporting: Link retrain framing error during power transition
+RUN-NVME-000751,FATAL,396328,uvm_test_top,TEST_ABORT,Test sequence terminated,Test sequence terminated
+RUN-NVME-000758,ERROR,22975,uvm_test_top.env.ftl_engine,NAND_RETENTION_CORRUPTION,NAND die junction temperature 100.6C caused block erase retention failure,NAND die junction temperature 100.6C caused block erase retention failure
+RUN-NVME-000758,FATAL,23025,uvm_test_top,TEST_ABORT,Test sequence terminated,Test sequence terminated
+RUN-NVME-000771,ERROR,105477,uvm_test_top.env.ftl_engine,NAND_RETENTION_CORRUPTION,NAND die junction temperature 101.7C caused block erase retention failure,NAND die junction temperature 101.7C caused block erase retention failure
+RUN-NVME-000771,FATAL,105527,uvm_test_top,TEST_ABORT,Test sequence terminated,Test sequence terminated
+RUN-NVME-000773,ERROR,250608,uvm_test_top.env.nvme_sub_queue,NVME_COMMAND_TIMEOUT,NVMe Submission Queue 4096 starved host memory buffer (HMB=0) at address 0x04b27e1e,NVMe Submission Queue <N> starved host memory buffer (HMB=<N>) at address <ADDR>
+RUN-NVME-000773,FATAL,250658,uvm_test_top,TEST_ABORT,Test sequence terminated,Test sequence terminated
+RUN-NVME-000779,ERROR,278556,uvm_test_top.env.ftl_engine,NAND_RETENTION_CORRUPTION,NAND die junction temperature 97.5C caused block erase retention failure,NAND die junction temperature 97.5C caused block erase retention failure
+RUN-NVME-000779,FATAL,278606,uvm_test_top,TEST_ABORT,Test sequence terminated,Test sequence terminated
+RUN-NVME-000836,ERROR,19752,uvm_test_top.env.nvme_sub_queue,NVME_COMMAND_TIMEOUT,NVMe Submission Queue 4096 starved host memory buffer (HMB=0) at address 0x04d56c9e,NVMe Submission Queue <N> starved host memory buffer (HMB=<N>) at address <ADDR>
+RUN-NVME-000836,FATAL,19802,uvm_test_top,TEST_ABORT,Test sequence terminated,Test sequence terminated
+RUN-NVME-000849,ERROR,86735,uvm_test_top.env.ftl_engine,NAND_RETENTION_CORRUPTION,NAND die junction temperature 103.2C caused block erase retention failure,NAND die junction temperature 103.2C caused block erase retention failure
+RUN-NVME-000849,FATAL,86785,uvm_test_top,TEST_ABORT,Test sequence terminated,Test sequence terminated
+RUN-NVME-000909,ERROR,51648,uvm_test_top.env.ftl_engine,NAND_RETENTION_CORRUPTION,NAND die junction temperature 101.0C caused block erase retention failure,NAND die junction temperature 101.0C caused block erase retention failure
+RUN-NVME-000909,FATAL,51698,uvm_test_top,TEST_ABORT,Test sequence terminated,Test sequence terminated
+RUN-NVME-000914,ERROR,187488,uvm_test_top.env.ftl_engine,NAND_RETENTION_CORRUPTION,NAND die junction temperature 97.8C caused block erase retention failure,NAND die junction temperature 97.8C caused block erase retention failure
+RUN-NVME-000914,FATAL,187538,uvm_test_top,TEST_ABORT,Test sequence terminated,Test sequence terminated
+RUN-NVME-000938,ERROR,459651,uvm_test_top.env.nvme_sub_queue,NVME_COMMAND_TIMEOUT,NVMe Submission Queue 4096 starved host memory buffer (HMB=0) at address 0x00c6701d,NVMe Submission Queue <N> starved host memory buffer (HMB=<N>) at address <ADDR>
+RUN-NVME-000938,FATAL,459701,uvm_test_top,TEST_ABORT,Test sequence terminated,Test sequence terminated
+RUN-NVME-000967,ERROR,244246,uvm_test_top.env.ftl_engine,NAND_RETENTION_CORRUPTION,NAND die junction temperature 102.0C caused block erase retention failure,NAND die junction temperature 102.0C caused block erase retention failure
+RUN-NVME-000967,FATAL,244296,uvm_test_top,TEST_ABORT,Test sequence terminated,Test sequence terminated
+RUN-NVME-000969,ERROR,325734,uvm_test_top.env.pcie_phy,PCIE_AER_PROTOCOL_ERROR,PCIe Advanced Error Reporting: Link retrain framing error during power transition,PCIe Advanced Error Reporting: Link retrain framing error during power transition
+RUN-NVME-000969,FATAL,325784,uvm_test_top,TEST_ABORT,Test sequence terminated,Test sequence terminated

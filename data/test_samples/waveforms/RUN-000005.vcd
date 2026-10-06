@@ -1,0 +1,14 @@
+$date
+   Oct 06, 2026 11:15:00
+$end
+$version
+   SanDisk UFS4.0 M-PHY Waveform $end
+$timescale 1ps $end
+$scope module ufs_top $end
+$var wire 1 ! mphy_tx_clk $end
+$upscope $end
+$enddefinitions $end
+#0
+0!
+#500
+1!

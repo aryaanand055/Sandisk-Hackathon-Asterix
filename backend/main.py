@@ -13,6 +13,7 @@ import uuid
 from datetime import datetime
 from typing import Any, Dict, List, Optional
 
+import numpy as np
 import pandas as pd
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
@@ -63,6 +64,32 @@ def sample_files() -> List[str]:
     return sorted(glob.glob(os.path.join(SAMPLE_DIR, "*.log")))
 
 
+def _clean_obj(obj: Any) -> Any:
+    if obj is None:
+        return None
+    if isinstance(obj, (np.floating, float)):
+        val = float(obj)
+        if np.isnan(val) or np.isinf(val):
+            return None
+        return val
+    if isinstance(obj, (np.integer, int)):
+        return int(obj)
+    if isinstance(obj, (np.bool_, bool)):
+        return bool(obj)
+    if isinstance(obj, np.ndarray):
+        return [_clean_obj(x) for x in obj.tolist()]
+    if isinstance(obj, dict):
+        return {str(k): _clean_obj(v) for k, v in obj.items()}
+    if isinstance(obj, (list, tuple)):
+        return [_clean_obj(x) for x in obj]
+    if hasattr(obj, "item"):
+        try:
+            return _clean_obj(obj.item())
+        except Exception:
+            return str(obj)
+    return obj
+
+
 def _py(v: Any) -> Any:
     """Coerce numpy/pandas scalars to JSON-serialisable Python natives.
 
@@ -91,6 +118,12 @@ def _run_job(job_id: str, paths: List[str], params: Dict[str, Any],
 
         runs, errors, stats, multi_meta = parse_files_multi(paths)
         if runs.empty:
+            wf_avail = multi_meta.get("data_sources", {}).get("waveforms", False)
+            if wf_avail and multi_meta.get("mode") != "multi" and not multi_meta.get("data_sources", {}).get("uvm_log", False):
+                raise ValueError(
+                    "Only waveform companion files (.fsdb, .vcd, .wlf) were uploaded. "
+                    "Waveforms provide internal signal inspection and must be uploaded together with a .log or .csv verification file."
+                )
             raise ValueError(
                 "No valid runs parsed. Ensure input log or CSV files contain verification data."
             )
@@ -110,6 +143,7 @@ def _run_job(job_id: str, paths: List[str], params: Dict[str, Any],
             progress=progress,
         )
 
+        clean_analysis = _clean_obj(analysis)
         job["runs_df"] = runs
         job["result"] = {
             "meta": {
@@ -120,11 +154,11 @@ def _run_job(job_id: str, paths: List[str], params: Dict[str, Any],
                 "files": job.get("files", []),
                 "params": params,
                 "created": job["created"],
-                "elapsed": analysis.get("total_seconds"),
+                "elapsed": clean_analysis.get("total_seconds"),
                 "error": None,
                 "n_runs": int(len(runs)),
             },
-            "analysis": analysis,
+            "analysis": clean_analysis,
         }
         job.update(status="completed", progress=100, message="Complete")
 
@@ -363,4 +397,5 @@ async def copilot_query(req: Dict[str, Any]):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="127.0.0.1", port=8000)
+    port = int(os.getenv("PORT", 8000))
+    uvicorn.run(app, host="127.0.0.1", port=port)

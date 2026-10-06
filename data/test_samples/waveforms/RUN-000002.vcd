@@ -1,0 +1,26 @@
+$date
+   Oct 06, 2026 11:15:00
+$end
+$version
+   SanDisk Asterix Waveform Generator v1.0
+$end
+$timescale 1ps $end
+$scope module tb_top $end
+$var wire 1 ! clk $end
+$var wire 1 " rst_n $end
+$var wire 64 # axi_awaddr [63:0] $end
+$var wire 1 $ axi_awvalid $end
+$var wire 1 % axi_awready $end
+$upscope $end
+$enddefinitions $end
+#0
+0!
+0"
+b0 #
+0$
+0%
+#1000
+1"
+#2000
+1!
+1$

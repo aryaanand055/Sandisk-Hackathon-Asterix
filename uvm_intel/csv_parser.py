@@ -30,6 +30,14 @@ _OUTCOME_ALIASES = {
     "verdict": "pass_fail",
 }
 
+_ERROR_TAG_ALIASES = {
+    "failure_class": "primary_error_tag",
+    "failure_type": "primary_error_tag",
+    "error_tag": "primary_error_tag",
+    "error_type": "primary_error_tag",
+    "err_tag": "primary_error_tag",
+}
+
 _PASS_VALUES = {"pass", "passed", "ok", "success", "1", "true", "yes"}
 _FAIL_VALUES = {"fail", "failed", "error", "failure", "0", "false", "no"}
 
@@ -75,6 +83,8 @@ def _normalise_columns(df: pd.DataFrame) -> pd.DataFrame:
             rename[col] = "run_id"
         elif normed in _OUTCOME_ALIASES:
             rename[col] = _OUTCOME_ALIASES[normed]
+        elif normed in _ERROR_TAG_ALIASES:
+            rename[col] = _ERROR_TAG_ALIASES[normed]
         elif normed != col:
             rename[col] = normed
     df = df.rename(columns=rename)
