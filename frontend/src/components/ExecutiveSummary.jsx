@@ -200,28 +200,6 @@ export default function ExecutiveSummary({ data }) {
           </table>
         </div>
       </div>
-
-      <div style={{ ...card, marginTop: 20 }}>
-        <h3 style={{ marginTop: 0 }}>Timing by Failure Mode</h3>
-        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-          <thead>
-            <tr style={{ background: '#f3f4f6' }}>
-              <th style={th}>Error Tag</th>
-              <th style={{ ...th, textAlign: 'right' }}>Runs</th>
-              <th style={{ ...th, textAlign: 'right' }}>Mean Exec Time</th>
-            </tr>
-          </thead>
-          <tbody>
-            {Object.entries(s.by_error_tag || {}).map(([tag, v]) => (
-              <tr key={tag}>
-                <td style={td}>{tag}</td>
-                <td style={{ ...td, textAlign: 'right' }}>{num(v.count)}</td>
-                <td style={{ ...td, textAlign: 'right' }}>{v.mean_execution_time_ms?.toFixed(2)} ms</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
     </div>
   )
 }

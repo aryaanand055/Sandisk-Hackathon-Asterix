@@ -7,3 +7,5 @@ data/uvm_logs/
 .env
 
 site-packages
+# Corpora built from the Generator page
+data/generated/
