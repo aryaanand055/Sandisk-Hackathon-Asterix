@@ -1,0 +1,380 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=block" rel="stylesheet">
+<style>
+:root{
+  --font-sans:'Inter',-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
+  --font-mono:'JetBrains Mono','DejaVu Sans Mono',monospace;
+  --bg:#f5f6f8;--surface:#fff;--surface-hover:#f1f2f5;--border:#e3e5ea;--border-strong:#d1d5dc;
+  --text:#171a21;--text-secondary:#565d6b;--text-tertiary:#858c99;
+  --accent:#4a5fe0;--accent-subtle:rgba(74,95,224,.08);--accent-border:rgba(74,95,224,.28);
+  --success:#16884f;--success-subtle:rgba(22,136,79,.08);--success-border:rgba(22,136,79,.26);
+  --warning:#a3690a;--warning-subtle:rgba(163,105,10,.10);--warning-border:rgba(163,105,10,.30);
+  --danger:#cc352d;--danger-subtle:rgba(204,53,45,.08);
+  --purple:#7449db;--purple-subtle:rgba(116,73,219,.08);--purple-border:rgba(116,73,219,.26);
+  --shadow-md:0 24px 56px rgba(23,26,33,.12),0 4px 14px rgba(23,26,33,.06);
+  --navy:#0b0e19;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1920px;height:1080px;overflow:hidden;background:var(--navy)}
+body{font-family:var(--font-sans);-webkit-font-smoothing:antialiased;color:var(--text)}
+#stage{position:absolute;inset:0;overflow:hidden}
+.abs{position:absolute}
+
+/* ---------- dark world ---------- */
+#dark{position:absolute;inset:0;background:var(--navy)}
+#logwrap{position:absolute;left:-40px;right:-40px;top:0;bottom:0;overflow:hidden}
+#logs{position:absolute;left:60px;top:0;font-family:var(--font-mono);font-size:21px;line-height:33px;white-space:pre;color:#4d5670}
+#logs .e{color:#ff6259}
+#logs .i{color:#46506a}
+#logs .t{color:#7d89ad}
+#shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(11,14,25,.97) 0%,rgba(11,14,25,.93) 55%,rgba(11,14,25,.45) 85%,rgba(11,14,25,.25) 100%)}
+.hook{position:absolute;left:140px;font-weight:800;font-size:132px;letter-spacing:-.035em;line-height:1;color:#fff}
+#h1{top:330px}
+#h2{top:490px;color:#ff5a52}
+#title{position:absolute;left:140px;top:350px;width:1640px}
+#kicker{font-family:var(--font-mono);font-size:26px;font-weight:500;letter-spacing:.18em;color:#8b9cff;margin-bottom:26px}
+#ttl{font-size:110px;font-weight:800;letter-spacing:-.035em;line-height:1.02;color:#fff}
+#sub{margin-top:34px;font-size:48px;font-weight:500;color:#aeb6cc;letter-spacing:-.01em}
+
+/* ---------- light world ---------- */
+#light{position:absolute;inset:0;background:var(--bg)}
+#dots{position:absolute;inset:0;background-image:radial-gradient(rgba(23,26,33,.075) 1.6px,transparent 1.6px);background-size:34px 34px}
+#glow{position:absolute;width:1400px;height:1400px;left:700px;top:-300px;border-radius:50%;background:radial-gradient(circle,rgba(74,95,224,.13),rgba(74,95,224,0) 62%)}
+.cap{position:absolute;left:120px;top:0;width:620px;height:1080px;display:flex;flex-direction:column;justify-content:center}
+.tag{font-family:var(--font-mono);font-size:22px;font-weight:500;color:var(--accent);letter-spacing:.12em;margin-bottom:26px}
+.capt{font-size:74px;font-weight:800;letter-spacing:-.035em;line-height:1.05;color:var(--text)}
+.capt .ln{display:block}
+.capt em{font-style:normal;color:var(--danger)}
+.capt b{color:var(--accent)}
+.panel{position:absolute;left:800px;top:0;width:1010px;height:1080px;display:flex;flex-direction:column;justify-content:center}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:20px;box-shadow:var(--shadow-md);padding:44px 48px}
+.card h3{font-size:34px;font-weight:700;letter-spacing:-.02em;color:#1f2937}
+.card .desc{font-size:20px;color:var(--text-secondary);margin-top:8px;line-height:1.4}
+
+/* upload */
+#upTitle{font-size:44px;font-weight:700;text-align:center;letter-spacing:-.02em}
+#zone{margin:36px 0 34px;border:3px dashed #c4c8cf;border-radius:18px;padding:60px 50px;text-align:center}
+#zone svg{width:76px;height:76px}
+#zone .l1{font-size:27px;color:#2d3748;margin-top:28px;line-height:1.35}
+#zone .l2{font-size:22px;color:#8a929f;margin-top:14px}
+#btnWrap{display:flex;justify-content:center}
+#btn{position:relative;background:#eceff1;border-radius:12px;padding:26px 60px;font-size:28px;font-weight:700;color:#2d3748;overflow:hidden}
+#ripple{position:absolute;width:40px;height:40px;border-radius:50%;background:rgba(74,95,224,.35);left:50%;top:50%;margin:-20px 0 0 -20px}
+
+/* app shell */
+.tabs{display:flex;gap:6px;border-bottom:1px solid var(--border);margin:-44px -48px 34px;padding:0 30px;background:#fafbfc;border-radius:20px 20px 0 0}
+.tabs div{font-size:20px;color:var(--text-tertiary);padding:24px 18px 20px;border-bottom:3px solid transparent;white-space:nowrap}
+.tabs div.on{color:var(--accent);border-bottom-color:var(--accent);font-weight:600}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.kpi{border:1px solid var(--border);border-radius:16px;padding:26px 28px;background:#fff;box-shadow:0 1px 3px rgba(23,26,33,.06)}
+.kpi .v{font-size:54px;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.kpi .k{font-size:21px;color:var(--text-secondary);margin-top:6px}
+
+/* shap */
+.bars{margin-top:30px}
+.bar{display:flex;align-items:center;height:52px}
+.bar .n{width:250px;text-align:right;padding-right:18px;font-size:22px;color:#4a5263;font-family:var(--font-sans)}
+.bar .track{flex:1;height:36px;position:relative;border-left:2px solid #6b7280}
+.bar .fill{position:absolute;left:0;top:0;bottom:0;border-radius:0 9px 9px 0}
+.legend{font-size:20px;color:var(--text-secondary);margin-top:8px}
+.legend .r{color:#dc2626;font-weight:700}.legend .g{color:#9ca3af;font-weight:700}
+
+/* fingerprint table */
+table{border-collapse:collapse;width:100%;margin-top:24px;font-variant-numeric:tabular-nums}
+th{font-size:19px;font-weight:600;color:#374151;text-align:left;background:#f3f4f6;padding:16px 14px}
+td{font-size:21px;color:#374151;padding:15px 14px;border-bottom:1px solid #eceef2}
+th.r,td.r{text-align:right}
+td.id{font-weight:700}
+.det{display:inline-block;padding:5px 12px;border-radius:8px;font-weight:700;font-size:20px;background:#e3e9ff;color:#2a3fbf}
+.det.hot{background:#fdf0c4;color:#8a5300}
+.cls{font-size:19px;color:#555d6b;white-space:nowrap}
+tr.hl td{background:#eef3ff}
+#ring{position:absolute;border:4px solid var(--danger);border-radius:999px}
+#tmpl{margin-top:22px;background:#f7f8fa;border:1px solid var(--border);border-radius:12px;padding:18px 22px;font-family:var(--font-mono);font-size:18px;color:#2d3748;line-height:1.5}
+#tmplNote{font-size:19px;color:var(--text-secondary);margin-top:12px}
+
+/* recommendations */
+#banner{background:#effbf3;border-left:7px solid #22a356;border-radius:10px;padding:22px 26px;font-size:24px;color:#14532d}
+.rkpis{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:24px 0 8px}
+.pill{display:inline-block;background:#d7f6e3;color:#11683c;font-weight:700;font-size:19px;padding:7px 14px;border-radius:9px}
+td.mono{font-family:var(--font-mono);font-size:19px}
+tr.best td{background:var(--accent-subtle)}
+#bestBox{position:absolute;border:3px solid var(--accent);border-radius:12px}
+
+/* outro */
+#outro{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+#logo{width:560px}
+#oTitle{font-size:96px;font-weight:800;letter-spacing:-.04em;margin-top:44px;color:var(--text)}
+#oTag{font-size:52px;font-weight:700;color:var(--accent);margin-top:18px;letter-spacing:-.02em}
+#oFoot{margin-top:56px;font-size:26px;color:var(--text-secondary)}
+#oRepo{margin-top:14px;font-family:var(--font-mono);font-size:24px;color:var(--text-tertiary)}
+
+#cursor{position:absolute;left:0;top:0;width:44px;height:44px;filter:drop-shadow(0 4px 8px rgba(0,0,0,.25))}
+#flash{position:absolute;inset:0;background:#fff;pointer-events:none}
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="dark">
+    <div id="logwrap"><div id="logs"></div></div>
+    <div id="shade"></div>
+    <div class="hook" id="h1">50,000 test runs.</div>
+    <div class="hook" id="h2">12,000 failed.</div>
+    <div id="title">
+      <div id="kicker">TEAM ASTERIX PRESENTS</div>
+      <div id="ttl">UVM Configuration<br>Intelligence</div>
+      <div id="sub">Turns UVM logs into root causes.</div>
+    </div>
+  </div>
+
+  <div id="light">
+    <div id="dots"></div><div id="glow"></div>
+
+    <!-- scene 3 -->
+    <div class="cap" id="c3"><div class="tag">01 · UPLOAD</div><div class="capt">Drop in your<br>sim logs.</div></div>
+    <div class="panel" id="p3a"><div class="card" style="padding:56px 60px">
+      <div id="upTitle">Upload Verification Files</div>
+      <div id="zone">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#3b9ae1" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+        <div class="l1">Drag files or entire folders here (.log, .csv, .vcd, .fsdb, .wlf) or click to browse</div>
+        <div class="l2">Supports single-file logs, multi-file CSV folders, and waveform companion files</div>
+      </div>
+      <div id="btnWrap"><div id="btn"><div id="ripple"></div><span style="position:relative">Use Bundled Sample</span></div></div>
+    </div></div>
+    <div class="panel" id="p3b"><div class="card">
+      <div class="tabs"><div class="on">Executive Summary</div><div>AI Copilot</div><div>Failure Fingerprints</div><div>Tradeoff Matrix</div></div>
+      <div class="kpis">
+        <div class="kpi" id="k1"><div class="v" id="v1">50,000</div><div class="k">Runs Analysed</div></div>
+        <div class="kpi" id="k2"><div class="v" id="v2" style="color:var(--danger)">24.0%</div><div class="k">Failure Rate</div></div>
+        <div class="kpi" id="k3"><div class="v" id="v3">0.884</div><div class="k">Model ROC-AUC</div></div>
+      </div>
+      <div class="kpis" style="grid-template-columns:repeat(2,1fr);margin-top:20px">
+        <div class="kpi" id="k4"><div class="v" id="v4">27,902</div><div class="k">Error Lines</div></div>
+        <div class="kpi" id="k5"><div class="v" id="v5">24.2%</div><div class="k">Mean Predicted Risk</div></div>
+      </div>
+    </div></div>
+
+    <!-- scene 4 -->
+    <div class="cap" id="c4"><div class="tag">02 · RISK DRIVERS</div><div class="capt">See which <b>settings</b> make tests fail.</div></div>
+    <div class="panel" id="p4"><div class="card">
+      <h3>Global SHAP Importance</h3>
+      <div class="legend">Bar length = how much the setting matters. <span class="r">Red raises risk</span>, <span class="g">grey</span> = no clear direction.</div>
+      <div class="bars" id="bars"></div>
+    </div></div>
+
+    <!-- scene 5 -->
+    <div class="cap" id="c5"><div class="tag">03 · FAILURE FINGERPRINTS</div><div class="capt">
+      <span class="ln" id="l5a">804 failures.</span>
+      <span class="ln" id="l5b">One identical trace.</span>
+      <span class="ln" id="l5c"><em>A real RTL bug.</em></span></div></div>
+    <div class="panel" id="p5"><div class="card" style="padding:40px 44px;position:relative" id="fpCard">
+      <h3>Clusters</h3>
+      <table id="fp">
+        <thead><tr><th>Cluster</th><th>Dominant Tag</th><th class="r">Runs</th><th class="r">Traces</th><th class="r">Determinism</th><th>Classification</th></tr></thead>
+        <tbody></tbody>
+      </table>
+      <div id="tmplBox"><div id="tmpl">Illegal burst termination on plane &lt;N&gt;: beat=&lt;N&gt; addr=&lt;ADDR&gt; expected_ack=&lt;N&gt; observed_ack=&lt;N&gt;</div>
+      <div id="tmplNote">1 template(s) · 1 distinct trace(s) across 804 seed(s)</div></div>
+      <div id="ring"></div>
+    </div></div>
+
+    <!-- scene 6 -->
+    <div class="cap" id="c6"><div class="tag">04 · RECOMMENDATIONS</div><div class="capt">Then the fastest config under <b>2% risk.</b></div></div>
+    <div class="panel" id="p6"><div class="card" style="position:relative" id="recCard">
+      <div id="banner">Found 111 configuration(s) under the 2.0% risk ceiling across 150 trials.</div>
+      <div class="rkpis">
+        <div class="kpi" id="r1"><div class="v" id="rv1">150</div><div class="k">Trials</div></div>
+        <div class="kpi" id="r2"><div class="v" id="rv2">111</div><div class="k">Feasible</div></div>
+        <div class="kpi" id="r3"><div class="v" id="rv3">0.98%</div><div class="k">Min Achievable Risk</div></div>
+      </div>
+      <table id="rec">
+        <thead><tr><th>#</th><th class="r">Throughput</th><th class="r">Predicted Risk</th><th>Status</th><th>test_name</th><th>cache_policy</th></tr></thead>
+        <tbody></tbody>
+      </table>
+      <div id="bestBox"></div>
+    </div></div>
+
+    <!-- outro -->
+    <div id="outro">
+      <img id="logo" src="asterix-logo.png">
+      <div id="oTitle">UVM Configuration Intelligence</div>
+      <div id="oTag">Find the bug, not the noise.</div>
+      <div id="oFoot">Team Asterix · Sandisk Hackathon</div>
+      <div id="oRepo">github.com/aryaanand055/Sandisk-Hackathon-Asterix</div>
+    </div>
+  </div>
+
+  <svg id="cursor" viewBox="0 0 24 24"><path d="M4 2.5 L4 19.5 L8.6 15.4 L11.6 22 L14.6 20.7 L11.7 14.2 L18 14.2 Z" fill="#111" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg>
+  <div id="flash"></div>
+</div>
+
+<script src="loglines.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+const clamp = (x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const seg = (t,a,b)=>clamp((t-a)/(b-a));
+const eo = x=>1-Math.pow(1-x,3);
+const eio = x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+const back = x=>{const c1=1.5,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2)};
+function S(el,o){ if(typeof el==='string') el=$(el);
+  const x=o.x||0,y=o.y||0,s=o.s===undefined?1:o.s;
+  el.style.opacity = o.o===undefined?1:o.o;
+  el.style.transform = `translate(${x}px,${y}px) scale(${s})`;
+  if(o.blur!==undefined) el.style.filter = o.blur>0.05?`blur(${o.blur}px)`:'none';
+  el.style.visibility = (o.o===0)?'hidden':'visible';
+}
+// in/out envelope: rise in over [a,a+d], fade out over [b,b+d2]
+function env(t,a,b,d=.35,d2=.25){ const i=eo(seg(t,a,a+d)), o=eio(seg(t,b,b+d2)); return {p:i,q:o,o:i*(1-o)}; }
+function fmt(n,dec){ return n.toLocaleString('en-US',{minimumFractionDigits:dec,maximumFractionDigits:dec}); }
+
+/* ---- data (real dashboard output, 50,000-run bundled sample) ---- */
+const LOGS = window.LOGLINES || [];
+const shap = [ // share of importance read off the dashboard's chart
+  ['test_mode_enabled',22.2,'r'],['clock_freq_mhz',10.9,'r'],['test_name',8.7,'g'],['cache_policy',8.5,'g'],
+  ['prefetch_depth',8.2,'r'],['queue_depth',6.3,'r'],['burst_length',3.4,'r'],['ecc_mode',3.1,'g'],['num_planes',2.7,'r'],['scrambler_enable',1.6,'r']];
+const fp = [['c0','DATA_MISMATCH','3,101','3,101','3,101','0.0000'],['c2','TIMEOUT','3,040','3,040','3,040','0.0000'],
+  ['c4','FIFO_OVERFLOW','2,415','2,415','2,415','0.0000'],['c3','ASSERTION_FAIL','1,534','1,534','1,534','0.0000'],
+  ['c5','ECC_UNCORRECTABLE','995','995','995','0.0000'],['c1','PROTOCOL_VIOLATION','804','1','804','0.9988'],['c6','RETENTION_FAIL','131','131','131','0.0000']];
+const rec = [['1','380.65 Mbps','1.98%','Garbage_Collect','Adaptive'],['2','371.71 Mbps','1.41%','Garbage_Collect','Adaptive'],['3','366.79 Mbps','1.44%','Garbage_Collect','Adaptive']];
+
+function build(){
+  const lg=$('logs'); let h='';
+  for(let r=0;r<3;r++) for(const l of LOGS){
+    const esc=l.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+    const m=esc.match(/^(UVM_\w+)( @ [\d]+ ns: )(.*)$/);
+    if(!m){h+=esc+'\n';continue}
+    const cls=m[1]==='UVM_ERROR'?'e':'i';
+    h+=`<span class="${cls}">${m[1]}</span><span class="t">${m[2]}</span><span class="${cls}">${m[3]}</span>\n`;
+  }
+  lg.innerHTML=h;
+  $('bars').innerHTML = shap.map((b,i)=>`<div class="bar"><div class="n">${b[0]}</div><div class="track"><div class="fill" id="bf${i}" style="background:${b[2]==='r'?'#dc2626':'#9ca3af'}"></div></div></div>`).join('');
+  document.querySelector('#fp tbody').innerHTML = fp.map((r,i)=>`<tr id="fr${i}" class="${r[0]==='c1'?'c1':''}"><td class="id">${r[0]}</td><td>${r[1]}</td><td class="r">${r[2]}</td><td class="r" ${r[0]==='c1'?'id="trc"':''}>${r[3]}</td><td class="r"><span class="det ${r[0]==='c1'?'hot':''}" ${r[0]==='c1'?'id="detc1"':''}>${r[5]}</span></td><td class="cls">${r[0]==='c1'?'🐛 deterministic RTL bug':'seed-dependent / random'}</td></tr>`).join('');
+  document.querySelector('#rec tbody').innerHTML = rec.map((r,i)=>`<tr id="rr${i}"><td>${r[0]}</td><td class="r" style="font-weight:600">${r[1]}</td><td class="r">${r[2]}</td><td><span class="pill">within ceiling</span></td><td class="mono">${r[3]}</td><td class="mono">${r[4]}</td></tr>`).join('');
+}
+
+function render(t){
+  /* ---------- DARK: 0 – 5.75 ---------- */
+  const darkOn = t<5.9;
+  $('dark').style.visibility = darkOn?'visible':'hidden';
+  if(darkOn){
+    // log scroll accelerates through the hook, slows under the title
+    const sp = t<3 ? 300*t + 130*t*t : 300*3+130*9 + 260*(t-3) + 40*(t-3)*(t-3)*-0.5;
+    $('logs').style.transform = `translateY(${-sp}px)`;
+    const tb = eio(seg(t,2.9,3.4));
+    $('logwrap').style.filter = tb>0.01?`blur(${7*tb}px)`:'none';
+    $('logwrap').style.opacity = 1-0.45*tb;
+    $('shade').style.opacity = 1;
+    const a=env(t,0.15,2.82,.4,.2); S('h1',{o:a.o,y:40*(1-a.p)-30*a.q});
+    const b=env(t,0.95,2.82,.4,.2); S('h2',{o:b.o,y:40*(1-b.p)-30*b.q, s:1+0.04*(1-eo(seg(t,0.95,1.3)))});
+    const k=env(t,3.0,9,.35); S('kicker',{o:k.o,y:20*(1-k.p)});
+    const tt=env(t,3.05,9,.45); S('ttl',{o:tt.o,y:50*(1-tt.p)});
+    const sb=env(t,3.35,9,.4); S('sub',{o:sb.o,y:30*(1-sb.p)});
+  }
+  /* ---------- LIGHT wipe in 5.35 – 5.8 ---------- */
+  const w = eio(seg(t,5.35,5.8));
+  const L=$('light');
+  L.style.visibility = w>0?'visible':'hidden';
+  L.style.clipPath = `inset(${(1-w)*100}% 0 0 0 round ${40*(1-w)}px)`;
+  $('glow').style.transform = `translate(${-120*Math.sin(t*0.25)}px,${60*Math.sin(t*0.3)}px)`;
+  $('dots').style.transform = `translateY(${-t*6 % 34}px)`;
+
+  /* ---------- S3 upload + KPIs 5.5 – 9.0 ---------- */
+  { const c=env(t,5.7,8.75); S('c3',{o:c.o,y:30*(1-c.p)-20*c.q});
+    const ua=env(t,5.55,6.85,.45,.3); S('p3a',{o:ua.o,x:80*(1-ua.p)-60*ua.q,s:1-.03*ua.q});
+    // button press
+    const press = seg(t,6.5,6.6)-seg(t,6.62,6.75);
+    $('btn').style.transform=`scale(${1-0.05*press})`;
+    $('btn').style.background = t>6.5? '#dfe3f9':'#eceff1';
+    const rp=seg(t,6.52,7.0); S('ripple',{o:(1-rp)*(rp>0?1:0), s:1+14*eo(rp)});
+    const ka=env(t,6.95,8.75,.4,.25); S('p3b',{o:ka.o,x:80*(1-ka.p)-60*ka.q});
+    const cnt=eo(seg(t,7.15,8.0));
+    $('v1').textContent=fmt(Math.round(50000*cnt),0);
+    $('v2').textContent=fmt(24.0*cnt,1)+'%';
+    $('v3').textContent=fmt(0.884*cnt,3);
+    $('v4').textContent=fmt(Math.round(27902*cnt),0);
+    $('v5').textContent=fmt(24.2*cnt,1)+'%';
+    ['k1','k2','k3','k4','k5'].forEach((k,i)=>{const p=back(seg(t,7.0+i*.08,7.4+i*.08)); S(k,{o:clamp(p),y:24*(1-p)})});
+  }
+  /* ---------- S4 SHAP 9.0 – 13.0 ---------- */
+  { const c=env(t,9.0,12.75); S('c4',{o:c.o,y:30*(1-c.p)-20*c.q});
+    const p=env(t,9.0,12.75,.4); S('p4',{o:p.o,x:80*(1-p.p)-60*p.q});
+    shap.forEach((b,i)=>{ const g=eo(seg(t,9.3+i*.09,9.95+i*.09));
+      const el=$('bf'+i); el.style.width=(b[1]/24*100*g)+'%';
+      const hl = i===0 ? eo(seg(t,10.9,11.2)) : 0;
+      el.style.boxShadow = hl>0?`0 0 0 ${4*hl}px rgba(220,38,38,.22), 0 0 ${26*hl}px rgba(220,38,38,.45)`:'none';
+      el.parentNode.parentNode.style.opacity = (i>0 && t>10.9) ? 1-0.45*eo(seg(t,10.9,11.2)) : 1;
+    });
+  }
+  /* ---------- S5 fingerprints 13.0 – 17.5 ---------- */
+  { const c=env(t,13.0,17.25); S('c5',{o:c.o,y:-20*c.q});
+    const la=env(t,13.05,99,.35); S('l5a',{o:la.o,y:24*(1-la.p)});
+    const lb=env(t,14.35,99,.35); S('l5b',{o:lb.o,y:24*(1-lb.p)});
+    const lc=env(t,15.0,99,.35); S('l5c',{o:lc.o,y:24*(1-lc.p),s:1+.06*(1-eo(seg(t,15.0,15.5)))});
+    const p=env(t,13.0,17.25,.4); S('p5',{o:p.o,x:80*(1-p.p)-60*p.q});
+    const hl=eo(seg(t,14.25,14.55));
+    fp.forEach((r,i)=>{ const g=eo(seg(t,13.2+i*.08,13.55+i*.08)); const tr=$('fr'+i);
+      tr.style.opacity = g*(r[0]==='c1'?1:1-0.6*hl);
+      tr.style.transform=`translateY(${16*(1-g)}px)`;
+      tr.classList.toggle('hl', r[0]==='c1' && hl>0.3);
+    });
+    const dp = seg(t,14.3,14.8); $('detc1').style.transform=`scale(${1+0.25*Math.sin(Math.PI*dp)})`;
+    // ring around "1" trace count
+    const trc=$('trc'), card=$('fpCard');
+    const rr=trc.getBoundingClientRect(), cr=card.getBoundingClientRect();
+    const sc = cr.width/card.offsetWidth || 1;
+    const rgn=back(seg(t,14.5,14.85));
+    const R=$('ring'); const cx=(rr.right-cr.left)/sc-14-12, cy=(rr.top+rr.height/2-cr.top)/sc;
+    R.style.width='64px';R.style.height='54px';R.style.left=(cx-32)+'px';R.style.top=(cy-27)+'px';
+    R.style.opacity=clamp(rgn); R.style.transform=`scale(${0.4+0.6*rgn})`;
+    const tm=env(t,15.0,99,.4); S('tmplBox',{o:tm.o,y:20*(1-tm.p)});
+  }
+  /* ---------- S6 recommendations 17.5 – 21.0 ---------- */
+  { const c=env(t,17.5,20.75); S('c6',{o:c.o,y:30*(1-c.p)-20*c.q});
+    const p=env(t,17.5,20.75,.4); S('p6',{o:p.o,x:80*(1-p.p)-60*p.q});
+    const bn=eo(seg(t,17.65,18.0)); S('banner',{o:bn,x:-30*(1-bn)});
+    const cnt=eo(seg(t,18.0,18.7));
+    $('rv1').textContent=Math.round(150*cnt); $('rv2').textContent=Math.round(111*cnt);
+    $('rv3').textContent=fmt(0.98+ (24.2-0.98)*(1-cnt),2)+'%';
+    ['r1','r2','r3'].forEach((k,i)=>{const q=back(seg(t,17.9+i*.08,18.3+i*.08)); S(k,{o:clamp(q),y:24*(1-q)})});
+    rec.forEach((r,i)=>{ const g=eo(seg(t,18.5+i*.12,18.85+i*.12)); const tr=$('rr'+i);
+      tr.style.opacity=g; tr.style.transform=`translateX(${30*(1-g)}px)`; tr.classList.toggle('best', i===0 && t>19.4); });
+    const tr0=$('rr0'), card=$('recCard'); const a=tr0.getBoundingClientRect(), cr=card.getBoundingClientRect();
+    const sc = cr.width/card.offsetWidth || 1;
+    const bb=$('bestBox'), q=back(seg(t,19.35,19.7));
+    bb.style.left=((a.left-cr.left)/sc-6)+'px'; bb.style.top=((a.top-cr.top)/sc-4)+'px';
+    bb.style.width=(a.width/sc+12)+'px'; bb.style.height=(a.height/sc+8)+'px';
+    bb.style.opacity=clamp(q); bb.style.transform=`scale(${1.04-0.04*q})`;
+  }
+  /* ---------- outro 21.0 – 24 ---------- */
+  { const on=t>20.9; $('outro').style.visibility=on?'visible':'hidden';
+    const l=env(t,21.0,99,.5); S('logo',{o:l.o,y:30*(1-l.p),s:.94+.06*l.p});
+    const a=env(t,21.15,99,.45); S('oTitle',{o:a.o,y:40*(1-a.p)});
+    const b=env(t,21.45,99,.45); S('oTag',{o:b.o,y:30*(1-b.p)});
+    const c=env(t,21.75,99,.45); S('oFoot',{o:c.o,y:20*(1-c.p)});
+    const d=env(t,21.85,99,.45); S('oRepo',{o:d.o,y:20*(1-d.p)});
+    const gl=eio(seg(t,23.4,24)); $('stage').style.opacity=1; // keep last frame clean
+  }
+  /* ---------- cursor ---------- */
+  { // enters 5.95, moves to button by 6.45, clicks 6.55, exits 6.95
+    const btn=$('btn').getBoundingClientRect();
+    const tx=btn.left+btn.width*0.62, ty=btn.top+btn.height*0.55;
+    const m=eio(seg(t,5.95,6.48));
+    const x=1850+(tx-1850)*m, y=1120+(ty-1120)*m;
+    const out=eio(seg(t,6.85,7.15));
+    const vis = t>5.9 && t<7.15;
+    const C=$('cursor'); C.style.visibility=vis?'visible':'hidden';
+    const pr = seg(t,6.5,6.58)-seg(t,6.62,6.72);
+    C.style.opacity=1-out; C.style.transform=`translate(${x+out*120}px,${y+out*160}px) scale(${1-0.15*pr})`;
+  }
+  $('flash').style.opacity = 0.0;
+}
+window.render=render;
+window.ready = (async()=>{ build(); await document.fonts.ready;
+  await Promise.all([...document.images].map(i=>i.complete?1:new Promise(r=>{i.onload=i.onerror=r})));
+  render(0); return true; })();
+</script>
+</body>
+</html>

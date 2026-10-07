@@ -1,0 +1,1 @@
+50,000 UVM test runs, 12,000 failures, and one question: which ones are real bugs? UVM Configuration Intelligence reads your sim logs, shows which settings make tests fail, flags a deterministic RTL bug (804 failures, one identical trace), and recommends the fastest config under 2% risk. Built by Team Asterix for the Sandisk Hackathon.
