@@ -105,6 +105,34 @@ def _merge_csv_tables(csv_data: Dict[str, pd.DataFrame]) -> pd.DataFrame:
     return base
 
 
+# Telemetry columns that describe the environment a run was launched in, as
+# opposed to what the run did (wall time, CPU load, peak memory), which is a
+# consequence of the outcome and would leak it into the risk model.
+ENVIRONMENT_COLUMNS = {
+    "host", "os_release", "simulator", "simulator_version", "cpu_model",
+    "cpu_cores_allocated", "temperature_c", "voltage_mv", "power_mode",
+    "grid_queue",
+}
+
+
+def _input_columns(csv_data: Dict[str, pd.DataFrame],
+                   runs_df: pd.DataFrame) -> List[str]:
+    """Columns known before a run starts: configuration, randomisation and
+    environment. Outcomes, transactions and registers are observed during or
+    after the run, so they never count as candidate causes."""
+    cols: List[str] = []
+    for cat in ("config", "randomization"):
+        df = csv_data.get(cat)
+        if isinstance(df, pd.DataFrame):
+            cols += list(df.columns)
+    tel = csv_data.get("telemetry")
+    if isinstance(tel, pd.DataFrame):
+        cols += [c for c in tel.columns if c in ENVIRONMENT_COLUMNS]
+    seen = set()
+    return [c for c in cols if c in runs_df.columns and c != "run_id"
+            and not (c in seen or seen.add(c))]
+
+
 def _ensure_required_columns(df: pd.DataFrame) -> pd.DataFrame:
     """Ensure the canonical columns the pipeline expects exist.
 
@@ -336,4 +364,5 @@ def parse_upload(
     if waveform_info.get("available"):
         stats["waveform_info"] = waveform_info
 
+    runs_df.attrs["feature_columns"] = _input_columns(csv_data, runs_df)
     return runs_df, log_errors, stats

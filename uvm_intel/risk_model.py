@@ -35,6 +35,11 @@ EXCLUDED_COLUMNS = {"run_id", "seed"}
 
 def select_features(df: pd.DataFrame) -> List[str]:
     """Configuration knobs only - the things an engineer can actually set."""
+    # Multi-file uploads say which columns came from config / randomisation /
+    # environment tables; everything else there is an observed outcome.
+    known = df.attrs.get("feature_columns")
+    if known:
+        return [c for c in known if c in df.columns and c not in EXCLUDED_COLUMNS]
     return [c for c in df.columns
             if c not in OUTCOME_COLUMNS and c not in EXCLUDED_COLUMNS]
 
