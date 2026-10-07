@@ -118,9 +118,12 @@ def nearest_twin_diff(
 
         parts_f, parts_p = [], []
         if num:
-            sc = StandardScaler().fit(grp[num].to_numpy(dtype=float))
-            parts_f.append(sc.transform(f[num].to_numpy(dtype=float)))
-            parts_p.append(sc.transform(p[num].to_numpy(dtype=float)))
+            # Partial uploads leave gaps; fill with the sequence median so
+            # NearestNeighbors gets a complete matrix.
+            fill = grp[num].median(numeric_only=True).fillna(0)
+            sc = StandardScaler().fit(grp[num].fillna(fill).to_numpy(dtype=float))
+            parts_f.append(sc.transform(f[num].fillna(fill).to_numpy(dtype=float)))
+            parts_p.append(sc.transform(p[num].fillna(fill).to_numpy(dtype=float)))
         if cat:
             enc = OneHotEncoder(handle_unknown="ignore", sparse_output=False)
             enc.fit(grp[cat].astype(str))
