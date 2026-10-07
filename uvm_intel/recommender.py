@@ -13,7 +13,7 @@ The search maximises predicted throughput subject to predicted failure
 probability staying under a hard ceiling (default 2%).
 """
 
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 import numpy as np
 import pandas as pd
@@ -82,9 +82,37 @@ def recommend(
     n_trials: int = 150,
     seed: int = 42,
     top_n: int = 10,
+    shap_importance: Optional[List[Dict[str, Any]]] = None,
+    max_active_knobs: int = 12,
 ) -> Dict[str, Any]:
-    """Search for high-throughput, low-risk configurations with Optuna or Random/Grid fallback."""
-    space = _search_space(runs, features)
+    """Search for high-throughput, low-risk configurations with Optuna or Random/Grid fallback.
+    
+    When features exceed max_active_knobs, uses SHAP-guided dimensionality reduction:
+    tunes the top active risk/throughput drivers with TPE while freezing lower-impact
+    parameters to their safe baseline defaults.
+    """
+    # ── SHAP-guided active parameter selection ──────────────────────────────
+    if shap_importance and len(features) > max_active_knobs:
+        shap_ranked = [item["feature"] for item in shap_importance if item.get("feature") in features]
+        # Top high-impact knobs to actively optimize
+        active_features = shap_ranked[:max_active_knobs]
+        # Lower-impact knobs frozen to safe defaults
+        frozen_features = [f for f in features if f not in active_features]
+    else:
+        active_features = list(features)
+        frozen_features = []
+
+    # Compute baseline defaults for frozen features from passing runs (mode or median)
+    pass_runs = runs[runs["pass_fail"] == "pass"] if (runs["pass_fail"] == "pass").any() else runs
+    defaults: Dict[str, Any] = {}
+    for f in frozen_features:
+        col = pass_runs[f]
+        if pd.api.types.is_numeric_dtype(col):
+            defaults[f] = float(col.median()) if pd.api.types.is_float_dtype(col) else int(col.median())
+        else:
+            defaults[f] = col.mode()[0] if not col.mode().empty else col.iloc[0]
+
+    space = _search_space(runs, active_features)
     tp_model = _fit_throughput_model(runs, features, X, seed)
     dtypes = {c: X[c].dtype for c in X.columns}
 
@@ -137,7 +165,7 @@ def recommend(
         optuna.logging.set_verbosity(optuna.logging.WARNING)
 
         def objective(trial: "optuna.Trial") -> float:
-            cfg: Dict[str, Any] = {}
+            cfg: Dict[str, Any] = dict(defaults)
             for f, spec in space.items():
                 if spec["kind"] == "categorical":
                     cfg[f] = trial.suggest_categorical(f, spec["choices"])
@@ -166,7 +194,7 @@ def recommend(
         rng = np.random.default_rng(seed)
         history = []
         for i in range(n_trials):
-            cfg: Dict[str, Any] = {}
+            cfg: Dict[str, Any] = dict(defaults)
             for f, spec in space.items():
                 if spec["kind"] == "categorical":
                     cfg[f] = rng.choice(spec["choices"])

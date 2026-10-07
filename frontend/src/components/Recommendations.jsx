@@ -119,15 +119,57 @@ export default function Recommendations({ data }) {
 
       <div style={card}>
         <h3 style={{ marginTop: 0 }}>Derived Search Space</h3>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))', gap: 14 }}>
-          {Object.entries(r.search_space || {}).map(([k, v]) => (
-            <div key={k} style={{ padding: 12, background: '#f9fafb', borderRadius: 4, borderLeft: '3px solid #3b82f6' }}>
-              <div style={{ fontWeight: 600, fontSize: 13, color: '#111827' }}>{k}</div>
-              <div style={{ ...mono, color: '#6b7280', marginTop: 4 }}>
-                {Array.isArray(v) ? v.join(', ') : JSON.stringify(v)}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 14 }}>
+          {Object.entries(r.search_space || {}).map(([k, v]) => {
+            const isCat = v?.kind === 'categorical' || Array.isArray(v?.choices)
+            const isRange = v?.low != null && v?.high != null
+            return (
+              <div
+                key={k}
+                style={{
+                  padding: '12px 14px',
+                  background: '#f9fafb',
+                  borderRadius: 6,
+                  border: '1px solid #e5e7eb',
+                  borderLeft: '4px solid #3b82f6',
+                  overflow: 'hidden',
+                  wordBreak: 'break-word',
+                  overflowWrap: 'anywhere',
+                }}
+              >
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 4 }}>
+                  <span style={{ fontWeight: 600, fontSize: 13, color: '#111827' }}>{k}</span>
+                  {v?.kind && (
+                    <span style={{ fontSize: 11, color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                      {v.kind}
+                    </span>
+                  )}
+                </div>
+                <div
+                  style={{
+                    ...mono,
+                    color: '#4b5563',
+                    lineHeight: 1.5,
+                    whiteSpace: 'normal',
+                    wordBreak: 'break-word',
+                    overflowWrap: 'anywhere',
+                  }}
+                >
+                  {isCat ? (
+                    (v.choices || []).join(', ')
+                  ) : isRange ? (
+                    `${v.low} … ${v.high}`
+                  ) : Array.isArray(v) ? (
+                    v.join(', ')
+                  ) : typeof v === 'object' && v !== null ? (
+                    JSON.stringify(v, null, 1)
+                  ) : (
+                    String(v)
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
+            )
+          })}
         </div>
       </div>
     </div>

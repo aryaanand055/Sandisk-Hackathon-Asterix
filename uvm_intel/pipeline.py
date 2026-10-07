@@ -184,7 +184,8 @@ def run_analysis(
         rec = _stage("recommender",
                      lambda: recommend(runs, features, risk["_X"],
                                        risk["_model"], max_risk=max_risk,
-                                       n_trials=n_trials, seed=seed), log)
+                                       n_trials=n_trials, seed=seed,
+                                       shap_importance=risk.get("shap_importance")), log)
 
     tick("Finalising", 99)
     clean_risk = {k: v for k, v in risk.items()

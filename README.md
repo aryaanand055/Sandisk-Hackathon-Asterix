@@ -32,7 +32,7 @@ python -m uvicorn backend.main:app --host 127.0.0.1 --port 8000
 cd frontend && npm install && npm run dev
 ```
 
-Open <http://localhost:5173>, then either drop files on the upload zone or
+Open [http://localhost:5173](http://localhost:5173), then either drop files on the upload zone or
 click **Use bundled sample** to analyse the generated corpus.
 
 The AI Copilot tab needs a Google Gemini API key, typed into the tab or set as
@@ -43,11 +43,11 @@ answers with a rule-based summary.
 
 ## What you can upload
 
-| Input | Handled by |
-|---|---|
-| `.log` UVM simulation logs | [`uvm_intel/log_parser.py`](uvm_intel/log_parser.py) |
-| `.csv` run tables, single or split by category (config, outcomes, telemetry, …) joined on `run_id` | [`uvm_intel/csv_parser.py`](uvm_intel/csv_parser.py) |
-| `.fsdb` / `.vcd` / `.wlf` waveforms, as companions to a log or CSV | [`uvm_intel/waveform_stub.py`](uvm_intel/waveform_stub.py) |
+| Input                                                                                                   | Handled by                                                  |
+| ------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- |
+| `.log` UVM simulation logs                                                                            | [`uvm_intel/log_parser.py`](uvm_intel/log_parser.py)       |
+| `.csv` run tables, single or split by category (config, outcomes, telemetry, …) joined on `run_id` | [`uvm_intel/csv_parser.py`](uvm_intel/csv_parser.py)       |
+| `.fsdb` / `.vcd` / `.wlf` waveforms, as companions to a log or CSV                                | [`uvm_intel/waveform_stub.py`](uvm_intel/waveform_stub.py) |
 
 [`uvm_intel/ingest_multi.py`](uvm_intel/ingest_multi.py) routes each file to
 its parser and merges the results into one run table. Uploads are capped at
@@ -90,16 +90,16 @@ rest of the report still renders.
 
 ## Dashboard tabs
 
-| Tab | What it shows |
-|---|---|
-| **Executive Summary** | KPIs, pass/fail split, risk bands, SHAP drivers, failure modes, model metrics |
-| **AI Copilot** | Ask questions about the analysis in plain English (Google Gemini) |
-| **Failure Fingerprints** | Cluster map, determinism scores, masked template and raw trace per cluster |
-| **Tradeoff Matrix** | Interactive Pareto scatter and frontier table |
-| **Recommendations** | Optimiser results and search history |
-| **Config Diff** | Twin-divergence ranking and a two-run diff viewer |
-| **Run Explorer** | Paged, filterable table of every parsed run |
-| **All Details** | Parse stats, stage timings, failure rate by field, job metadata |
+| Tab                            | What it shows                                                                 |
+| ------------------------------ | ----------------------------------------------------------------------------- |
+| **Executive Summary**    | KPIs, pass/fail split, risk bands, SHAP drivers, failure modes, model metrics |
+| **AI Copilot**           | Ask questions about the analysis in plain English (Google Gemini)             |
+| **Failure Fingerprints** | Cluster map, determinism scores, masked template and raw trace per cluster    |
+| **Tradeoff Matrix**      | Interactive Pareto scatter and frontier table                                 |
+| **Recommendations**      | Optimiser results and search history                                          |
+| **Config Diff**          | Twin-divergence ranking and a two-run diff viewer                             |
+| **Run Explorer**         | Paged, filterable table of every parsed run                                   |
+| **All Details**          | Parse stats, stage timings, failure rate by field, job metadata               |
 
 ---
 

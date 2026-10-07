@@ -12,6 +12,18 @@ import AICopilot from './components/AICopilot'
 import LogGenerator from './components/LogGenerator'
 import './App.css'
 
+function isGenerateRoute() {
+  const path = window.location.pathname.toLowerCase()
+  const hash = window.location.hash.toLowerCase()
+  return (
+    path.startsWith('/generate') ||
+    path.startsWith('/generator') ||
+    hash.startsWith('#/generate') ||
+    hash.startsWith('#generate') ||
+    hash.startsWith('#/generator')
+  )
+}
+
 export default function App() {
   const [jobId, setJobId] = useState(null)
   const [progress, setProgress] = useState(null)
@@ -19,7 +31,7 @@ export default function App() {
   const [loading, setLoading] = useState(false)
   const [activeTab, setActiveTab] = useState('summary')
   const [error, setError] = useState(null)
-  const [page, setPage] = useState('analyse')
+  const [isGenerate, setIsGenerate] = useState(isGenerateRoute)
 
   const handleReset = () => {
     setJobId(null)
@@ -28,7 +40,39 @@ export default function App() {
     setLoading(false)
     setError(null)
     setActiveTab('summary')
+    if (window.location.search.includes('job_id')) {
+      window.history.pushState({}, '', window.location.pathname)
+    }
   }
+
+  useEffect(() => {
+    const handleLocationChange = () => {
+      const isGen = isGenerateRoute()
+      setIsGenerate(isGen)
+      if (!isGen) {
+        const params = new URLSearchParams(window.location.search)
+        const urlJobId = params.get('job_id')
+        if (urlJobId) {
+          setJobId(urlJobId)
+        }
+      }
+    }
+
+    if (!isGenerateRoute()) {
+      const params = new URLSearchParams(window.location.search)
+      const urlJobId = params.get('job_id')
+      if (urlJobId) {
+        setJobId(urlJobId)
+      }
+    }
+
+    window.addEventListener('popstate', handleLocationChange)
+    window.addEventListener('hashchange', handleLocationChange)
+    return () => {
+      window.removeEventListener('popstate', handleLocationChange)
+      window.removeEventListener('hashchange', handleLocationChange)
+    }
+  }, [])
 
   useEffect(() => {
     if (!jobId) return
@@ -102,44 +146,65 @@ export default function App() {
 
   const handleGenerated = async (corpusId) => {
     handleReset()
-    setPage('analyse')
     setLoading(true)
+    setError(null)
     try {
       const res = await axios.post(`/api/generate/${corpusId}/analyze`)
-      setJobId(res.data.job_id)
+      const newJobId = res.data.job_id
+      setJobId(newJobId)
+      window.history.pushState({}, '', `/?job_id=${newJobId}`)
+      setIsGenerate(false)
     } catch (err) {
       setError('Analysis failed: ' + (err.response?.data?.detail || err.message))
       setLoading(false)
     }
   }
 
+  // Separate page for Log Generator (accessible only via separate URL, e.g. /generate)
+  if (isGenerate) {
+    return (
+      <div className="app">
+        <header className="app-header">
+          <div className="brand-group">
+            <img src="/sandisk-logo-clean.png" alt="SanDisk" className="brand-logo-sandisk" />
+            <div className="brand-divider" />
+            <img src="/asterix-logo-clean.png" alt="Team Asterix" className="brand-logo-asterix" />
+            <span className="app-title">Synthetic Log Generator</span>
+          </div>
+          <button
+            className="btn btn-secondary"
+            onClick={() => {
+              window.history.pushState({}, '', '/')
+              setIsGenerate(false)
+            }}
+            style={{ fontSize: '0.85rem' }}
+          >
+            ← Back to Dashboard
+          </button>
+        </header>
+
+        {error && <div className="error-box">{error}</div>}
+
+        <LogGenerator onAnalyze={handleGenerated} />
+      </div>
+    )
+  }
+
+  // Main Page: Analysis Dashboard (not directly linked to generator)
   return (
     <div className="app">
       <header className="app-header">
-        <h1>UVM Configuration Intelligence Dashboard</h1>
-        <p>Upload UVM simulation logs, get parsed and clustered analysis</p>
+        <div className="brand-group">
+          <img src="/sandisk-logo-clean.png" alt="SanDisk" className="brand-logo-sandisk" />
+          <div className="brand-divider" />
+          <img src="/asterix-logo-clean.png" alt="Team Asterix" className="brand-logo-asterix" />
+          <span className="app-title">Configuration Intelligence Dashboard</span>
+        </div>
       </header>
 
-      <div className="tab-buttons" style={{ padding: '0 24px', marginBottom: 16 }}>
-        {[
-          { id: 'analyse', label: 'Analyse logs' },
-          { id: 'generate', label: 'Generate logs' },
-        ].map(p => (
-          <button
-            key={p.id}
-            className={`tab-btn ${page === p.id ? 'active' : ''}`}
-            onClick={() => setPage(p.id)}
-          >
-            {p.label}
-          </button>
-        ))}
-      </div>
+      {error && <div className="error-box">{error}</div>}
 
-      {page === 'generate' && <LogGenerator onAnalyze={handleGenerated} />}
-
-      {page === 'analyse' && error && <div className="error-box">{error}</div>}
-
-      {page === 'analyse' && jobId && (
+      {jobId && (
         <div style={{ textAlign: 'right', padding: '0 24px', marginBottom: '12px' }}>
           <button className="btn btn-secondary" onClick={handleReset} style={{ fontSize: '0.875rem' }}>
             ← Analyze New Files / Reset
@@ -147,7 +212,7 @@ export default function App() {
         </div>
       )}
 
-      {page !== 'analyse' ? null : !jobId ? (
+      {!jobId ? (
         <UploadZone onUpload={handleUpload} onSample={handleSample} />
       ) : (
         <>
@@ -172,7 +237,7 @@ export default function App() {
               <div className="tab-buttons">
                 {[
                   { id: 'summary', label: 'Executive Summary' },
-                  { id: 'copilot', label: '🤖 AI Copilot' },
+                  { id: 'copilot', label: 'AI Copilot' },
                   { id: 'fingerprints', label: 'Failure Fingerprints' },
                   { id: 'tradeoff', label: 'Tradeoff Matrix' },
                   { id: 'recommendations', label: 'Recommendations' },

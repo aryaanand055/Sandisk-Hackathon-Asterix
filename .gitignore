@@ -9,3 +9,5 @@ data/uvm_logs/
 site-packages
 # Corpora built from the Generator page
 data/generated/
+dist/
+
