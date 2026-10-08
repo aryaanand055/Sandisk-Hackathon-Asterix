@@ -124,13 +124,13 @@ export default function UploadZone({ onUpload, onSample }) {
             <svg className="dropzone-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
               <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
-            <p className="dropzone-text">Drag files or entire folders here (.log, .csv, .vcd, .fsdb, .wlf) or click to browse</p>
-            <p className="dropzone-hint">Supports single-file logs, multi-file CSV folders, and waveform companion files</p>
+            <p className="dropzone-text">Drag files or entire folders here (.log, .csv) or click to browse</p>
+            <p className="dropzone-hint">Supports single-file logs, multi-file CSV folders</p>
           </div>
           <input
             type="file"
             multiple
-            accept=".log,.csv,.vcd,.fsdb,.wlf"
+            accept=".log,.csv"
             onChange={handleChange}
             className="file-input"
           />

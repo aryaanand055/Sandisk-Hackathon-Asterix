@@ -10,6 +10,7 @@ import RunExplorer from './components/RunExplorer'
 import AllDetails from './components/AllDetails'
 import AICopilot from './components/AICopilot'
 import LogGenerator from './components/LogGenerator'
+import ExportReport from './components/ExportReport'
 import './App.css'
 
 function isGenerateRoute() {
@@ -243,7 +244,8 @@ export default function App() {
                   { id: 'recommendations', label: 'Recommendations' },
                   { id: 'diff', label: 'Config Diff' },
                   { id: 'explorer', label: 'Run Explorer' },
-                  { id: 'details', label: 'All Details' }
+                  { id: 'details', label: 'All Details' },
+                  { id: 'export', label: '⬇ Export PDF' }
                 ].map(tab => (
                   <button
                     key={tab.id}
@@ -264,6 +266,7 @@ export default function App() {
                 {activeTab === 'diff' && <ConfigDiff data={result} jobId={jobId} />}
                 {activeTab === 'explorer' && <RunExplorer jobId={jobId} />}
                 {activeTab === 'details' && <AllDetails data={result} />}
+                {activeTab === 'export' && <ExportReport result={result} jobId={jobId} />}
               </div>
             </div>
           )}
