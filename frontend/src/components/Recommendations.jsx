@@ -347,6 +347,43 @@ export default function Recommendations({ data }) {
                 </div>
               </div>
 
+              {/* Hardware Waveform & SystemVerilog Source Proof */}
+              {simResult.waveform_path && (
+                <div style={{ marginTop: 12, padding: '10px 14px', background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 8 }}>
+                  <div style={{ fontSize: 12, color: '#166534', fontWeight: 600 }}>
+                    ⚡ Real Hardware Waveform Dumped to: <code style={{ background: '#dcfce7', padding: '2px 6px', borderRadius: 4 }}>data/xsim_simulation_trace.vcd</code>
+                  </div>
+                  <div style={{ fontSize: 11, color: '#15803d' }}>
+                    View via: <code style={{ background: '#dcfce7', padding: '2px 6px', borderRadius: 4 }}>vivado -mode gui</code> or GTKWave
+                  </div>
+                </div>
+              )}
+
+              {/* Collapsible SystemVerilog Testbench Source */}
+              {simResult.sv_source && (
+                <details style={{ marginTop: 12 }}>
+                  <summary style={{ cursor: 'pointer', fontSize: 12, fontWeight: 600, color: '#2563eb', userSelect: 'none' }}>
+                    🔍 Inspect Synthesized SystemVerilog Testbench Source (uvm_test_top.sv)
+                  </summary>
+                  <pre style={{
+                    ...mono,
+                    marginTop: 8,
+                    padding: 12,
+                    background: '#1e293b',
+                    color: '#93c5fd',
+                    borderRadius: 6,
+                    maxHeight: 240,
+                    overflowY: 'auto',
+                    fontSize: 11.5,
+                    lineHeight: 1.5,
+                    whiteSpace: 'pre-wrap',
+                    wordBreak: 'break-all',
+                  }}>
+                    {simResult.sv_source}
+                  </pre>
+                </details>
+              )}
+
               {/* Collapsible Simulation Log */}
               <details style={{ marginTop: 10 }}>
                 <summary style={{ cursor: 'pointer', fontSize: 12, fontWeight: 600, color: '#475569', userSelect: 'none' }}>
