@@ -204,14 +204,6 @@ export default function App() {
 
       {error && <div className="error-box">{error}</div>}
 
-      {jobId && (
-        <div style={{ textAlign: 'right', padding: '0 24px', marginBottom: '12px' }}>
-          <button className="btn btn-secondary" onClick={handleReset} style={{ fontSize: '0.875rem' }}>
-            ← Analyze New Files / Reset
-          </button>
-        </div>
-      )}
-
       {!jobId ? (
         <UploadZone onUpload={handleUpload} onSample={handleSample} />
       ) : (

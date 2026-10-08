@@ -65,7 +65,7 @@ export default function TradeoffMatrix({ data }) {
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))', gap: 16, marginBottom: 20 }}>
         {operating.map(([label, cfg, color]) => (
-          <div key={label} style={{ ...card, borderLeft: `4px solid ${color}` }}>
+          <div key={label} style={{ padding: '8px 14px', borderLeft: `3px solid ${color}` }}>
             <h4 style={{ margin: '0 0 10px', fontSize: 15 }}>{label}</h4>
             {cfg ? (
               <>

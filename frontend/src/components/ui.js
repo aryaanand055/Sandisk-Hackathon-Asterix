@@ -2,10 +2,8 @@
 // React does not support without the babel plugin.
 
 export const card = {
-  background: '#fff',
-  padding: 20,
-  borderRadius: 8,
-  boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+  background: 'transparent',
+  padding: '16px 0',
 }
 
 export const th = {

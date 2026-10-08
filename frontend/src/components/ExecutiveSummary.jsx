@@ -14,8 +14,8 @@ export default function ExecutiveSummary({ data }) {
   const meter = a.risk_meter || {}
 
   const outcome = [
-    { name: 'Pass', value: s.n_pass, fill: '#10b981' },
-    { name: 'Fail', value: s.n_fail, fill: '#ef4444' },
+    { name: 'Pass', value: s.n_pass, fill: '#16a34a' },
+    { name: 'Fail', value: s.n_fail, fill: '#e10600' },
   ]
 
   const errorTags = Object.entries(s.error_tag_distribution || {})
@@ -77,7 +77,7 @@ export default function ExecutiveSummary({ data }) {
               <YAxis dataKey="name" type="category" width={150} tick={{ fontSize: 11 }}
                      label={yLabel('Failure mode (error tag)')} />
               <Tooltip formatter={(v) => num(v)} />
-              <Bar dataKey="count" fill="#3b82f6" radius={[0, 6, 6, 0]} />
+              <Bar dataKey="count" fill="#e10600" radius={[0, 6, 6, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -115,7 +115,11 @@ export default function ExecutiveSummary({ data }) {
                      label={xLabel('Predicted failure-risk band')} />
               <YAxis allowDecimals={false} label={yLabel('Runs (count)')} />
               <Tooltip formatter={(v) => num(v)} />
-              <Bar dataKey="count" fill="#f59e0b" radius={[6, 6, 0, 0]} />
+              <Bar
+                dataKey="count"
+                fill="#4f46e5"
+                radius={[6, 6, 0, 0]}
+              />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -137,7 +141,7 @@ export default function ExecutiveSummary({ data }) {
                        label={yLabel('True positive rate (failures caught, 0–1)')} />
                 <Tooltip content={<RocTooltip />} />
                 <Legend verticalAlign="top" />
-                <Line dataKey="tpr" stroke="#0ea5e9" dot={false} strokeWidth={2}
+                <Line dataKey="tpr" stroke="#e10600" dot={false} strokeWidth={2.5}
                       name={`ROC (AUC ${metrics.roc_auc?.toFixed(3) ?? '—'})`} />
                 {ops.default && (
                   <ReferenceDot x={ops.default.fpr} y={ops.default.tpr} r={6}
@@ -205,8 +209,8 @@ export default function ExecutiveSummary({ data }) {
 }
 
 const UNIT_TICKS = [0, 0.2, 0.4, 0.6, 0.8, 1]
-const ROC_BEST = '#16a34a'
-const ROC_DEFAULT = '#f59e0b'
+const ROC_BEST = '#16a34a'     // Green for Best balance
+const ROC_DEFAULT = '#2563eb'  // Blue for Current cut-off
 
 function RocTooltip({ active, payload }) {
   if (!active || !payload?.length) return null
@@ -222,7 +226,7 @@ function RocTooltip({ active, payload }) {
   )
 }
 
-const SHAP_UP = '#dc2626'
+const SHAP_UP = '#e10600'
 const SHAP_DOWN = '#16a34a'
 const SHAP_NONE = '#9ca3af'
 
@@ -262,7 +266,7 @@ function ShapTooltip({ active, payload }) {
 
 function Kpi({ label, value }) {
   return (
-    <div style={{ ...card, padding: 18 }}>
+    <div style={{ padding: '8px 0' }}>
       <div style={{ fontSize: 26, fontWeight: 700, color: '#111827' }}>{value}</div>
       <div style={{ fontSize: 12, color: '#6b7280', marginTop: 4 }}>{label}</div>
     </div>

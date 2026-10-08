@@ -145,7 +145,7 @@ export default function FailureFingerprints({ data }) {
 
 function Stat({ label, value }) {
   return (
-    <div style={{ ...card, padding: 18 }}>
+    <div style={{ padding: '8px 0' }}>
       <div style={{ fontSize: 26, fontWeight: 700, color: '#111827' }}>{value}</div>
       <div style={{ fontSize: 12, color: '#6b7280', marginTop: 4 }}>{label}</div>
     </div>
