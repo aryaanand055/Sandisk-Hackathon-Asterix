@@ -29,6 +29,7 @@ from uvm_intel.copilot import query_gemini_copilot
 from uvm_intel.ingest_multi import parse_files_multi
 from uvm_intel.log_parser import parse_files
 from uvm_intel.pipeline import run_analysis
+from uvm_intel.xsim_runner import run_xsim_simulation, is_xsim_available
 
 app = FastAPI(title="UVM Configuration Intelligence")
 
@@ -474,6 +475,45 @@ async def copilot_query(req: Dict[str, Any]):
     res["question"] = question
     res["timestamp"] = datetime.now().isoformat()
     return res
+
+
+@app.get("/api/simulate/info")
+async def simulate_info():
+    """Returns info on xsim availability and defaults."""
+    return {
+        "xsim_available": is_xsim_available(),
+        "default_top_module": "uvm_test_top",
+        "default_test_name": "uvm_config_stress_test",
+    }
+
+
+@app.post("/api/simulate/xsim")
+async def simulate_top_config(req: Dict[str, Any]):
+    """
+    Simulate the top optimal configuration chosen by Optuna in Vivado xSim.
+    Accepts:
+      - config: Dict of configuration parameters (knobs)
+      - top_module: Top-level testbench module (default: uvm_test_top)
+      - test_name: UVM test name (default: uvm_config_stress_test)
+      - cycles: Number of cycles to simulate (default: 50000)
+    """
+    config = req.get("config")
+    if not config or not isinstance(config, dict):
+        raise HTTPException(status_code=400, detail="Missing or invalid config dictionary")
+    
+    top_module = req.get("top_module", "uvm_test_top")
+    test_name = req.get("test_name", "uvm_config_stress_test")
+    cycles = int(req.get("cycles", 50000))
+    seed = int(req.get("seed", 42))
+
+    sim_res = run_xsim_simulation(
+        config=config,
+        top_module=top_module,
+        test_name=test_name,
+        sim_cycles=cycles,
+        seed=seed,
+    )
+    return sim_res
 
 
 if __name__ == "__main__":
