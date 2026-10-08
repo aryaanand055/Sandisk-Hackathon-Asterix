@@ -19,6 +19,8 @@ from sklearn.metrics import (
 )
 from sklearn.model_selection import train_test_split
 
+from .sim_log_parser import METRIC_PREFIX
+
 # Columns produced by the run, not chosen by the engineer. Using any of these
 # as a feature would leak the verdict.
 OUTCOME_COLUMNS = {
@@ -27,7 +29,7 @@ OUTCOME_COLUMNS = {
     "uvm_warning_total", "verdict", "pass_fail", "primary_error_tag",
     "distinct_error_tags", "trace_fingerprint", "error_trace",
     "power_mw", "temperature_c", "area_mm2", "status", "error_msg",
-    "notes", "timestamp", "log_file", "source_file",
+    "notes", "timestamp", "log_file", "source_file", "sim_time_ns",
 }
 # Identifiers and pure randomisation controls.
 EXCLUDED_COLUMNS = {"run_id", "seed"}
@@ -36,7 +38,8 @@ EXCLUDED_COLUMNS = {"run_id", "seed"}
 def select_features(df: pd.DataFrame) -> List[str]:
     """Configuration knobs only - the things an engineer can actually set."""
     return [c for c in df.columns
-            if c not in OUTCOME_COLUMNS and c not in EXCLUDED_COLUMNS]
+            if c not in OUTCOME_COLUMNS and c not in EXCLUDED_COLUMNS
+            and not c.startswith(METRIC_PREFIX)]
 
 
 def _prepare(df: pd.DataFrame, features: List[str]) -> pd.DataFrame:
@@ -61,6 +64,11 @@ def train_risk_model(
 
     if len(np.unique(y)) < 2:
         raise ValueError("Need both passing and failing runs to train a model.")
+    n_fail, n_pass = int(y.sum()), int(len(y) - y.sum())
+    if min(n_fail, n_pass) < 2:
+        raise ValueError(
+            f"Need at least 2 passing and 2 failing runs to train a model "
+            f"(got {n_pass} passing, {n_fail} failing).")
 
     X_tr, X_te, y_tr, y_te = train_test_split(
         X, y, test_size=test_size, random_state=seed, stratify=y)

@@ -29,6 +29,7 @@ from uvm_intel.copilot import query_gemini_copilot
 from uvm_intel.ingest_multi import parse_files_multi
 from uvm_intel.log_parser import parse_files
 from uvm_intel.pipeline import run_analysis
+from uvm_intel.sim_log_parser import METRIC_PREFIX
 
 app = FastAPI(title="UVM Configuration Intelligence")
 
@@ -59,7 +60,7 @@ OUTCOME_COLUMNS = {
     "uvm_error_count", "uvm_fatal_count", "verdict", "pass_fail",
     "uvm_error_total", "uvm_fatal_total", "uvm_warning_total",
     "primary_error_tag", "distinct_error_tags", "trace_fingerprint",
-    "error_trace",
+    "error_trace", "sim_time_ns",
 }
 
 jobs: Dict[str, Dict[str, Any]] = {}
@@ -430,7 +431,8 @@ async def get_diff(job_id: str, run_a: str, run_b: str):
         va, vb = a[col], b[col]
         fields.append({
             "field": col,
-            "kind": "outcome" if col in OUTCOME_COLUMNS else "config",
+            "kind": ("outcome" if col in OUTCOME_COLUMNS
+                     or col.startswith(METRIC_PREFIX) else "config"),
             "run_a": _py(va),
             "run_b": _py(vb),
             "changed": bool(str(va) != str(vb)),

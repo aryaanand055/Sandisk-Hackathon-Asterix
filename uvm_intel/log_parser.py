@@ -27,6 +27,7 @@ from .log_format import (
     BANNER, CONFIG_CLOSE, CONFIG_OPEN, METRICS_CLOSE, METRICS_OPEN,
     RE_SUMMARY_COUNT, RE_UVM_LINE, RE_VERDICT, fingerprint,
 )
+from .sim_log_parser import parse_sim_log
 
 # Severities that count as a failure signal.
 _FAIL_SEVERITIES = ("ERROR", "FATAL")
@@ -185,11 +186,35 @@ def parse_files(paths: List[str]) -> Tuple[pd.DataFrame, pd.DataFrame, ParseStat
     stats = ParseStats()
     all_runs: List[Dict] = []
     all_errors: List[Dict] = []
+    sim_ids: set = set()
 
     for path in paths:
         stats.files += 1
         with open(path, "r", encoding="utf-8", errors="replace") as fh:
-            r, e = parse_lines(fh, stats)
+            # Generated corpora open with the run banner; anything else is
+            # treated as a single-run transcript from a real simulator.
+            is_corpus = BANNER in fh.read(4096)
+            fh.seek(0)
+            if is_corpus:
+                r, e = parse_lines(fh, stats)
+            else:
+                lines = fh.readlines()
+                stats.lines += len(lines)
+                row, e, n_err, n_unparsed = parse_sim_log(path, lines)
+                stats.error_lines += n_err
+                stats.unparsed_lines += n_unparsed
+                r = [row] if row else []
+                stats.runs += len(r)
+                # Transcripts take their run_id from the file name, so two
+                # uploads both called sim.log would otherwise collide.
+                if row:
+                    base, n = row["run_id"], 2
+                    while row["run_id"] in sim_ids:
+                        row["run_id"] = f"{base}#{n}"
+                        n += 1
+                    sim_ids.add(row["run_id"])
+                    for err in e:
+                        err["run_id"] = row["run_id"]
         all_runs.extend(r)
         all_errors.extend(e)
 
